@@ -1,0 +1,29 @@
+/** Colors */
+
+$blue:                  #002E5C;
+$red:                   #CB0935;
+$dark_blue:             #002040;
+$grey:                  #332F34;
+$light_grey:            #F2F6FC;
+
+$primary:               #002E5C;
+
+$link:                  $primary;
+$dark:                  $dark_blue;
+
+$gold:                  $red;
+
+$spacer:                2rem;
+
+$navbar-background-color:       $dark_blue;
+$navbar-padding-vertical:       0.6875rem;
+$navbar-item-img-max-height:    auto;
+$navbar-burger-color:           #000000;
+$navbar-item-color:             $grey;
+$navbar-item-hover-background-color: $dark_blue;
+$navbar-item-hover-color: $grey;
+$navbar-dropdown-background-color: $primary;
+$navbar-dropdown-border-top: none;
+$navbar-dropdown-radius: 0;
+
+$button-padding-vertical: 1rem;

@@ -1,0 +1,8 @@
+.title{
+  //@include roboto;
+  color: $dark_blue;
+
+  &.is-2{
+    font-size: 1.875rem;
+  }
+}

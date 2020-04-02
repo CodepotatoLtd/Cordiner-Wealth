@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="25px" height="25px" viewBox="0 0 25 25" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>Group 21 Copy</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polygon id="path-1" points="5.05274834e-16 5.70083317 5.05274834e-16 0 6.38577778 0 6.38577778 5.70083317 6.38577778 11.4016663 0 11.4016663"></polygon>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="20190903Metis&gt;Mobile&gt;PageWithCopy+Image7" transform="translate(-264.000000, -1600.000000)">
+            <g id="TABLES" transform="translate(15.000000, 1337.000000)">
+                <g id="Group-20" transform="translate(0.000000, 250.000000)">
+                    <g id="Group-21-Copy" transform="translate(249.000000, 13.000000)">
+                        <circle id="Oval-3-Copy-2" fill="#002040" transform="translate(12.500000, 12.500000) rotate(360.000000) translate(-12.500000, -12.500000) " cx="12.5" cy="12.5" r="12.5"></circle>
+                        <g id="Page-1-Copy-2" transform="translate(12.500000, 13.000000) rotate(450.000000) translate(-12.500000, -13.000000) translate(9.000000, 7.000000)">
+                            <mask id="mask-2" fill="white">
+                                <use xlink:href="#path-1"></use>
+                            </mask>
+                            <g id="Clip-2"></g>
+                            <path d="M6.25777778,5.39247866 L6.24369778,5.37842375 C6.24369778,5.37828034 6.24355556,5.37828034 6.24355556,5.37813692 L5.94488889,5.07696045 C5.94261333,5.07452235 5.93991111,5.07280134 5.93763556,5.07050667 L1.024,0.129061289 C0.867555556,-0.0430395518 0.597333333,-0.0430395518 0.426666667,0.129061289 L0.128,0.430237759 C-0.0426666667,0.587996863 -0.0426666667,0.86048986 0.128,1.0325907 L4.74382222,5.68734476 L0.128,10.3547196 C-0.0426666667,10.5124787 -0.0426666667,10.7849717 0.128,10.9570725 L0.440888889,11.2725907 C0.597333333,11.4446915 0.867555556,11.4446915 1.03822222,11.2725907 L5.83296,6.39797782 C5.87818667,6.37675204 5.92142222,6.34849882 5.95911111,6.3103498 L6.25777778,5.9948316 C6.42844444,5.83707249 6.42844444,5.5645795 6.25777778,5.39247866" id="Fill-1" fill="#FFFFFF" mask="url(#mask-2)"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

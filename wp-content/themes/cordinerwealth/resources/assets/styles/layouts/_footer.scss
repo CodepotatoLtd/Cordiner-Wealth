@@ -1,0 +1,155 @@
+.subscription-section{
+  font-size:0.9rem;
+  @media(min-width:768px){
+    font-size:1.25rem;
+    }
+  }
+
+footer{
+  .footer-logo{
+    width:72px;
+    height:72px;
+    }
+  .footer-menu{
+    @apply flex flex-col;
+    .navbar-item{
+      margin:0;
+      @apply text-white leading-loose;
+      @media(min-width:768px){
+        @apply leading-tight;
+        }
+      }
+    }
+  .contact-info{
+    margin-top:1.5rem;
+    padding-top:1.5rem;
+    @media(min-width:768px){
+      margin-top:0;
+      padding-top:0;
+      border-top:0;
+      }
+    }
+  .address{
+    margin-bottom:1.5rem;
+    @apply text-white;
+    @media(min-width:768px){
+      margin:0;
+      }
+    }
+  }
+
+//
+//  .more-on-us{
+//    background: $primary;
+//    color: #fff;
+//
+//    .container{
+//      padding: 0 1rem;
+//    }
+//
+//    .button{
+//      margin-bottom: 0!important;
+//      text-transform: uppercase;
+//    }
+//
+//    h4{
+//      @include roboto_light;
+//      color: #fff;
+//      strong{
+//        @include roboto_medium;
+//      }
+//
+//
+//    }
+//  }
+//
+//  .spacer{
+//    background: #000;
+//    color: #fff;
+//    text-align: center;
+//    padding: 2rem 1rem;
+//
+//
+//    .footer-logo{
+//      display: block;
+//      margin-bottom: 1.5rem;
+//      img{
+//        width: 126px;
+//        height: 43px;
+//      }
+//    }
+//
+//
+//    .menu{
+//      font-size: 1.125rem;
+//      text-transform: uppercase;
+//    }
+//
+//
+//  }
+//
+//  .small-reg{
+//    @include assistant_light;
+//    font-size: 0.75rem;
+//    line-height: 1.125rem;
+//    color:$primary;
+//    a{
+//      &:hover{
+//        color:$primary;
+//        }
+//      }
+//
+//  }
+//
+//  .bottom-regs{
+//    padding: 3rem 1rem 2rem;
+//    font-size: 0.75rem;
+//    text-align: center;
+//
+//
+//  }
+//
+//  .top{
+//    margin: 3rem 0 1rem;
+//    display: block;
+//
+//
+//  }
+//
+//  .menu{
+//    .navbar-link{
+//      display: block;
+//      width: 100%
+//    }
+//    .navbar-link:not(.is-arrowless)::after
+//    {
+//      display: none;
+//    }
+//  }
+//
+//}
+//
+//.menu{
+//  a{
+//    text-transform: none;
+//    color:$primary;
+//    font-size:0.875rem;
+//    padding:0.25rem 0.75rem;
+//    &:hover{
+//      background-color:#000;
+//      }
+//    &:nth-child(odd){
+//      float:left;
+//      width:50%;
+//      }
+//    &:nth-child(even){
+//      float:right;
+//      width:50%;
+//      }
+//    }
+//  }
+//
+//.footer-top{
+//  border-bottom:1px solid #646363;
+//  margin-bottom:30px;
+//  }

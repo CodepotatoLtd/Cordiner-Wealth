@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63.1 (92452) - https://sketch.com -->
+    <title>Group 14</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polygon id="path-1" points="10.0423016 0.109017857 10.0423016 10.6943353 0.028875 10.6943353 0.028875 0.109017857 10.0423016 0.109017857"></polygon>
+        <polygon id="path-3" points="0 15.4630317 15.4986508 15.4630317 15.4986508 -4.36507935e-05 0 -4.36507935e-05"></polygon>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="20200221&gt;Desktop&gt;CordinerWealthConcept2" transform="translate(-926.000000, -4604.000000)">
+            <g id="Footer" transform="translate(0.000000, 4424.000000)">
+                <g id="FOOTER">
+                    <g id="Group-18-Copy" transform="translate(926.000000, 180.000000)">
+                        <g id="Group-14">
+                            <g id="Group-4">
+                                <circle id="Oval" fill="#B26E45" cx="15" cy="15" r="15"></circle>
+                                <path d="M8.86347421,7.00002183 C9.8914504,7.00002183 10.724744,7.83440675 10.724744,8.86085516 C10.724744,9.88774008 9.8914504,10.7225615 8.86347421,10.7225615 C7.83156944,10.7225615 7.00002183,9.88774008 7.00002183,8.86085516 C7.00002183,7.83440675 7.83156944,7.00002183 8.86347421,7.00002183 Z" id="Fill-1" fill="#FFFFFF"></path>
+                                <g id="Group-5" transform="translate(12.456349, 11.768587)">
+                                    <mask id="mask-2" fill="white">
+                                        <use xlink:href="#path-1"></use>
+                                    </mask>
+                                    <g id="Clip-4"></g>
+                                    <path d="M6.19105754,0.109017857 C4.62857738,0.109017857 3.57986706,0.964573413 3.15165278,1.77735119 L3.10778373,1.77735119 L3.10778373,0.365902778 L0.028875,0.365902778 L0.028875,10.6943353 L3.23677183,10.6943353 L3.23677183,5.5841369 C3.23677183,4.23772817 3.49191071,2.93300595 5.1632996,2.93300595 C6.80915278,2.93300595 6.83294246,4.47409722 6.83294246,5.67274802 L6.83294246,10.6943353 L10.0423671,10.6943353 L10.0423671,5.02889881 C10.0423671,2.24747024 9.44107738,0.109017857 6.19105754,0.109017857" id="Fill-3" fill="#FFFFFF" mask="url(#mask-2)"></path>
+                                </g>
+                                <g id="Group-2" transform="translate(7.000000, 7.000000)">
+                                    <mask id="mask-4" fill="white">
+                                        <use xlink:href="#path-3"></use>
+                                    </mask>
+                                    <g id="Clip-7"></g>
+                                </g>
+                                <polygon id="Fill-6" fill="#FFFFFF" points="7.25426587 22.4630317 10.4695833 22.4630317 10.4695833 12.134381 7.25426587 12.134381"></polygon>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

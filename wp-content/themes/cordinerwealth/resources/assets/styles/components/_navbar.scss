@@ -1,0 +1,121 @@
+//.navbar {
+//  background-color:$primary;
+//  font-size: 1.125rem;
+//  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.40);
+//
+//
+//  .navbar-brand {
+//    .navbar-item {
+//      padding-top: 0.6875rem;
+//      padding-bottom: 0.6875rem;
+//    }
+//  }
+//
+//  .navbar-burger {
+//    width: 4.6875rem;
+//
+//    .left-slice {
+//      height: 2.25rem;
+//      background: #EAEAEA;
+//      width: 1px;
+//      position: absolute;
+//      top: calc(50% - 1.125rem);
+//      left: 0;
+//    }
+//
+//    &:hover {
+//      color: #fff;
+//    }
+//
+//    span {
+//      width: 30px;
+//      height: 3px;
+//      left: calc(50% - 15px);
+//
+//      &:nth-child(1) {
+//        top: calc(50% - 10px);
+//      }
+//
+//      &:nth-child(3) {
+//        top: calc(50% + 8px);
+//      }
+//
+//    }
+//
+//    &.is-active {
+//      span {
+//        color: #000;
+//
+//        &:nth-child(1) {
+//          transform: translateY(10px) rotate(45deg);
+//        }
+//
+//        &:nth-child(3) {
+//          transform: translateY(-8px) rotate(-45deg);
+//        }
+//
+//      }
+//    }
+//
+//  }
+//
+//  .navbar-menu {
+//    .navbar-item{
+//      @include assistant_semi_bold;
+//      font-size:1.2rem;
+//      letter-spacing: -0.5px;
+//      padding:0;
+//      //transition: all 300ms ease-in;
+//      text-align:center;
+//      margin-bottom:10px;
+//      &:hover {
+//        background: transparent;
+//      }
+//      &.menu-item-has-children {
+//        padding-left: 0;
+//        padding-right: 0;
+//
+//        .navbar-link {
+//          padding-left: 0.6rem;
+//          padding-right: 0.6rem;
+//        }
+//
+//        //&:hover {
+//        //  .navbar-link {
+//        //    box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.40);
+//        //    z-index: 10000;
+//        //  }
+//        //}
+//      }
+//
+//      .navbar-dropdown {
+//        padding-bottom:0;
+//        margin-bottom:0;
+//        .navbar-item{
+//          margin-top:0;
+//          margin-left:0;
+//          margin-right:0;
+//          color:darken($primary, 30%);
+//          text-transform: capitalize;
+//          &:hover{
+//            }
+//          }
+//        }
+//
+//
+//      &.current-menu-item {
+//        }
+//
+//    }
+//  }
+//
+//}
+//
+//.header-link{
+//  @include assistant_semi_bold;
+//  padding:10px 0;
+//  margin-right:20px;
+//  &:hover{
+//    color:#fff;
+//    }
+//  }

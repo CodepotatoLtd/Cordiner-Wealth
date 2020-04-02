@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="532px" height="532px" viewBox="0 0 532 532" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>Group 7</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polygon id="path-1" points="165.965808 251.988097 165.965808 0.375573037 0.018560843 0.375573037 0.018560843 251.988097 165.965808 251.988097"></polygon>
+        <polygon id="path-3" points="261.215301 0.0586718713 0.233513905 0.0586718713 0.233513905 195.567354 261.215301 195.567354 261.215301 0.0586718713"></polygon>
+        <polygon id="path-5" points="0.37827234 193.869278 262.71984 193.869278 262.71984 0.272908291 0.37827234 0.272908291"></polygon>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="20190903Metis&gt;Desktop&gt;WhyMetis3" transform="translate(-98.000000, -733.000000)">
+            <g id="Group-7" transform="translate(98.000000, 733.000000)">
+                <g id="Page-1">
+                    <path d="M281,150.434468 C317.634198,154.947128 348.977268,176.52176 366.878515,207 L451.372104,204.747415 L496,131.076844 C452.196332,56.4793983 373.177033,5.13993795 281.824227,0 L322.362759,74.0282137 L281,150.434468 Z" id="Fill-1" fill="#002E5C"></path>
+                    <g id="Group-5" transform="translate(366.000000, 146.000000)">
+                        <mask id="mask-2" fill="white">
+                            <use xlink:href="#path-1"></use>
+                        </mask>
+                        <g id="Clip-4"></g>
+                        <path d="M7.04355869,75.6592409 C12.6849301,89.2810044 15.8159005,104.198123 15.8159005,119.846913 C15.8159005,141.108287 10.0451657,161.016444 0.018560843,178.154705 L44.3508531,250.108526 L130.645649,251.988097 C153.115518,213.073306 165.967496,167.954248 165.967496,119.846913 C165.967496,76.8706035 155.699038,36.2890221 137.492538,0.375573037 L92.9915107,73.3802366 L7.04355869,75.6592409 Z" id="Fill-3" fill="#CB0935" mask="url(#mask-2)"></path>
+                    </g>
+                    <g id="Group-8" transform="translate(44.000000, 0.000000)">
+                        <mask id="mask-4" fill="white">
+                            <use xlink:href="#path-3"></use>
+                        </mask>
+                        <g id="Clip-7"></g>
+                        <path d="M129.456906,195.567354 C150.330431,168.096745 183.184375,150.199228 220.267693,149.566497 L261.215301,74.3050929 L220.361305,0.0571787006 C128.442155,0.710440892 47.6028802,47.7733156 0.233513905,118.919168 L83.4074635,120.729637 L129.456906,195.567354 Z" id="Fill-6" fill="#002E5C" mask="url(#mask-4)"></path>
+                    </g>
+                    <path d="M159.094472,310.627852 C153.463009,296.991012 150.337547,282.061395 150.337547,266.398393 C150.337547,245.912263 155.670542,226.67214 165,209.953961 L119.381392,135.833462 L35.3336784,134 C12.8547538,172.994739 0,218.200798 0,266.398393 C0,308.620399 9.87946393,348.53561 27.4364896,384 L70.6804969,312.975806 L159.094472,310.627852 Z" id="Fill-9" fill="#002E5C"></path>
+                    <path d="M250,381.371949 C214.286598,376.269025 183.824397,354.907556 166.285497,325 L79.4359767,327.31917 L36,399.037358 C79.1817356,474.069449 157.79646,526.029729 248.9363,532 L208.47644,458.093775 L250,381.371949 Z" id="Fill-11" fill="#002E5C"></path>
+                    <g id="Group-15" transform="translate(225.000000, 338.000000)">
+                        <mask id="mask-6" fill="white">
+                            <use xlink:href="#path-5"></use>
+                        </mask>
+                        <g id="Clip-14"></g>
+                        <path d="M132.682194,0.272908291 C111.448209,27.2375151 78.5228468,44.5757666 41.523783,44.5757666 C41.3988113,44.5757666 41.275705,44.566446 41.1507333,44.566446 L0.37827234,119.692655 L41.0891801,193.864431 C41.2346695,193.864431 41.3782936,193.870024 41.523783,193.870024 C133.874088,193.870024 215.19145,146.711322 262.71984,75.184743 L177.522762,73.3243436 L132.682194,0.272908291 Z" id="Fill-13" fill="#002E5C" mask="url(#mask-6)"></path>
+                    </g>
+                </g>
+                <g id="Group-20-Copy" transform="translate(361.000000, 91.000000)">
+                    <circle id="Oval-2" fill="#FFFFFF" cx="29" cy="29" r="29"></circle>
+                    <text id="SECONDARY-TEXT-Copy-3" font-family="Roboto-Light, Roboto Light" font-size="25" font-weight="normal" line-spacing="28">
+                        <tspan x="3.71313477" y="34.5961914" fill="#332F34">1</tspan>
+                        <tspan x="35.9274902" y="38" font-size="20" fill="#FFFFFF"></tspan>
+                    </text>
+                </g>
+                <circle id="Oval-2" fill="#FFFFFF" cx="453" cy="300" r="29"></circle>
+                <text id="SECONDARY-TEXT-Copy-3" font-family="Roboto-Light, Roboto Light" font-size="25" font-weight="normal" line-spacing="28">
+                    <tspan x="427.713135" y="304.596191" fill="#332F34">2</tspan>
+                    <tspan x="459.92749" y="308" fill="#FFFFFF"></tspan>
+                </text>
+                <circle id="Oval-2" fill="#FFFFFF" cx="332" cy="443" r="29"></circle>
+                <text id="SECONDARY-TEXT-Copy-3" font-family="Roboto-Light, Roboto Light" font-size="25" font-weight="normal" line-spacing="28">
+                    <tspan x="306.713135" y="447.596191" fill="#332F34">3</tspan>
+                    <tspan x="338.92749" y="451" fill="#FFFFFF"></tspan>
+                </text>
+                <circle id="Oval-2" fill="#FFFFFF" cx="145" cy="414" r="29"></circle>
+                <text id="SECONDARY-TEXT-Copy-3" font-family="Roboto-Light, Roboto Light" font-size="25" font-weight="normal" line-spacing="28">
+                    <tspan x="119.713135" y="418.596191" fill="#332F34">4</tspan>
+                    <tspan x="151.92749" y="422" fill="#FFFFFF"></tspan>
+                </text>
+                <circle id="Oval-2" fill="#FFFFFF" cx="87" cy="232" r="29"></circle>
+                <text id="SECONDARY-TEXT-Copy-3" font-family="Roboto-Light, Roboto Light" font-size="25" font-weight="normal" line-spacing="28">
+                    <tspan x="61.7131348" y="236.596191" fill="#332F34">5</tspan>
+                    <tspan x="93.9274902" y="240" fill="#FFFFFF"></tspan>
+                </text>
+                <circle id="Oval-2" fill="#FFFFFF" cx="203" cy="91" r="29"></circle>
+                <text id="SECONDARY-TEXT-Copy-3" font-family="Roboto-Light, Roboto Light" font-size="25" font-weight="normal" line-spacing="28">
+                    <tspan x="177.713135" y="95.5961914" fill="#332F34">6</tspan>
+                    <tspan x="209.92749" y="99" fill="#FFFFFF"></tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>
