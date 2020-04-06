@@ -18,6 +18,7 @@ module.exports = {
                 lightgrey:   '#F5F5F5',
                 border:      '#B26E45',
                 blue:        '#002E5C',
+                cream:       '#EDE8DE',
             },
             fontSize: {
                 'ss':         '0.6rem',

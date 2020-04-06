@@ -1,4 +1,16 @@
-<div class="subscription-section bg-green montserrat-light text-white py-10" style="margin-top:200px">
+
+<div class="container">
+    <div class="bg-lightgrey py-16">
+        <div class="flex flex-col text-center mx-auto">
+            <h2 class="merriweather-light text-orange text-4xl mb-6">@php the_field('main_cta_title','options') @endphp</h2>
+            <div class="montserrat-regular text-darkgrey w-full md:w-2/3 mx-auto">
+                @php the_field('main_cta_text','options') @endphp
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="subscription-section bg-green montserrat-light text-white py-10" >
   <div class="container">
     <div class="flex flex-col justify-center lg:flex-row lg:items-center">
       <p class="text-center px-20 md:px-20 lg:px-0" data-aos="fade-left">{{ get_field('cta_title', 'options') }}</p>
@@ -417,7 +429,7 @@
       </div>
 
 
-      <div class="w-full md:w-4/12 lg:w-3/12 xl:w-2/12">
+      <div class="w-full md:w-4/12 lg:w-3/12 xl:w-3/12">
           <ul class="flex flex-row justify-center mx-auto md:mx-0 lg:justify-start">
               @if (have_rows('social_media','option'))
                   @php $i = 1 @endphp

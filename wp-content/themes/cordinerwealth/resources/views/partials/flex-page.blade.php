@@ -62,40 +62,15 @@
             </div>
         </div>
 
-    @elseif (get_row_layout() === 'centered_ctas')
+    @elseif (get_row_layout() === 'images_centered')
 
         <div class="container">
-            <div class="bg-darkblue flex flex-col justify-center text-center mx-auto w-full px-16 py-16">
+            <div class="@if (get_sub_field('layout')) : bg-darkblue @else bg-green md:w-10/12 @endif flex flex-col justify-center text-center mx-auto w-full px-16 py-16">
                 <h2 class="merriweather-light text-orange text-4xl pr-4 mb-4"
                     data-aos="fade">@php the_sub_field('title') @endphp</h2>
                 <div class="montserrat-light text-white" data-aos="fade-left">@php the_sub_field('text') @endphp</div>
             </div>
-            <div class="bg-darkblue flex flex-col justify-center mx-auto h-1100 lg:h-500 w-full"></div>
-            <div class="flex flex-col lg:flex-row mt-n1100 mb-n100 lg:mt-n500 lg:mb-200">
-                @if (have_rows('ctas'))
-                    @php $i = 1 @endphp
-                    @while (have_rows('ctas')) @php the_row() @endphp
-                    <div class="w-full lg:w-1/3 text-center mb-4 flex justify-center md:mx-2"
-                         data-aos="fade-up"
-                         data-aos-delay="{{ $i * 100 }}">
-                        <a class="relative" href="@php the_sub_field('link_url') @endphp">
-                            <img class="w-full" src="@php the_sub_field('image') @endphp">
-                            <div class="button white-bg-orange py-1 px-4 text-white text-center uppercase w-full md:w-11/12 lg:w-10/12 ml-n174 md:ml-n160 lg:ml-n131 xl:ml-n145 mx-auto absolute bottom-1 left-50%">@php the_sub_field('link_text') @endphp</div>
-                        </a>
-                    </div>
-                    @php $i++ @endphp
-                    @endwhile
-                @endif
-            </div>
-        </div>
-
-        <div class="container">
-            <div class="bg-green flex flex-col justify-center text-center mx-auto w-full md:w-10/12 px-16 py-16">
-                <h2 class="merriweather-light text-orange text-4xl pr-4 mb-4"
-                    data-aos="fade">@php the_sub_field('title') @endphp</h2>
-                <div class="montserrat-light text-white" data-aos="fade-left">@php the_sub_field('text') @endphp</div>
-            </div>
-            <div class="bg-green flex flex-col justify-center mx-auto h-1100 lg:h-500 w-full md:w-10/12"></div>
+            <div class="@if (get_sub_field('layout')) : bg-darkblue @else bg-green md:w-10/12 @endif flex flex-col justify-center mx-auto h-1100 lg:h-500 w-full"></div>
             <div class="flex flex-col lg:flex-row mt-n1100 mb-n100 lg:mt-n500 lg:mb-200">
                 @if (have_rows('ctas'))
                     @php $i = 1 @endphp
@@ -116,8 +91,29 @@
 
     @elseif (get_row_layout() === 'image_content')
 
-        <div class="bg-white container py-16">
-            @if (get_sub_field('layout'))
+        @if (get_sub_field('download'))
+            <div class="container">
+                <div class="bg-cream py-16 mb-16 lg:ml-100">
+                    <div class="flex flex-col lg:flex-row">
+                        <div class="w-full lg:w-7/12">
+                            <div class="flex justify-center lg:justify-start">
+                                <img class="lg:ml-n100" src="@php the_sub_field('image') @endphp" alt="Cordiner Image">
+                            </div>
+                        </div>
+                        <div class="w-full lg:w-5/12 text-center p-16">
+                            <div class="lg:ml-n145">
+                                <h2 class="merriweather-light text-orange text-4xl pr-4 mb-4">@php the_sub_field('title') @endphp</h2>
+                                <div class="mb-6">@php the_sub_field('text') @endphp</div>
+                                <a class="button white-bg-orange py-2 px-16 text-white text-center uppercase" href="@php the_sub_field('file') @endphp">@php the_sub_field('button_text') @endphp</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @else
+            <div class="bg-white container py-16">
+                @if (get_sub_field('layout'))
+
                     <div class="flex flex-col-reverse lg:flex-row">
                         <div class="w-full lg:w-1/2 text-center p-16">
                             <h2 class="merriweather-light text-orange text-4xl pr-4 mb-4">@php the_sub_field('title') @endphp</h2>
@@ -130,7 +126,9 @@
                             </div>
                         </div>
                     </div>
+
                 @else
+
                     <div class="flex flex-col lg:flex-row">
                         <div class="w-full lg:w-1/2">
                             <div class="flex justify-center lg:justify-start">
@@ -143,9 +141,10 @@
                             <a class="button white-bg-orange py-2 px-16 text-white text-center uppercase" href="@php the_sub_field('button_link') @endphp">@php the_sub_field('button_text') @endphp</a>
                         </div>
                     </div>
+
                 @endif
             </div>
-        </div>
+        @endif
 
     @elseif (get_row_layout() === 'video')
 
@@ -180,6 +179,16 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+    @elseif (get_row_layout() === 'cta_centered')
+
+        <div class="flex flex-col-reverse lg:flex-row my-16">
+            <div class="w-full lg:w-2/3 text-center mx-auto px-16">
+                <h2 class="merriweather-light text-orange text-4xl pr-4 mb-4">@php the_sub_field('title') @endphp</h2>
+                <div class="mb-6">@php the_sub_field('text') @endphp</div>
+                <a class="button white-bg-orange py-2 px-16 text-white text-center uppercase" href="@php the_sub_field('button_link') @endphp">@php the_sub_field('button_text') @endphp</a>
             </div>
         </div>
 

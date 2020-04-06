@@ -1,7 +1,5 @@
-<article <?php post_class('single-post') ?>>
-
+<article <?php post_class('single-post mb-16') ?>>
       <?php the_content() ?>
-
   <?php echo wp_link_pages(['echo' => 0, 'before' => '<nav class="page-nav"><p>' . __('Pages:', 'sage'), 'after' => '</p></nav>']); ?>
 
 </article>

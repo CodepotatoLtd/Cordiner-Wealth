@@ -2,10 +2,10 @@
 
 @section('content')
 
-    <div class="py-4 @if (has_post_thumbnail()) pb-2 @else pb-4 @endif h-auto lg:h-72">
+    <div class="bg-blue py-4 @if (has_post_thumbnail()) pb-2 @else pb-4 @endif h-auto lg:h-72">
         <div class="container">
             <div class="flex-row hidden lg:flex lg:px-4">
-                <a href="{{ home_url('/about-us') }}" class="button roboto-light inline-block bg-white white-bg-red mb-4">< Back to Team</a>
+                <a href="{{ home_url('/') }}/us/meet-the-team" class="button roboto-light inline-block bg-white white-bg-red mb-4">< Back to Team</a>
 
             </div>
             <div class="flex flex-col items-center lg:items-start md:flex-row justify-center lg:px-4">
@@ -19,13 +19,18 @@
                     </div>
                 </div>
                 <div class="w-full md:w-1/2 lg:w-9/12 px-4 lg:px-12">
-                    <div class="montserrat-regular leading-normal">
-                        @while(have_posts()) @php the_post() @endphp
-                            @include('partials.content-single-'.get_post_type())
-                        @endwhile
+                    <div class="roboto-light text-white text-xl leading-normal">
+                        @php the_field('intro_paragraph') @endphp
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="bg-lightgrey">
+        <div class="container">
+            @while(have_posts()) @php the_post() @endphp
+            @include('partials.content-single-'.get_post_type())
+            @endwhile
         </div>
     </div>
 

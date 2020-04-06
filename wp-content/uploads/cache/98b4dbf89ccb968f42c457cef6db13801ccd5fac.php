@@ -1,9 +1,9 @@
 <?php $__env->startSection('content'); ?>
 
-    <div class="py-4 <?php if(has_post_thumbnail()): ?> pb-2 <?php else: ?> pb-4 <?php endif; ?> h-auto lg:h-72">
+    <div class="bg-blue py-4 <?php if(has_post_thumbnail()): ?> pb-2 <?php else: ?> pb-4 <?php endif; ?> h-auto lg:h-72">
         <div class="container">
             <div class="flex-row hidden lg:flex lg:px-4">
-                <a href="<?php echo e(home_url('/about-us')); ?>" class="button roboto-light inline-block bg-white white-bg-red mb-4">< Back to Team</a>
+                <a href="<?php echo e(home_url('/')); ?>/us/meet-the-team" class="button roboto-light inline-block bg-white white-bg-red mb-4">< Back to Team</a>
 
             </div>
             <div class="flex flex-col items-center lg:items-start md:flex-row justify-center lg:px-4">
@@ -17,13 +17,18 @@
                     </div>
                 </div>
                 <div class="w-full md:w-1/2 lg:w-9/12 px-4 lg:px-12">
-                    <div class="montserrat-regular leading-normal">
-                        <?php while(have_posts()): ?> <?php the_post() ?>
-                            <?php echo $__env->make('partials.content-single-'.get_post_type(), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-                        <?php endwhile; ?>
+                    <div class="roboto-light text-white text-xl leading-normal">
+                        <?php the_field('intro_paragraph') ?>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="bg-lightgrey">
+        <div class="container">
+            <?php while(have_posts()): ?> <?php the_post() ?>
+            <?php echo $__env->make('partials.content-single-'.get_post_type(), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+            <?php endwhile; ?>
         </div>
     </div>
 
