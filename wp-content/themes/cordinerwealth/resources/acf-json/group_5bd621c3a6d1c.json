@@ -23,8 +23,8 @@
         },
         {
             "key": "field_5bd6221736884",
-            "label": "Intro Paragraph",
-            "name": "intro_paragraph",
+            "label": "Bio Text",
+            "name": "bio_text",
             "type": "wysiwyg",
             "instructions": "",
             "required": 0,
@@ -58,5 +58,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1574419194
+    "modified": 1586184182
 }

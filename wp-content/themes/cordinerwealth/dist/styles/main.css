@@ -4819,6 +4819,14 @@ video {
   height: 16rem;
 }
 
+.h-280{
+  height: 280px;
+}
+
+.h-360{
+  height: 360px;
+}
+
 .h-500{
   height: 500px;
 }
@@ -16665,6 +16673,14 @@ body#tinymce p {
     height: 16rem;
   }
 
+  .sm\:h-280{
+    height: 280px;
+  }
+
+  .sm\:h-360{
+    height: 360px;
+  }
+
   .sm\:h-500{
     height: 500px;
   }
@@ -26665,6 +26681,14 @@ body#tinymce p {
 
   .md\:h-64{
     height: 16rem;
+  }
+
+  .md\:h-280{
+    height: 280px;
+  }
+
+  .md\:h-360{
+    height: 360px;
   }
 
   .md\:h-500{
@@ -36669,6 +36693,14 @@ body#tinymce p {
     height: 16rem;
   }
 
+  .lg\:h-280{
+    height: 280px;
+  }
+
+  .lg\:h-360{
+    height: 360px;
+  }
+
   .lg\:h-500{
     height: 500px;
   }
@@ -46669,6 +46701,14 @@ body#tinymce p {
 
   .xl\:h-64{
     height: 16rem;
+  }
+
+  .xl\:h-280{
+    height: 280px;
+  }
+
+  .xl\:h-360{
+    height: 360px;
   }
 
   .xl\:h-500{

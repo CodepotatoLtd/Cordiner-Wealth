@@ -4,7 +4,10 @@
         <div class="flex flex-col text-center mx-auto">
             <h2 class="merriweather-light text-orange text-4xl mb-6"><?php the_field('main_cta_title','options') ?></h2>
             <div class="montserrat-regular text-darkgrey w-full md:w-2/3 mx-auto">
-                <?php the_field('main_cta_text','options') ?>
+                <div class="mb-6">
+                    <?php the_field('main_cta_text','options') ?>
+                </div>
+                <a class="button white-bg-orange py-2 px-16 text-white text-center uppercase" href="<?php the_field('main_cta_button_link','options') ?>"><?php the_field('main_cta_button_text','options') ?></a>
             </div>
         </div>
     </div>

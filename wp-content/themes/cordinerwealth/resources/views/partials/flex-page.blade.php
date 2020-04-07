@@ -53,7 +53,11 @@
                         </div>
                     </div>
                     <div class="w-full md:w-7/12">
-                        <div class="montserrat-regular text-md leading-snug md:text-base @php colour('intro') @endphp" data-aos="fade-left"
+                        <div class="montserrat-regular text-md leading-snug md:text-base mb-4 @php colour('intro') @endphp" data-aos="fade-left"
+                             data-aos-delay="200">
+                            @php the_sub_field('intro_text') @endphp
+                        </div>
+                        <div class="montserrat-regular text-md leading-snug md:text-base @endphp" data-aos="fade-left"
                              data-aos-delay="200">
                             @php the_sub_field('text') @endphp
                         </div>
@@ -68,7 +72,7 @@
             <div class="@if (get_sub_field('layout')) : bg-darkblue @else bg-green md:w-10/12 @endif flex flex-col justify-center text-center mx-auto w-full px-16 py-16">
                 <h2 class="merriweather-light text-orange text-4xl pr-4 mb-4"
                     data-aos="fade">@php the_sub_field('title') @endphp</h2>
-                <div class="montserrat-light text-white" data-aos="fade-left">@php the_sub_field('text') @endphp</div>
+                <div class="montserrat-medium text-white" data-aos="fade-left">@php the_sub_field('text') @endphp</div>
             </div>
             <div class="@if (get_sub_field('layout')) : bg-darkblue @else bg-green md:w-10/12 @endif flex flex-col justify-center mx-auto h-1100 lg:h-500 w-full"></div>
             <div class="flex flex-col lg:flex-row mt-n1100 mb-n100 lg:mt-n500 lg:mb-200">
@@ -161,17 +165,17 @@
         <div class="container">
             <div class="bg-green mb-16 pb-24 lg:py-24 lg:ml-100 ">
                 <div class="flex flex-col lg:flex-row">
-                    <div class="w-full lg:w-1/2">
-                        <div class="" style="padding:56.25% 0 0 0;position:relative;">
-                            <iframe class="mt-n90 px-4 mb-4 lg:mt-0 lg:ml-n100"
+                    <div class="w-full lg:w-3/5">
+                        <div class="" style="padding:52.25% 0 0 0;position:relative;">
+                            <iframe class="mt-n90 mb-4 lg:mt-0 lg:ml-n100"
                                 src="https://player.vimeo.com/video/@php video_url() @endphp?title=0&byline=0&portrait=0"
                                 style="position:absolute;top:0;left:0;width:100%;height:100%;"
                                 frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
                         </div>
                         <script src="https://player.vimeo.com/api/player.js"></script>
                     </div>
-                    <div class="w-full lg:w-1/2">
-                        <div class="px-4 lg:ml-n100">
+                    <div class="w-full lg:w-2/5 flex md:h-280 ">
+                        <div class="px-4 lg:ml-n100 lg:my-auto">
                             <h2 class="merriweather-light text-orange text-4xl pr-4 mb-4">@php the_sub_field('title') @endphp</h2>
                             <div class="text-white">
                                 @php the_sub_field('text') @endphp
