@@ -1,21 +1,21 @@
+@php
+
+    function colour($type){
+        if (get_sub_field($type.'_colour')) :
+            the_sub_field($type.'_colour');
+        endif;
+    }
+
+    function video_url(){
+         $video_url = get_sub_field('vimeo_url');
+         $video_url = explode('/', $video_url);
+         echo $video_url[3];
+    }
+
+@endphp
+
 @if( have_rows('horizontal_panels') )
     @php while ( have_rows('horizontal_panels') ) : the_row(); @endphp
-
-    @php
-
-        function colour($type){
-            if (get_sub_field($type.'_colour')) :
-                the_sub_field($type.'_colour');
-            endif;
-        }
-
-        function video_url(){
-             $video_url = get_sub_field('vimeo_url');
-             $video_url = explode('/', $video_url);
-             echo $video_url[3];
-        }
-
-    @endphp
 
     @if (get_row_layout() === 'full_image')
 

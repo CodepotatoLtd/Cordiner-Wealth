@@ -1,3 +1,19 @@
+<?php
+
+    function colour($type){
+        if (get_sub_field($type.'_colour')) :
+            the_sub_field($type.'_colour');
+        endif;
+    }
+
+    function video_url(){
+         $video_url = get_sub_field('vimeo_url');
+         $video_url = explode('/', $video_url);
+         echo $video_url[3];
+    }
+
+?>
+
 <?php if( have_rows('horizontal_panels') ): ?>
     <?php while ( have_rows('horizontal_panels') ) : the_row(); ?>
 
@@ -32,16 +48,6 @@
         </div>
 
     <?php elseif(get_row_layout() === 'text_content'): ?>
-
-        <?php
-
-            function colour($type){
-                if (get_sub_field($type.'_colour')) :
-                    the_sub_field($type.'_colour');
-                endif;
-            }
-
-        ?>
 
         <div class="<?php colour('background') ?> py-16">
             <div class="container">
@@ -151,16 +157,6 @@
         <?php endif; ?>
 
     <?php elseif(get_row_layout() === 'video'): ?>
-
-        <?php
-
-            function video_url(){
-                 $video_url = get_sub_field('vimeo_url');
-                 $video_url = explode('/', $video_url);
-                 echo $video_url[3];
-            }
-
-        ?>
 
         <div class="container">
             <div class="bg-green mb-16 pb-24 lg:py-24 lg:ml-100 ">
