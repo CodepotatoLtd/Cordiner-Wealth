@@ -260,20 +260,20 @@
                         <div class="mb-4">
                             <label class="_form-label"></label>
                             <input type="hidden" name="field[3][]" value="~|">
-                            <input id="field_3I agree for Metis Ireland to use my data above to contact me in line with their privacy policy." type="checkbox" name="field[3][]" value="true" required>
+                            <input id="field_3I agree for Cordiner Wealth to use my data above to contact me in line with their privacy policy." type="checkbox" name="field[3][]" value="true" required>
                             <span>
-                              <label for="field_3I agree for Metis Ireland to use my data above to contact me in line with their privacy policy." class="text-grey text-sm text-roboto text-bold mb-2 ml-2">
-                                  I agree for Metis Ireland to use my data above to contact me in line with their <a class="text-red" href="{{ home_url() }}/privacy-policy/" target="_blank">Privacy Policy</a>
+                              <label for="field_3I agree for Cordiner Wealth to use my data above to contact me in line with their privacy policy." class="text-grey text-sm text-roboto text-bold mb-2 ml-2">
+                                  I agree for Cordiner Wealth to use my data above to contact me in line with their <a class="text-red" href="{{ home_url() }}/privacy-policy/" target="_blank">Privacy Policy</a>
                               </label>
                             </span>
                         </div>
                         <div class="mb-4">
                             <label class="_form-label"></label>
                             <input type="hidden" name="field[2][]" value="~|">
-                            <input id="field_2I agree for Metis Ireland to keep me informed with news, offers, products and promotions it believes would interest me by email" type="checkbox" name="field[2][]" value="true">
+                            <input id="field_2I agree for Cordiner Wealth to keep me informed with news, offers, products and promotions it believes would interest me by email" type="checkbox" name="field[2][]" value="true">
                             <span>
-                              <label for="field_2I agree for Metis Ireland to keep me informed with news, offers, products and promotions it believes would interest me by email" class="text-grey text-sm roboto-light mb-2 ml-2">
-                                I agree for Metis Ireland to keep me informed with news, offers, products and promotions it believes would interest me by email
+                              <label for="field_2I agree for Cordiner Wealth to keep me informed with news, offers, products and promotions it believes would interest me by email" class="text-grey text-sm roboto-light mb-2 ml-2">
+                                I agree for Cordiner Wealth to keep me informed with news, offers, products and promotions it believes would interest me by email
                               </label>
                             </span>
                         </div>
@@ -628,7 +628,7 @@
                         <div class="w-full md:w-1/2 lg:w-1/4 text-image px-2 mb-4">
                             <a href="{{ get_permalink() }}">
                             @if (has_post_thumbnail())
-                                <div class="relative" style="background:url('@php echo the_post_thumbnail_url() @endphp') no-repeat 0 0; width:100%; height:300px; overflow:hidden; background-size:cover"></div>
+                                <div class="relative" style="background:url('@php echo the_post_thumbnail_url() @endphp') no-repeat center center; width:100%; height:300px; overflow:hidden; background-size:cover"></div>
                             @endif
                             </a>
                             <div class="bg-white leading-normal p-4 pt-0 pb-10 border border-lightgrey news-item-text">

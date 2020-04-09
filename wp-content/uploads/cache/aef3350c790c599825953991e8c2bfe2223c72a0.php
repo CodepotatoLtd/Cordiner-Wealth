@@ -466,6 +466,6 @@
 </footer>
 
 <div class="container py-4">
-  <p class="montserrat-light text-09 text-center lg:text-left px-10 lg:px-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+  <p class="montserrat-light text-09 text-center lg:text-left px-10 lg:px-0">Cordiner Wealth is a trading style of TPFA Limited, which is authorised and regulated by the Financial Conduct Authority. FCA reference number 611188. Registered in England and Wales as a Limited Company No. 8453762.</p>
 </div>
 
