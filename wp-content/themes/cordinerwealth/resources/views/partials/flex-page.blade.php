@@ -80,8 +80,8 @@
                     data-aos="fade">@php the_sub_field('title') @endphp</h2>
                 <div class="montserrat-medium text-white" data-aos="fade-left">@php the_sub_field('text') @endphp</div>
             </div>
-            <div class="@if (get_sub_field('layout')) : bg-darkblue @else bg-green md:w-10/12 @endif flex flex-col justify-center mx-auto h-1650 lg:h-500 w-full mb-32"></div>
-            <div class="flex flex-col lg:flex-row mt-n1650 lg:mb-200">
+            <div class="@if (get_sub_field('layout')) : bg-darkblue @else bg-green md:w-10/12 @endif flex flex-col justify-center mx-auto h-1100 lg:h-500 w-full"></div>
+            <div class="flex flex-col lg:flex-row mt-n1100 mb-n100 lg:mt-n500 lg:mb-200">
                 @if (have_rows('ctas'))
                     @php $i = 1 @endphp
                     @while (have_rows('ctas')) @php the_row() @endphp
