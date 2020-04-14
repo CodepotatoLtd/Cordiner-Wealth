@@ -80,8 +80,8 @@
                     data-aos="fade">@php the_sub_field('title') @endphp</h2>
                 <div class="montserrat-medium text-white" data-aos="fade-left">@php the_sub_field('text') @endphp</div>
             </div>
-            <div class="@if (get_sub_field('layout')) : bg-darkblue @else bg-green md:w-10/12 @endif flex flex-col justify-center mx-auto h-1100 lg:h-500 w-full"></div>
-            <div class="flex flex-col lg:flex-row mt-n1100 mb-n100 lg:mt-n500 lg:mb-200">
+            <div class="@if (get_sub_field('layout')) : bg-darkblue @else bg-green md:w-10/12 @endif flex flex-col justify-center mx-auto h-1650 lg:h-500 w-full mb-32"></div>
+            <div class="flex flex-col lg:flex-row mt-n1650 lg:mb-200">
                 @if (have_rows('ctas'))
                     @php $i = 1 @endphp
                     @while (have_rows('ctas')) @php the_row() @endphp
@@ -89,8 +89,8 @@
                          data-aos="fade-up"
                          data-aos-delay="{{ $i * 100 }}">
                         <a class="relative" href="@php the_sub_field('link_url') @endphp">
-                            <img class="w-full" src="@php the_sub_field('image') @endphp">
-                            <div class="button white-bg-orange py-1 px-4 text-white text-center uppercase w-full md:w-11/12 lg:w-10/12 ml-n174 md:ml-n160 lg:ml-n131 xl:ml-n145 mx-auto absolute bottom-1 left-50%">@php the_sub_field('link_text') @endphp</div>
+                            <img class="w-2/3 mx-auto md:w-2/3 lg:w-full" src="@php the_sub_field('image') @endphp">
+                            <div class="button white-bg-orange py-1 px-4 text-white text-center uppercase w-9/12 md:w-2/3 lg:w-10/12 ml-auto ml-n281 md:ml-n281 lg:ml-n131 xl:ml-n166 mx-auto absolute bottom-1 left-50%">@php the_sub_field('link_text') @endphp</div>
                         </a>
                     </div>
                     @php $i++ @endphp
@@ -614,6 +614,65 @@
             })();
 
         </script>
+
+    @elseif (get_row_layout() === 'content_list')
+
+        <div class="bg-lightgrey py-16 mb-16">
+            <div class="container">
+                <div class="mx-auto w-2/3 md:w-1/2 -mt-32 py-8 mb-8 bg-lightgrey">
+                    <h2 class="merriweather-light text-orange text-4xl pr-4 mb-4 text-center" data-aos="fade">Our promise to you</h2>
+                </div>
+                <div class="flex flex-col items-center md:flex-row">
+                    <div class="w-full md:w-1/2">
+                        <ul>
+                            @if (have_rows('content_list_left'))
+                                @php $nl = 1 @endphp
+                                @while (have_rows('content_list_left')) @php the_row() @endphp
+                                <li class="flex flex-col lg:flex-row mb-4" data-aos="fade-left"
+                                    data-aos-delay="{{ $nl * 50 }}">
+                                    <div class="flex flex-row justify-between w-full">
+                                        <div class="w-1/6">
+                                            <div
+                                                class="bg-green rounded-full mb-4 lg:mb-0 w-f40 h-f40 lg:w-f60 lg:h-f60 text-center flex flex-col text-white justify-center md:mr-4">@php echo $nl @endphp</div>
+                                        </div>
+                                        <div class="w-5/6 md:mr-8">
+                                            <div class="montserrat-light">@php the_sub_field('text') @endphp</div>
+                                        </div>
+                                    </div>
+                                </li>
+                                @php $nl++ @endphp
+                                @endwhile
+                            @endif
+                        </ul>
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <ul>
+                            @if (have_rows('content_list_right'))
+                                @php $nr = $nl @endphp
+                                @while (have_rows('content_list_right')) @php the_row() @endphp
+                                <li class="flex flex-col lg:flex-row mb-4" data-aos="fade-left"
+                                    data-aos-delay="{{ $nr * 50 }}">
+                                    <div class="flex flex-row justify-between w-full">
+                                        <div class="w-1/6">
+                                            <div
+                                                class="bg-green rounded-full mb-4 lg:mb-0 w-f40 h-f40 lg:w-f60 lg:h-f60 text-center flex flex-col text-white justify-center md:mr-4">@php echo $nr @endphp</div>
+                                        </div>
+                                        <div class="w-5/6">
+                                            <div class="montserrat-light">@php the_sub_field('text') @endphp</div>
+                                        </div>
+                                    </div>
+                                </li>
+                                @php $nr++ @endphp
+                                @endwhile
+                            @endif
+                        </ul>
+                    </div>
+                </div>
+                <div class="flex flex-row justify-center mt-12">
+                    <img class="" data-aos="fade-down" src="@php the_sub_field('image') @endphp">
+                </div>
+            </div>
+        </div>
 
     @elseif (get_row_layout() === 'team_section')
 
