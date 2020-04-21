@@ -1027,13 +1027,13 @@
                             "collapsed": "",
                             "min": 0,
                             "max": 0,
-                            "layout": "table",
+                            "layout": "block",
                             "button_label": "",
                             "sub_fields": [
                                 {
-                                    "key": "field_5e958b2c92f8e",
-                                    "label": "Text",
-                                    "name": "text",
+                                    "key": "field_5e9d6a71ba19d",
+                                    "label": "Title",
+                                    "name": "title",
                                     "type": "text",
                                     "instructions": "",
                                     "required": 0,
@@ -1048,6 +1048,25 @@
                                     "prepend": "",
                                     "append": "",
                                     "maxlength": ""
+                                },
+                                {
+                                    "key": "field_5e958b2c92f8e",
+                                    "label": "Text",
+                                    "name": "text",
+                                    "type": "textarea",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "placeholder": "",
+                                    "maxlength": "",
+                                    "rows": "",
+                                    "new_lines": ""
                                 }
                             ]
                         },
@@ -1067,13 +1086,13 @@
                             "collapsed": "",
                             "min": 0,
                             "max": 0,
-                            "layout": "table",
+                            "layout": "block",
                             "button_label": "",
                             "sub_fields": [
                                 {
-                                    "key": "field_5e958b5592f90",
-                                    "label": "Text",
-                                    "name": "text",
+                                    "key": "field_5e9d6b5c809b7",
+                                    "label": "Title",
+                                    "name": "title",
                                     "type": "text",
                                     "instructions": "",
                                     "required": 0,
@@ -1088,6 +1107,25 @@
                                     "prepend": "",
                                     "append": "",
                                     "maxlength": ""
+                                },
+                                {
+                                    "key": "field_5e958b5592f90",
+                                    "label": "Text",
+                                    "name": "text",
+                                    "type": "textarea",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "placeholder": "",
+                                    "maxlength": "",
+                                    "rows": "",
+                                    "new_lines": ""
                                 }
                             ]
                         }
@@ -1134,5 +1172,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1586858860
+    "modified": 1587375095
 }

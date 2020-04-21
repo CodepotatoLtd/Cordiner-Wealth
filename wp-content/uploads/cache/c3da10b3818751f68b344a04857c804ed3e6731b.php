@@ -80,17 +80,17 @@
                     data-aos="fade"><?php the_sub_field('title') ?></h2>
                 <div class="montserrat-medium text-white" data-aos="fade-left"><?php the_sub_field('text') ?></div>
             </div>
-            <div class="<?php if(get_sub_field('layout')): ?> : bg-darkblue <?php else: ?> bg-green md:w-10/12 <?php endif; ?> flex flex-col justify-center mx-auto h-1100 lg:h-500 w-full"></div>
-            <div class="flex flex-col lg:flex-row mt-n1100 mb-n100 lg:mt-n500 lg:mb-200">
+            <div class=" <?php if(get_sub_field('layout')): ?> bg-darkblue <?php else: ?> bg-green md:w-10/12 <?php endif; ?> flex flex-col justify-center mx-auto md:h-1100 lg:h-500 w-full"></div>
+            <div class="flex flex-col lg:flex-row justify-center mb-20 lg:mt-n500 lg:mb-200 mx-auto w-full  lg:w-full lg:bg-transparent <?php if(get_sub_field('layout')): ?> bg-darkblue <?php else: ?> bg-green md:w-10/12 <?php endif; ?>">
                 <?php if(have_rows('ctas')): ?>
                     <?php $i = 1 ?>
                     <?php while(have_rows('ctas')): ?> <?php the_row() ?>
-                    <div class="w-full lg:w-1/3 text-center mb-4 flex justify-center md:mx-2"
+                    <div class="w-11/12 lg:w-1/3 text-center mb-4 flex justify-center mx-auto lg:mx-2"
                          data-aos="fade-up"
                          data-aos-delay="<?php echo e($i * 100); ?>">
-                        <a class="relative" href="<?php the_sub_field('link_url') ?>">
-                            <img class="w-2/3 mx-auto md:w-2/3 lg:w-full" src="<?php the_sub_field('image') ?>">
-                            <div class="button white-bg-orange py-1 px-4 text-white text-center uppercase w-9/12 md:w-2/3 lg:w-10/12 ml-auto ml-n281 md:ml-n281 lg:ml-n131 xl:ml-n166 mx-auto absolute bottom-1 left-50%"><?php the_sub_field('link_text') ?></div>
+                        <a class="" href="<?php the_sub_field('link_url') ?>" style="background:url('<?php the_sub_field('image') ?>') no-repeat 0 0; background-size:cover">
+                            <img class="w-2/3 mx-auto md:w-2/3 lg:w-full" src="<?php the_sub_field('image') ?>" style="visibility:hidden">
+                            <div class="button white-bg-orange py-1 px-4 text-white text-center uppercase w-9/12 md:w-2/3 lg:w-10/12 mx-auto mb-p20"><?php the_sub_field('link_text') ?></div>
                         </a>
                     </div>
                     <?php $i++ ?>
@@ -98,6 +98,31 @@
                 <?php endif; ?>
             </div>
         </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <?php elseif(get_row_layout() === 'image_content'): ?>
 
@@ -636,6 +661,7 @@
                                                 class="bg-green rounded-full mb-4 lg:mb-0 w-f40 h-f40 lg:w-f60 lg:h-f60 text-center flex flex-col text-white justify-center md:mr-4"><?php echo $nl ?></div>
                                         </div>
                                         <div class="w-5/6 md:mr-8">
+                                            <div class="montserrat-light"><?php the_sub_field('title') ?></div>
                                             <div class="montserrat-light"><?php the_sub_field('text') ?></div>
                                         </div>
                                     </div>
@@ -658,6 +684,7 @@
                                                 class="bg-green rounded-full mb-4 lg:mb-0 w-f40 h-f40 lg:w-f60 lg:h-f60 text-center flex flex-col text-white justify-center md:mr-4"><?php echo $nr ?></div>
                                         </div>
                                         <div class="w-5/6">
+                                            <div class="montserrat-light"><?php the_sub_field('title') ?></div>
                                             <div class="montserrat-light"><?php the_sub_field('text') ?></div>
                                         </div>
                                     </div>
