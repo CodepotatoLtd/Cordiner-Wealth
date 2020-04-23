@@ -617,7 +617,7 @@
 
     @elseif (get_row_layout() === 'content_list')
 
-        <div class="bg-lightgrey py-16 mt-8 my-16">
+        <div class="bg-lightgrey py-16 mt-32 my-16">
             <div class="container">
                 <div class="mx-auto w-2/3 md:w-1/2 -mt-32 py-8 bg-lightgrey">
                     <h2 class="merriweather-light text-orange text-4xl pr-4 mb-4 text-center" data-aos="fade">@php the_sub_field('title') @endphp</h2>
@@ -628,7 +628,7 @@
                             @if (have_rows('content_list_left'))
                                 @php $nl = 1 @endphp
                                 @while (have_rows('content_list_left')) @php the_row() @endphp
-                                <li class="flex flex-col lg:flex-row mb-8" data-aos="fade-left"
+                                <li class="flex flex-col lg:flex-row mb-6" data-aos="fade-left"
                                     data-aos-delay="{{ $nl * 50 }}">
                                     <div class="flex flex-row justify-between w-full">
                                         <div class="w-1/6">
@@ -651,7 +651,7 @@
                             @if (have_rows('content_list_right'))
                                 @php $nr = $nl @endphp
                                 @while (have_rows('content_list_right')) @php the_row() @endphp
-                                <li class="flex flex-col lg:flex-row mb-4" data-aos="fade-left"
+                                <li class="flex flex-col lg:flex-row mb-6" data-aos="fade-left"
                                     data-aos-delay="{{ $nr * 50 }}">
                                     <div class="flex flex-row justify-between w-full">
                                         <div class="w-1/6">

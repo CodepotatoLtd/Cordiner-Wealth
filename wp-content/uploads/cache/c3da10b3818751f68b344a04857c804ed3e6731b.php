@@ -617,7 +617,7 @@
 
     <?php elseif(get_row_layout() === 'content_list'): ?>
 
-        <div class="bg-lightgrey py-16 my-16">
+        <div class="bg-lightgrey py-16 mt-8 my-16">
             <div class="container">
                 <div class="mx-auto w-2/3 md:w-1/2 -mt-32 py-8 bg-lightgrey">
                     <h2 class="merriweather-light text-orange text-4xl pr-4 mb-4 text-center" data-aos="fade"><?php the_sub_field('title') ?></h2>
