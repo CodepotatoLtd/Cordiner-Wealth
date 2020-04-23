@@ -99,31 +99,6 @@
             </div>
         </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <?php elseif(get_row_layout() === 'image_content'): ?>
 
         <?php if(get_sub_field('download')): ?>
@@ -642,10 +617,10 @@
 
     <?php elseif(get_row_layout() === 'content_list'): ?>
 
-        <div class="bg-lightgrey py-16 mb-16">
+        <div class="bg-lightgrey py-16 my-16">
             <div class="container">
-                <div class="mx-auto w-2/3 md:w-1/2 -mt-32 py-8 mb-8 bg-lightgrey">
-                    <h2 class="merriweather-light text-orange text-4xl pr-4 mb-4 text-center" data-aos="fade">Our promise to you</h2>
+                <div class="mx-auto w-2/3 md:w-1/2 -mt-32 py-8 bg-lightgrey">
+                    <h2 class="merriweather-light text-orange text-4xl pr-4 mb-4 text-center" data-aos="fade"><?php the_sub_field('title') ?></h2>
                 </div>
                 <div class="flex flex-col items-center md:flex-row">
                     <div class="w-full md:w-1/2">
@@ -658,10 +633,10 @@
                                     <div class="flex flex-row justify-between w-full">
                                         <div class="w-1/6">
                                             <div
-                                                class="bg-green rounded-full mb-4 lg:mb-0 w-f40 h-f40 lg:w-f60 lg:h-f60 text-center flex flex-col text-white justify-center md:mr-4"><?php echo $nl ?></div>
+                                                class="bg-orange rounded-full mb-4 lg:mb-0 w-f40 h-f40 lg:w-f60 lg:h-f60 text-center flex flex-col text-white justify-center md:mr-4"><?php echo $nl ?></div>
                                         </div>
                                         <div class="w-5/6 md:mr-8">
-                                            <div class="montserrat-light"><?php the_sub_field('title') ?></div>
+                                            <div class="montserrat-light mb-2"><?php the_sub_field('title') ?></div>
                                             <div class="montserrat-light"><?php the_sub_field('text') ?></div>
                                         </div>
                                     </div>
@@ -681,10 +656,10 @@
                                     <div class="flex flex-row justify-between w-full">
                                         <div class="w-1/6">
                                             <div
-                                                class="bg-green rounded-full mb-4 lg:mb-0 w-f40 h-f40 lg:w-f60 lg:h-f60 text-center flex flex-col text-white justify-center md:mr-4"><?php echo $nr ?></div>
+                                                class="bg-orange rounded-full mb-4 lg:mb-0 w-f40 h-f40 lg:w-f60 lg:h-f60 text-center flex flex-col text-white justify-center md:mr-4"><?php echo $nr ?></div>
                                         </div>
                                         <div class="w-5/6">
-                                            <div class="montserrat-light"><?php the_sub_field('title') ?></div>
+                                            <div class="montserrat-light mb-2"><?php the_sub_field('title') ?></div>
                                             <div class="montserrat-light"><?php the_sub_field('text') ?></div>
                                         </div>
                                     </div>
