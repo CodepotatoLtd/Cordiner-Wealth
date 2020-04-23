@@ -622,13 +622,13 @@
                 <div class="mx-auto w-2/3 md:w-1/2 -mt-32 py-8 bg-lightgrey">
                     <h2 class="merriweather-light text-orange text-4xl pr-4 mb-4 text-center" data-aos="fade"><?php the_sub_field('title') ?></h2>
                 </div>
-                <div class="flex flex-col items-center md:flex-row">
+                <div class="flex flex-col md:flex-row">
                     <div class="w-full md:w-1/2">
                         <ul>
                             <?php if(have_rows('content_list_left')): ?>
                                 <?php $nl = 1 ?>
                                 <?php while(have_rows('content_list_left')): ?> <?php the_row() ?>
-                                <li class="flex flex-col lg:flex-row mb-4" data-aos="fade-left"
+                                <li class="flex flex-col lg:flex-row mb-8" data-aos="fade-left"
                                     data-aos-delay="<?php echo e($nl * 50); ?>">
                                     <div class="flex flex-row justify-between w-full">
                                         <div class="w-1/6">
