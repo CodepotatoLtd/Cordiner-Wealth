@@ -257,7 +257,7 @@ class Forminator_QForm_Front extends Forminator_Render_Form {
 
 		ob_start();
 
-		$class         = ( isset( $this->model->settings['results_behav'] ) && 'end' === $this->model->settings['results_behav'] ) ? '' : 'forminator-submit-rightaway';
+		$class         = '';
 		$uniq_id       = '-' . uniqid();
 		$field_slug    = uniqid();
 		$form_settings = $this->get_form_settings();

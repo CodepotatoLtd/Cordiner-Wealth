@@ -412,7 +412,7 @@ function forminator_print_polls_admin_styles( $version = '1.0' ) {
 function forminator_print_front_styles( $version = '1.0' ) {
 	// Load old styles.
 	// Remove on v1.12.0 quizzes migrate to Forminator UI.
-	wp_enqueue_style( 'forminator-ui', forminator_plugin_url() . 'assets/css/src/forminator-ui.min.css', array(), $version );
+	wp_enqueue_style( 'forminator-ui', forminator_plugin_url() . 'assets/forminator-ui/css/src/forminator-ui.min.css', array(), $version );
 
 }
 

@@ -5,9 +5,9 @@ Description: Limit the rate of login attempts, including by way of cookies and f
 Author: WPChef
 Author URI: https://wpchef.org
 Text Domain: limit-login-attempts-reloaded
-Version: 2.10.1
+Version: 2.12.1
 
-Copyright 2008 - 2012 Johan Eenfeldt, 2016 - 2019 WPChef
+Copyright 2008 - 2012 Johan Eenfeldt, 2016 - 2020 WPChef
 */
 
 /***************************************************************************************
@@ -33,7 +33,6 @@ $limit_login_nonempty_credentials = false; /* user and pwd nonempty */
  * Include files
  **************************************************************************************/
 require_once( LLA_PLUGIN_DIR . '/core/Helpers.php' );
-require_once( LLA_PLUGIN_DIR . '/core/Logger.php' );
 require_once( LLA_PLUGIN_DIR . '/core/LimitLoginAttempts.php' );
 
 $limit_login_attempts_obj = new Limit_Login_Attempts();

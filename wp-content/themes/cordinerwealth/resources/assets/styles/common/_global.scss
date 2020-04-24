@@ -300,6 +300,21 @@ p,strong{
     margin-top:20px;
     }
 
+.googlemap {
+    position: relative;
+    padding-bottom: 36%;
+    height: 0;
+    overflow: hidden;
+    }
+
+.googlemap iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    }
+
 .video-warning-container{
     position:absolute;
     top:0;

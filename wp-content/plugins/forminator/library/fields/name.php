@@ -372,6 +372,8 @@ class Forminator_Name extends Forminator_Field {
 
 			$html .= sprintf( '<div class="forminator-col forminator-col-%s">', $cols );
 
+				$html .= '<div class="forminator-field">';
+
 				$html .= self::create_input(
 					$middle_name,
 					esc_html( self::get_property( 'mname_label', $field ) ),

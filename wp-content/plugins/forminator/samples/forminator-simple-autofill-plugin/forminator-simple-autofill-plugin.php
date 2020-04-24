@@ -9,7 +9,7 @@
  * Domain Path: /languages/
  */
 
-add_action( 'forminator_register_autofill_provider', 'load_forminator_autofill_simple' );	     			 	 	      	 	
+add_action( 'forminator_register_autofill_provider', 'load_forminator_autofill_simple' );
 function load_forminator_autofill_simple() {
 	if ( class_exists( 'Forminator_Autofill_Provider_Abstract' ) ) {
 		include_once plugin_dir_path( __FILE__ ) . 'forminator-autofill-simple.php';

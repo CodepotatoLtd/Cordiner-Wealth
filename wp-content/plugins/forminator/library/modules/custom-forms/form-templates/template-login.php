@@ -27,12 +27,37 @@ class Forminator_Template_Login extends Forminator_Template {
 	}
 
 	/**
+	 * Get url for lost password
+	 *
+	 * @since 1.12
+	 * @param string
+	 *
+	 * @return string
+	 */
+	private function get_lostpassword_url( $redirect ) {
+		global $wp_rewrite;
+
+		if ( is_null( $wp_rewrite ) ) {
+			$args                = array();
+			$args['redirect_to'] = urlencode( $redirect );
+
+			$lostpassword_url = add_query_arg( $args, network_site_url( 'wp-login.php?action=lostpassword', 'login' ) );
+		} else {
+			$lostpassword_url = wp_lostpassword_url( $redirect );
+		}
+
+		return $lostpassword_url;
+	}
+
+	/**
 	 * Template fields
 	 *
 	 * @since 1.0
 	 * @return array
 	 */
 	public function fields() {
+		$lostpassword_url = $this->get_lostpassword_url( get_permalink() );
+
 		return array(
 			array(
 				'wrapper_id' => 'wrapper-1511347711918-1669',
@@ -58,7 +83,7 @@ class Forminator_Template_Login extends Forminator_Template {
 						'required_message'             => __( 'Your password is required', Forminator::DOMAIN ),
 						'field_label'                  => __( 'Password', Forminator::DOMAIN ),
 						'placeholder'                  => __( 'Enter your password', Forminator::DOMAIN ),
-						'description'                  => sprintf( __( '<a href="%s" title="Lost Password" target="_blank">Lost your password?</a>', Forminator::DOMAIN ), wp_lostpassword_url( get_permalink() ) ),
+						'description'                  => sprintf( __( '<a href="%s" title="Lost Password" target="_blank">Lost your password?</a>', Forminator::DOMAIN ), $lostpassword_url ),
 						'confirm-password-label'       => __( 'Confirm Password', Forminator::DOMAIN ),
 						'confirm-password-placeholder' => __( 'Confirm new password', Forminator::DOMAIN ),
 					),

@@ -1005,6 +1005,35 @@
                     "min": "",
                     "max": ""
                 },
+                "layout_5ea2f830f1dd8": {
+                    "key": "layout_5ea2f830f1dd8",
+                    "name": "google_map",
+                    "label": "Google Map",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_5ea2f846f1dd9",
+                            "label": "Embed Code",
+                            "name": "embed_code",
+                            "type": "textarea",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "placeholder": "",
+                            "maxlength": "",
+                            "rows": "",
+                            "new_lines": ""
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
+                },
                 "layout_5e9584b392f8c": {
                     "key": "layout_5e9584b392f8c",
                     "name": "content_list",
@@ -1191,5 +1220,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1587649678
+    "modified": 1587738717
 }

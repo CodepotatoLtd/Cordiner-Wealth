@@ -4,6 +4,16 @@ Author: Cvetan Cvetanov (Incsub)
 Change Log:
 ----------------------------------------------------------------------
 
+1.12.1.1 - 2020-04-01
+----------------------------------------------------------------------
+- Fix: Missing quiz styles on front-end
+
+1.12.1 - 2020-03-23
+----------------------------------------------------------------------
+- Fix: Quiz submitting after answering first question
+- Fix: Compatibility issue with BigCommerce plugin
+- Fix: Name field breaks pagination
+
 1.12 - 2020-03-16
 ----------------------------------------------------------------------
 - Add: Registration & Login forms
@@ -14,7 +24,7 @@ Change Log:
 - Improvement: Improved front-end pagination logic
 - Improvement: Updated Stripe PHP lib
 - Improvement: Allow upload limit to be set in different units (Byte, KB and MB)
-- Improvement: Allow disavling IP Retention when 0 set as value
+- Improvement: Allow disabling IP Retention when 0 set as value
 - Improvement: Make subject and body required for the email notifications
 - Improvement: Add Unselect All for File Upload field
 - Improvement: Quiz Real Time responses show answer faster
@@ -45,6 +55,10 @@ Change Log:
 - Fix: Visual issues with Pagination on Twenty Twenty theme
 - Fix: Text content goes outside the preview modal
 - Fix: Quiz font does not match the theme font automatically
+
+1.11.4 - 2020-03-04
+----------------------------------------------------------------------
+- Fix: GDPR field prints HTML as text
 
 1.11.3 - 2020-02-28
 ----------------------------------------------------------------------
@@ -603,4 +617,4 @@ Change Log:
 - First public release
 
 
-59765-1584545786-au
+59765-1587724904-au

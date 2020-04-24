@@ -366,15 +366,69 @@
             "delay": 0
         },
         {
-            "key": "field_5e8b15a297b61",
-            "label": "CTA Button Text",
-            "name": "main_cta_button_text",
-            "type": "text",
+            "key": "field_5ea2c3292e3e0",
+            "label": "External Link?",
+            "name": "main_cta_external_link",
+            "type": "true_false",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
                 "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_5e8c2c6e0ec77",
+            "label": "CTA Button Link",
+            "name": "main_cta_button_link",
+            "type": "page_link",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5ea2c3292e3e0",
+                        "operator": "!=",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "post_type": "",
+            "taxonomy": "",
+            "allow_null": 0,
+            "allow_archives": 1,
+            "multiple": 0
+        },
+        {
+            "key": "field_5ea2c3032e3df",
+            "label": "CTA Button Link",
+            "name": "main_cta_button_link",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5ea2c3292e3e0",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "50",
                 "class": "",
                 "id": ""
             },
@@ -385,23 +439,23 @@
             "maxlength": ""
         },
         {
-            "key": "field_5e8c2c6e0ec77",
-            "label": "CTA Button Link",
-            "name": "main_cta_button_link",
-            "type": "page_link",
+            "key": "field_5e8b15a297b61",
+            "label": "CTA Button Text",
+            "name": "main_cta_button_text",
+            "type": "text",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "50",
                 "class": "",
                 "id": ""
             },
-            "post_type": "",
-            "taxonomy": "",
-            "allow_null": 0,
-            "allow_archives": 1,
-            "multiple": 0
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
         }
     ],
     "location": [
@@ -421,5 +475,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1586244754
+    "modified": 1587737300
 }

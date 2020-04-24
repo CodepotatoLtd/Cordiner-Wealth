@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Stable tag: trunk
 Tags: gdpr, cookie, notice, consent, law
 Requires at least: 4.5
-Tested up to: 5.3
+Tested up to: 5.4
 Requires PHP: 5.6 or higher
 License: GPLv2
 
@@ -16,22 +16,22 @@ GDPR Cookie Compliance can assist you with GDPR, PIPEDA, CCPA, LGPD, AAP, cookie
 ### Key Features
 
 * Give your users **full control** over cookies stored on their computer, including the ability for users to **revoke their consent**.
-* **Fully customisable** - upload your own logo, colours, fonts.
-* **Fully editable** - change all text.
-* **Set the position** of the Cookie Consent Banner: at the top or bottom of your pages. 
-* **Flexible** - decide which scripts will be loaded by default or only when the user gives consent.
-* Includes both **'Accept'** and **'Reject'** buttons.
-* **Consent expiration** settings.
-* Includes link to **Privacy Policy** page.
-* Simple, beautiful & intuitive user interface.
-* Choose from **two unique layouts**.
-* Sleek animations to enhance the user experience.
+* **Fully customisable** - upload your own logo, colours, fonts
+* **Fully editable** - change all text
+* **Set the position** of the Cookie Consent Banner: at the top or bottom of your pages
+* **Flexible** - decide which scripts will be loaded by default or only when the user gives consent
+* Includes both **'Accept'** and **'Reject'** buttons
+* **Consent expiration** settings
+* Includes link to **Privacy Policy** page
+* Simple, beautiful & intuitive user interface
+* Choose from **two unique layouts**
+* Sleek animations to enhance the user experience
 * **Mobile responsive** design
 * **SEO friendly**
-* WPML, QTranslate, WP Multilang and Polylang compatible, .pot file for translations included.
-* **CDN** Base URL supported.
-* Supports all major **caching** servers and plugins.
-* Available in **9 languages**.
+* WPML, QTranslate, WP Multilang and Polylang compatible, .pot file for translations included
+* **CDN** Base URL supported
+* Supports all major **caching** servers and plugins
+* Available in **9 languages**
 
 **The plugin is especially useful in preparing your site for the following cookie law, data protection and privacy regulations:**
 * **GDPR**: The General Data Protection Regulation (European Union)
@@ -44,20 +44,20 @@ GDPR Cookie Compliance can assist you with GDPR, PIPEDA, CCPA, LGPD, AAP, cookie
 
 ### Premium Features Available
 
-* **Cookie wall / Full-screen layout** - If enabled, the Cookie Consent Banner will be display in a full screen mode, and force users to either accept or reject cookies before they can see your content.
-* **Export & import settings** - Transfer your custom settings between sites with ease.
-* **WordPress Multisite extension** - You can manage the plugin settings globally, and clone them from one site to another within your multi-site setup.
-* **Accept on Scroll / Hide timer ** - Allow users to accept cookies by scrolling down the page OR by setting a timer (ie. Hide banner after 5 seconds)
-* **Analytics** - Stats and charts showing you how many users accepted your cookies (all anonymous).
-* **Geo-location** - If enabled, the Cookie Consent Banner will only be shown to visitors from the European Union or selected countries (ie. Canada, United States etc.).
+* **Cookie wall / Full-screen layout** - If enabled, the Cookie Consent Banner will be display in a full screen mode, and force users to either accept or reject cookies before they can see your content
+* **Export & import settings** - Transfer your custom settings between sites with ease
+* **WordPress Multisite extension** - You can manage the plugin settings globally, and clone them from one site to another within your multi-site setup
+* **Accept on Scroll / Hide timer** - Allow users to accept cookies by scrolling down the page OR by setting a timer (ie. Hide banner after 5 seconds)
+* **Renew Consent** - ask users to renew their consent if there is a change in privacy or cookie policy on your site
+* **Geo-location** - If enabled, the Cookie Consent Banner will only be shown to visitors from the European Union or selected countries (ie. Canada, United States etc.)
+* **iFrame Blocker** - blocks users from viewing 3rd party resources (such as Youtube) until they accept cookies
 * **Premium Shortcodes** that can be added to your ‘Privacy & Cookie Policy’ and allow your users to manage their consent with ease.
-* **Hide Cookie Banner** allows you to hide the Cookie Notice Banner on selected pages.
-* **iFrame Blocker** allows you to block users from viewing 3rd party resources (such as Youtube) until they accept cookies.
-* **Cookie Declaration** allows you to manually declare the exact type of cookies that your site uses, including the cookie name, provider, purpose and expiration.
-* **Consent Log** gives you the ability to store user consent information in the event that you need to prove that consent was given.
-* **Fast Premium Support** from our friendly team.
-* **Renew Consent** - This feature allows you to ask users to renew their consent if there is a change in privacy policy on your site
-* **12 months** of updates included.
+* **Hide Cookie Banner** allows you to hide the Cookie Notice Banner on selected pages
+* **Cookie Declaration** allows you to manually declare the exact type of cookies that your site uses, including the cookie name, provider, purpose and expiration
+* **Consent Log** - gives you the ability to store user consent information in the event that you need to prove that consent was given.
+* **Analytics** - Stats and charts showing you how many users accepted your cookies (all anonymous)
+* **Fast Premium Support** from our friendly team
+* **12 months** of updates included
 
 [Buy GDPR Premium Add-on here](https://www.mooveagency.com/wordpress-plugins/gdpr-cookie-compliance/)
 
@@ -183,48 +183,65 @@ The Brazilian General Data Protection Law (“Lei Geral de Proteção de Dados�
 6. GDPR Cookie Compliance - Front-end - One Page Layout
 7. GDPR Cookie Compliance - Front-end - Cookie Consent Banner
 8. GDPR Cookie Compliance - Front-end - Full-Screen Mode [Premium]
-9. GDPR Cookie Compliance - Admin - Branding
-10. GDPR Cookie Compliance - Admin - With Language Notice
-11. GDPR Cookie Compliance - Admin - Cookie Notice Banner Settings
-12. GDPR Cookie Compliance - Admin - Floating Button
-13. GDPR Cookie Compliance - Admin - General Settings
-14. GDPR Cookie Compliance - Admin - Privacy Overview
-15. GDPR Cookie Compliance - Admin - Strictly Necessary Cookies
-16. GDPR Cookie Compliance - Admin - 3rd Party Cookies
-17. GDPR Cookie Compliance - Admin - Additional Cookies
-18. GDPR Cookie Compliance - Admin - Cookie Policy
-19. GDPR Cookie Compliance - Admin - Help - FAQ
-20. GDPR Cookie Compliance - Admin - Help - Hooks & Filters
-21. GDPR Cookie Compliance - Admin - Help - Premium Hooks [Premium] 
-22. GDPR Cookie Compliance - Admin - Help - Premium Shortcodes [Premium]
-23. GDPR Cookie Compliance - Admin - Export/Import Settings [Premium]
-24. GDPR Cookie Compliance - Admin - Multisite Settings [Premium] 
-25. GDPR Cookie Compliance - Admin - Accept Cookies on Scroll [Premium] 
-26. GDPR Cookie Compliance - Admin - Full-Screen Mode Settings [Premium]
-27. GDPR Cookie Compliance - Admin - Analytics [Premium]
-28. GDPR Cookie Compliance - Admin - Analytics with Stats [Premium]
-29. GDPR Cookie Compliance - Admin - Geo Location [Premium]
-30. GDPR Cookie Compliance - Admin - Hide Cookie Notice Banner on Selected Posts / Pages [Premium]
-31. GDPR Cookie Compliance - Admin - Iframe Blocker / Pages [Premium]
-32. GDPR Cookie Compliance - Admin - Language Specific Scripts [Premium]
+9. GDPR Cookie Compliance - Front-end - Full-Screen Mode - Cookie Settings [Premium]
+10. GDPR Cookie Compliance - Front-end - Cookie Declaration - One Page Layout [Premium]
+11. GDPR Cookie Compliance - Front-end - Cookie Declaration - Tabs Layout [Premium]
+12. GDPR Cookie Compliance - Admin - Branding
+13. GDPR Cookie Compliance - Admin - Language Notice
+14. GDPR Cookie Compliance - Admin - Cookie Notice Banner Settings
+15. GDPR Cookie Compliance - Admin - Floating Button
+16. GDPR Cookie Compliance - Admin - General Settings
+17. GDPR Cookie Compliance - Admin - Privacy Overview
+18. GDPR Cookie Compliance - Admin - Strictly Necessary Cookies
+19. GDPR Cookie Compliance - Admin - 3rd Party Cookies (GA Example Head)
+20. GDPR Cookie Compliance - Admin - Additional Cookies (GTM Example Head)
+21. GDPR Cookie Compliance - Admin - Additional Cookies (GTM Example Body)
+22. GDPR Cookie Compliance - Admin - Cookie Policy
+23. GDPR Cookie Compliance - Admin - Help - FAQ
+24. GDPR Cookie Compliance - Admin - Help - Hooks & Filters
+25. GDPR Cookie Compliance - Admin - Video Tutorial
+26. GDPR Cookie Compliance - Admin - Licence Manager
+27. GDPR Cookie Compliance - Admin - Export/Import Settings [Premium]
+28. GDPR Cookie Compliance - Admin - Multisite Settings [Premium] 
+29. GDPR Cookie Compliance - Admin - Accept on Scroll / Hide timer [Premium] 
+30. GDPR Cookie Compliance - Admin - Full-Screen / Cookiewall [Premium]
+31. GDPR Cookie Compliance - Admin - Analytics [Premium]
+32. GDPR Cookie Compliance - Admin - Geo Location [Premium]
+33. GDPR Cookie Compliance - Admin - Hide Cookie Notice Banner on Selected Posts / Pages [Premium]
+34. GDPR Cookie Compliance - Admin - Iframe Blocker / Pages [Premium]
+35. GDPR Cookie Compliance - Admin - Cookie Declaration [Premium]
+36. GDPR Cookie Compliance - Admin - Consent Log [Premium]
+37. GDPR Cookie Compliance - Admin - Renew Consent [Premium]
+38. GDPR Cookie Compliance - Admin - Language Specific Scripts [Premium]
+39. GDPR Cookie Compliance - Front-end - Cookie Shortcode [Premium]
 
 == Changelog ==
-= 4.1.7 =
+= 4.1.9: April 22, 2020 =
+* WordPress 5.4 compatibility
+* JavaScript fixes
+* Added hook to prevent Lity / main assets enqueue
+
+= 4.1.8: March 19, 2020 =
+* Cookie Settings screen keyboard accessibility improved
+* Updated plugin screenshots
+
+= 4.1.7: March 13, 2020 =
 * CSS improvements
 * Removed unused fonts
 * JavaScript improvements
+* .pot file extended with new strings
 
-= 4.1.6: February 28th, 2020 =
+= 4.1.6: February 28, 2020 =
 * Static script injection implemented
 * CSS fixes
 * JavaScript improvements
 * Lity updated
 
-= 4.1.5: February 5th, 2020 =
+= 4.1.5: February 5, 2020 =
 * SameSite=Lax cookie attribute added for Google Chrome 80 compliance
 * New hook added for advanced users who would like to switch to SameSite=None; Secure (or some other attribute)
 
-= 4.1.4: January 22nd, 2020 =
+= 4.1.4: January 22, 2020 =
 * Admin URL fixed across plugin
 
 = 4.1.3: January 15th, 2020 =

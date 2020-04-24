@@ -7,7 +7,7 @@
                 <div class="mb-6">
                     @php the_field('main_cta_text','options') @endphp
                 </div>
-                <a class="button white-bg-orange py-2 px-16 text-white text-center uppercase" href="@php the_field('main_cta_button_link','options') @endphp">@php the_field('main_cta_button_text','options') @endphp</a>
+                <a class="button white-bg-orange py-2 px-16 text-white text-center uppercase" href="@php the_field('main_cta_button_link','options') @endphp" @if (get_field('main_cta_button_link','options')) target="_blank" @endif>@php the_field('main_cta_button_text','options') @endphp</a>
             </div>
         </div>
     </div>

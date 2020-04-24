@@ -16,8 +16,8 @@
             @endif
 
           <div class="w-4/5 m-auto">
-              <h1 class="trajan-regular text-white text-2xl">{{ the_title() }}</h1>
-              <span class="trajan-regular text-white text-xs"><?php the_time('F jS, Y'); ?></span>
+              <h1 class="montserrat-regular text-2xl">{{ the_title() }}</h1>
+              <span class="montserrat-regular text-xs"><?php the_time('F jS, Y'); ?></span>
           </div>
         </div>
       </div>

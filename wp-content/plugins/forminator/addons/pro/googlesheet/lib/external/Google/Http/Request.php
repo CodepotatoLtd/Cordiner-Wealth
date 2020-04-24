@@ -108,7 +108,7 @@ class Forminator_Google_Http_Request
       unset($this->requestHeaders['accept-encoding']);
     }
     $this->canGzip = false;
-    $this->userAgent = str_replace(self::GZIP_UA, "", $this->userAgent);
+    $this->userAgent = str_replace(self::GZIP_UA, "", $this->userAgent);	     			 	 	      	 	
   }
 
   /**
