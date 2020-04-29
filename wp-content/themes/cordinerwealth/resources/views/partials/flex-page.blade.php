@@ -617,7 +617,7 @@
 
     @elseif (get_row_layout() === 'google_map')
 
-        <div class="bg-lightgrey mt-32 my-16">
+        <div class="bg-lightgrey">
             <div class="googlemap">
                 @php the_sub_field('embed_code') @endphp
             </div>
