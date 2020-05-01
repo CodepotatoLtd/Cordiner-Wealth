@@ -202,83 +202,82 @@
             </div>
             <div class="flex flex-col bg-white w-full lg:w-3/4 justify-center mx-auto p-4 md:p-20 md:pt-12"
                  style="box-shadow:0 2px 4px 0 rgba(0,0,0,0.10)">
-                <form method="POST" action="https://metisireland.activehosted.com/proc.php" id="_form_3_"
-                      class="_form _form_3 _inline-form  _dark" novalidate>
-                    <input type="hidden" name="u" value="3"/>
-                    <input type="hidden" name="f" value="3"/>
-                    <input type="hidden" name="s"/>
-                    <input type="hidden" name="c" value="0"/>
-                    <input type="hidden" name="m" value="0"/>
-                    <input type="hidden" name="act" value="sub"/>
-                    <input type="hidden" name="v" value="2"/>
+                <form method="POST" action="https://cordinerwealth.activehosted.com/proc.php" id="_form_1_" class="_form _form_1 _inline-form" novalidate>
+                    <input type="hidden" name="u" value="1" />
+                    <input type="hidden" name="f" value="1" />
+                    <input type="hidden" name="s" />
+                    <input type="hidden" name="c" value="0" />
+                    <input type="hidden" name="m" value="0" />
+                    <input type="hidden" name="act" value="sub" />
+                    <input type="hidden" name="v" value="2" />
                     <div class="_form-content">
                         <div class="mb-4">
-                            <label class="block text-grey text-sm roboto-light mb-2" for="firstname">
-                                First name:
+                            <label class="block text-grey text-sm montserrat-light mb-2" for="firstname">
+                                First name*
                             </label>
                             <input
-                                class="bg-gray-300 appearance-none w-full p-3 text-grey rounded-sm text-sm roboto-light leading-tight border border-white"
+                                class="bg-gray-300 appearance-none w-full p-3 text-grey rounded-sm text-sm montserrat-light leading-tight border border-white"
                                 name="firstname" placeholder="Type your first name" id="firstname" type="text" required>
                         </div>
                         <div class="mb-4">
-                            <label class="block text-grey text-sm roboto-light mb-2" for="lastname">
-                                Last name:
+                            <label class="block text-grey text-sm montserrat-light mb-2" for="lastname">
+                                Last name*
                             </label>
                             <input
-                                class="bg-gray-300 appearance-none w-full p-3 text-grey rounded-sm text-sm roboto-light leading-tight border border-white"
+                                class="bg-gray-300 appearance-none w-full p-3 text-grey rounded-sm text-sm montserrat-light leading-tight border border-white"
                                 name="lastname" placeholder="Type your last name" id="lastname" type="text" required>
                         </div>
                         <div class="mb-4">
-                            <label class="block text-grey text-sm roboto-light mb-2" for="email">
-                                Email address:
+                            <label class="block text-grey text-sm montserrat-light mb-2" for="email">
+                                Email*
                             </label>
                             <input
-                                class="bg-gray-300 appearance-none w-full p-3 text-grey rounded-sm text-sm roboto-light leading-tight border border-white"
+                                class="bg-gray-300 appearance-none w-full p-3 text-grey rounded-sm text-sm montserrat-light leading-tight border border-white"
                                 name="email" placeholder="Type your email" id="email" type="text" required>
                         </div>
                         <div class="mb-4">
-                            <label class="block text-grey text-sm roboto-light mb-2" for="phone">
-                                Phone:
+                            <label class="block text-grey text-sm montserrat-light mb-2" for="phone">
+                                Phone*
                             </label>
                             <input
-                                class="bg-gray-300 appearance-none w-full p-3 text-grey rounded-sm text-sm roboto-light leading-tight border border-white"
-                                name="phone" placeholder="Type your phone number" id="phone" type="text">
+                                class="bg-gray-300 appearance-none w-full p-3 text-grey rounded-sm text-sm montserrat-light leading-tight border border-white"
+                                name="phone" placeholder="Type your phone number" id="phone" type="text" required>
                         </div>
                         <div class="mb-4">
-                            <label class="block text-grey text-sm roboto-light mb-2" for="message">
-                                How can we help?
+                            <label class="block text-grey text-sm montserrat-light mb-2" for="message">
+                                Your Message*
                             </label>
                             <textarea
-                                class="bg-gray-300 w-full text-grey rounded-sm roboto-light text-sm border border-white h-32"
-                                name="field[1]" placeholder=""></textarea>
+                                class="bg-gray-300 w-full text-grey rounded-sm montserrat-light text-sm border border-white h-32"
+                                name="field[2]" placeholder="" required></textarea>
                         </div>
                         <div class="mb-4">
                             <div class="_form_element _x23802064 _full_width ">
                                 <div class="g-recaptcha" data-sitekey="6LcwIw8TAAAAACP1ysM08EhCgzd6q5JAOUR1a0Go"></div>
                             </div>
                         </div>
-                        <div class="mb-4">
-                            <label class="_form-label"></label>
-                            <input type="hidden" name="field[3][]" value="~|">
-                            <input id="field_3I agree for Cordiner Wealth to use my data above to contact me in line with their privacy policy." type="checkbox" name="field[3][]" value="true" required>
-                            <span>
-                              <label for="field_3I agree for Cordiner Wealth to use my data above to contact me in line with their privacy policy." class="text-grey text-sm text-roboto text-bold mb-2 ml-2">
-                                  I agree for Cordiner Wealth to use my data above to contact me in line with their <a class="text-red" href="<?php echo e(home_url()); ?>/privacy-policy/" target="_blank">Privacy Policy</a>
-                              </label>
-                            </span>
-                        </div>
-                        <div class="mb-4">
-                            <label class="_form-label"></label>
-                            <input type="hidden" name="field[2][]" value="~|">
-                            <input id="field_2I agree for Cordiner Wealth to keep me informed with news, offers, products and promotions it believes would interest me by email" type="checkbox" name="field[2][]" value="true">
-                            <span>
-                              <label for="field_2I agree for Cordiner Wealth to keep me informed with news, offers, products and promotions it believes would interest me by email" class="text-grey text-sm roboto-light mb-2 ml-2">
-                                I agree for Cordiner Wealth to keep me informed with news, offers, products and promotions it believes would interest me by email
-                              </label>
-                            </span>
-                        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                         <div class="flex flex-row justify-center">
-                            <input id="_form_3_submit" type="submit" class="button red-bg-white">
+                            <input id="_form_1_submit" type="submit" class="_submit button white-bg-orange py-2 px-8">
                         </div>
                     </div>
                     <div class="_form-thank-you" style="display:none;">
@@ -288,7 +287,7 @@
         </div>
 
         <script type="text/javascript">
-            window.cfields = {"1":"how_can_we_help","3":"confirmation","2":"subscribe"};
+            window.cfields = {"2":"your_message"};
             window._show_thank_you = function(id, message, trackcmp_url) {
                 var form = document.getElementById('_form_' + id + '_'), thank_you = form.querySelector('._form-thank-you');
                 form.querySelector('._form-content').style.display = 'none';
@@ -357,7 +356,7 @@
                     }
                 }
                 var _removed = false;
-                var form_to_submit = document.getElementById('_form_3_');
+                var form_to_submit = document.getElementById('_form_1_');
                 var allInputs = form_to_submit.querySelectorAll('input, select, textarea'), tooltips = [], submitted = false;
 
                 var getUrlParam = function(name) {
@@ -377,6 +376,9 @@
                     var fieldVal = getUrlParam(allInputs[i].dataset.name);
 
                     if (fieldVal) {
+                        if (allInputs[i].dataset.autofill === "false") {
+                            continue;
+                        }
                         if (allInputs[i].type == "radio" || allInputs[i].type == "checkbox") {
                             if (allInputs[i].value == fieldVal) {
                                 allInputs[i].checked = true;
@@ -413,7 +415,7 @@
                         tooltip.appendChild(inner);
                         elem.parentNode.appendChild(tooltip);
                     } else {
-                        tooltip.className = '_error-inner _no_arrow roboto-light mb-2 text-red text-sm';
+                        tooltip.className = '_error-inner _no_arrow';
                         tooltip.innerHTML = text;
                         elem.parentNode.insertBefore(tooltip, elem);
                         new_tooltip.no_arrow = true;
@@ -468,8 +470,7 @@
                                 if (!elems[i].checked) {
                                     no_error = false;
                                     elems[i].className = elems[i].className + ' _has_error';
-                                    //err.push("Checking %s is required".replace("%s", elems[i].value));
-                                    err.push("Please confirm by checking the box.".replace("%s", elems[i].value));
+                                    err.push("Checking %s is required".replace("%s", elems[i].value));
                                 }
                             }
                             if (!no_error) {
@@ -503,13 +504,13 @@
                             tooltip = create_tooltip(elem, "This field is required.");
                         }
                     }
-                    // if (no_error && elem.name == 'email') {
-                    //     if (!value.match(/^[\+_a-z0-9-'&=]+(\.[\+_a-z0-9-']+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/i)) {
-                    //         elem.className = elem.className + ' _has_error';
-                    //         no_error = false;
-                    //         tooltip = create_tooltip(elem, "Enter a valid email address.");
-                    //     }
-                    // }
+                    if (no_error && elem.name == 'email') {
+                        if (!value.match(/^[\+_a-z0-9-'&=]+(\.[\+_a-z0-9-']+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/i)) {
+                            elem.className = elem.className + ' _has_error';
+                            no_error = false;
+                            tooltip = create_tooltip(elem, "Enter a valid email address.");
+                        }
+                    }
                     if (no_error && /date_field/.test(elem.className)) {
                         if (!value.match(/^\d\d\d\d-\d\d-\d\d$/)) {
                             elem.className = elem.className + ' _has_error';
@@ -591,7 +592,7 @@
                             grecaptcha.render(recaptcha_id, {"sitekey":sitekey,"stoken":stoken});
                         }
                     }
-                };
+                };  _load_script("//www.google.com/recaptcha/api.js?onload=recaptcha_callback&render=explicit");
                 window._old_serialize = null;
                 if (typeof serialize !== 'undefined') window._old_serialize = window.serialize;
                 _load_script("//d3rxaij56vjege.cloudfront.net/form-serialize/0.3/serialize.min.js", function() {
@@ -602,11 +603,11 @@
                     e.preventDefault();
                     if (validate_form()) {
                         // use this trick to get the submit button & disable it using plain javascript
-                        document.querySelector('#_form_3_submit').disabled = true;
-                        var serialized = _form_serialize(document.getElementById('_form_3_'));
+                        document.querySelector('#_form_1_submit').disabled = true;
+                        var serialized = _form_serialize(document.getElementById('_form_1_'));
                         var err = form_to_submit.querySelector('._form_error');
                         err ? err.parentNode.removeChild(err) : false;
-                        _load_script('https://metisireland.activehosted.com/proc.php?' + serialized + '&jsonp=true');
+                        _load_script('https://cordinerwealth.activehosted.com/proc.php?' + serialized + '&jsonp=true');
                     }
                     return false;
                 };
@@ -617,7 +618,7 @@
 
     <?php elseif(get_row_layout() === 'google_map'): ?>
 
-        <div class="bg-lightgrey mt-32 my-16">
+        <div class="bg-lightgrey">
             <div class="googlemap">
                 <?php the_sub_field('embed_code') ?>
             </div>
