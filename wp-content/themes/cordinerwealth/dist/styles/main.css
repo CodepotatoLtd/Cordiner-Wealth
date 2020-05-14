@@ -4823,6 +4823,10 @@ video {
   height: 280px;
 }
 
+.h-300{
+  height: 300px;
+}
+
 .h-360{
   height: 360px;
 }
@@ -13938,7 +13942,7 @@ ol {
 .navbar-dropdown {
   height: 250px;
   left: 1000px;
-  background-color: #002E5C;
+  background-color: #06332E;
   position: absolute;
   top: 0;
   width: 100%;
@@ -16826,6 +16830,10 @@ body#tinymce p {
 
   .sm\:h-280{
     height: 280px;
+  }
+
+  .sm\:h-300{
+    height: 300px;
   }
 
   .sm\:h-360{
@@ -26974,6 +26982,10 @@ body#tinymce p {
     height: 280px;
   }
 
+  .md\:h-300{
+    height: 300px;
+  }
+
   .md\:h-360{
     height: 360px;
   }
@@ -37120,6 +37132,10 @@ body#tinymce p {
     height: 280px;
   }
 
+  .lg\:h-300{
+    height: 300px;
+  }
+
   .lg\:h-360{
     height: 360px;
   }
@@ -47264,6 +47280,10 @@ body#tinymce p {
 
   .xl\:h-280{
     height: 280px;
+  }
+
+  .xl\:h-300{
+    height: 300px;
   }
 
   .xl\:h-360{
