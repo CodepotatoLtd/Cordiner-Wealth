@@ -106,7 +106,7 @@
                 <div class="bg-cream py-16 mb-16 lg:ml-100">
                     <div class="flex flex-col lg:flex-row">
                         <div class="w-full lg:w-7/12">
-                            <div class="flex justify-center lg:justify-start">
+                            <div class="md:flex md:justify-center lg:flex lg:justify-start">
                                 <img class="lg:ml-n100" src="@php the_sub_field('image') @endphp" alt="Cordiner Image">
                             </div>
                         </div>
@@ -141,7 +141,7 @@
 
                     <div class="flex flex-col lg:flex-row">
                         <div class="w-full lg:w-1/2">
-                            <div class="flex justify-center lg:justify-start">
+                            <div class="md:flex md:justify-center lg:flex lg:justify-start">
                                 <img src="@php the_sub_field('image') @endphp" alt="Cordiner Image">
                             </div>
                         </div>
