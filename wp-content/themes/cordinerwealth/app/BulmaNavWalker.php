@@ -6,7 +6,7 @@ class BulmaNavWalker extends \Walker_Nav_Menu {
     public function start_lvl( &$output, $depth = 0, $args = array() ) {
 
         $output .= "<div class='navbar-dropdown shadow-xl z-10' style='display:none'>";
-        $output .= "<a class='navbar-item menu-back' href='#'><img src='/wp-content/themes/metisfinancial/dist/images/icon-arrow-left.svg'>Back</a>";
+        $output .= "<a class='navbar-item menu-back' href='#'><img src='/wp-content/themes/cordinerwealth/dist/images/icon-arrow-left.svg'>Back</a>";
     }
 
     public function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) {
