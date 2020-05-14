@@ -44,7 +44,7 @@
                 <label class="block text-white text-sm montserrat-light mb-2" for="lastname">
                   Last Name*
                 </label>
-                <input class="bg-gray-300 appearance-none w-full p-3 text-grey rounded-sm text-sm roboto-light leading-tight border border-white" name="lastname" placeholder="Type your last name" id="lastname" type="text" required>
+                <input class="bg-gray-300 appearance-none w-full p-3 text-grey rounded-sm text-sm montserrat-light leading-tight border border-white" name="lastname" placeholder="Type your last name" id="lastname" type="text" required>
               </div>
             </div>
           </div>

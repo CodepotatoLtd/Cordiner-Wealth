@@ -39,7 +39,7 @@
         <div class="bg-lightgrey py-16 -mt-8">
             <div class="container">
                 <div class="flex flex-col text-center mx-auto">
-                    <h2 class="merriweather-light text-orange text-4xl mb-6">@php the_sub_field('title') @endphp</h2>
+                    <h2 class="merriweather-light text-orange text-4xl leading-none mb-6">@php the_sub_field('title') @endphp</h2>
                     <div class="montserrat-regular text-darkgrey w-full md:w-2/3 mx-auto">
                         @php the_sub_field('text') @endphp
                     </div>
@@ -54,7 +54,7 @@
                 <div class="flex flex-col md:flex-row">
                     <div class="w-full md:w-5/12 mb-4">
                         <div class="flex flex-col justify-between h-full">
-                            <h2 class="merriweather-light text-4xl pr-4 mb-auto mr-4 php @php colour('title') @endphp"
+                            <h2 class="merriweather-light text-4xl leading-none pr-4 mb-auto mr-4 php @php colour('title') @endphp"
                                 data-aos="fade">@php the_sub_field('title') @endphp</h2>
                         </div>
                     </div>
@@ -76,7 +76,7 @@
 
         <div class="container">
             <div class="@if (get_sub_field('layout')) : bg-darkblue @else bg-green md:w-10/12 @endif flex flex-col justify-center text-center mx-auto w-full px-16 py-16">
-                <h2 class="merriweather-light text-orange text-4xl pr-4 mb-4"
+                <h2 class="merriweather-light text-orange text-4xl leading-tight pr-4 mb-4"
                     data-aos="fade">@php the_sub_field('title') @endphp</h2>
                 <div class="montserrat-medium text-white" data-aos="fade-left">@php the_sub_field('text') @endphp</div>
             </div>
@@ -110,9 +110,9 @@
                                 <img class="lg:ml-n100" src="@php the_sub_field('image') @endphp" alt="Cordiner Image">
                             </div>
                         </div>
-                        <div class="w-full lg:w-5/12 text-center p-16">
+                        <div class="w-full lg:w-5/12 text-center py-16">
                             <div class="lg:ml-n145">
-                                <h2 class="merriweather-light text-orange text-4xl pr-4 mb-4">@php the_sub_field('title') @endphp</h2>
+                                <h2 class="merriweather-light text-orange text-4xl leading-tight pr-4 mb-4">@php the_sub_field('title') @endphp</h2>
                                 <div class="mb-6">@php the_sub_field('text') @endphp</div>
                                 <a class="button white-bg-orange py-2 px-16 text-white text-center uppercase" href="@php the_sub_field('file') @endphp">@php the_sub_field('button_text') @endphp</a>
                             </div>
@@ -125,14 +125,14 @@
                 @if (get_sub_field('layout'))
 
                     <div class="flex flex-col-reverse lg:flex-row">
-                        <div class="w-full lg:w-1/2 text-center p-16">
-                            <h2 class="merriweather-light text-orange text-4xl pr-4 mb-4">@php the_sub_field('title') @endphp</h2>
+                        <div class="w-full lg:w-1/2 text-center py-16">
+                            <h2 class="merriweather-light text-orange text-4xl leading-tight pr-4 mb-4">@php the_sub_field('title') @endphp</h2>
                             <div class="mb-6">@php the_sub_field('text') @endphp</div>
                             <a class="button white-bg-orange py-2 px-16 text-white text-center uppercase" href="@php the_sub_field('button_link') @endphp">@php the_sub_field('button_text') @endphp</a>
                         </div>
                         <div class="w-full lg:w-1/2">
                             <div class="flex justify-center lg:justify-end">
-                                <img src="@php the_sub_field('image') @endphp" alt="Cordiner Image">
+                                <img class="h-auto" src="@php the_sub_field('image') @endphp" alt="Cordiner Image">
                             </div>
                         </div>
                     </div>
@@ -145,8 +145,8 @@
                                 <img src="@php the_sub_field('image') @endphp" alt="Cordiner Image">
                             </div>
                         </div>
-                        <div class="w-full lg:w-1/2 text-center p-16">
-                            <h2 class="merriweather-light text-orange text-4xl pr-4 mb-4">@php the_sub_field('title') @endphp</h2>
+                        <div class="w-full lg:w-1/2 text-center py-16">
+                            <h2 class="merriweather-light text-orange text-4xl leading-tight pr-4 mb-4">@php the_sub_field('title') @endphp</h2>
                             <div class="mb-6">@php the_sub_field('text') @endphp</div>
                             <a class="button white-bg-orange py-2 px-16 text-white text-center uppercase" href="@php the_sub_field('button_link') @endphp">@php the_sub_field('button_text') @endphp</a>
                         </div>
@@ -172,7 +172,7 @@
                     </div>
                     <div class="w-full lg:w-2/5 flex md:h-280 ">
                         <div class="px-4 lg:ml-n100 lg:my-auto">
-                            <h2 class="merriweather-light text-orange text-4xl pr-4 mb-4">@php the_sub_field('title') @endphp</h2>
+                            <h2 class="merriweather-light text-orange text-4xl leading-tight pr-4 mb-4">@php the_sub_field('title') @endphp</h2>
                             <div class="text-white">
                                 @php the_sub_field('text') @endphp
                             </div>
@@ -185,8 +185,8 @@
     @elseif (get_row_layout() === 'cta_centered')
 
         <div class="flex flex-col-reverse lg:flex-row my-16">
-            <div class="w-full lg:w-2/3 text-center mx-auto px-16">
-                <h2 class="merriweather-light text-orange text-4xl pr-4 mb-4">@php the_sub_field('title') @endphp</h2>
+            <div class="w-full lg:w-2/3 text-center mx-auto px-4">
+                <h2 class="merriweather-light text-orange text-4xl leading-tight pr-4 mb-4">@php the_sub_field('title') @endphp</h2>
                 <div class="mb-6">@php the_sub_field('text') @endphp</div>
                 <a class="button white-bg-orange py-2 px-16 text-white text-center uppercase" href="@php the_sub_field('button_link') @endphp">@php the_sub_field('button_text') @endphp</a>
             </div>
@@ -629,7 +629,7 @@
         <div class="bg-lightgrey py-16 mt-32 my-16">
             <div class="container">
                 <div class="mx-auto w-2/3 md:w-1/2 -mt-32 py-8 bg-lightgrey">
-                    <h2 class="merriweather-light text-orange text-4xl pr-4 mb-4 text-center" data-aos="fade">@php the_sub_field('title') @endphp</h2>
+                    <h2 class="merriweather-light text-orange text-4xl leading-tight pr-4 mb-4 text-center" data-aos="fade">@php the_sub_field('title') @endphp</h2>
                 </div>
                 <div class="flex flex-col md:flex-row">
                     <div class="w-full md:w-1/2">
@@ -702,7 +702,7 @@
                             @endif
                             </a>
                             <div class="bg-white leading-normal p-4 pt-0 pb-10 border border-lightgrey news-item-text">
-                                <h2 class="merriweather-regular text-orange text-lg mb-4"><a href="{{ get_permalink() }}">{{ the_title() }}</a></h2>
+                                <h2 class="merriweather-regular text-orange text-lg leading-tight mb-4"><a href="{{ get_permalink() }}">{{ the_title() }}</a></h2>
                                 <div class="montserrat-regular">
                                     @php the_excerpt() @endphp
                                 </div>
@@ -723,7 +723,7 @@
             <div class="container">
 
                 <div class="flex flex-col text-center mx-auto mb-8">
-                    <h2 class="merriweather-light text-orange text-4xl mb-6">@php the_sub_field('title') @endphp</h2>
+                    <h2 class="merriweather-light text-orange text-4xl leading-tight mb-6">@php the_sub_field('title') @endphp</h2>
                     <div class="montserrat-regular text-darkgrey w-full md:w-2/3 mx-auto">
                         @php the_sub_field('text') @endphp
                     </div>
@@ -788,7 +788,7 @@
                                     @if (has_post_thumbnail())
                                         <img src="@php echo get_template_directory_uri() @endphp/assets/images/arrow-down.svg">
                                     @endif
-                                    <h2 class="merriweather-regular text-orange text-lg mb-4"><a href="{{ get_permalink() }}">{{ the_title() }}</a></h2>
+                                    <h2 class="merriweather-regular text-orange text-lg leading-tight mb-4"><a href="{{ get_permalink() }}">{{ the_title() }}</a></h2>
                                     <div class="montserrat-regular">
                                         @php the_excerpt() @endphp
                                     </div>

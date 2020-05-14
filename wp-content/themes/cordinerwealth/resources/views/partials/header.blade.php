@@ -58,7 +58,7 @@
     </div>
   </div>
 
-  <div id="mobile-menu" class="hidden flex-col bg-blue text-white text-left px-6 pt-2 pb-8 relative sm:relative md:relative lg:absolute">
+  <div id="mobile-menu" class="hidden flex-col bg-green text-white text-left px-6 pt-2 pb-8 relative sm:relative md:relative lg:absolute">
     @if (has_nav_menu('primary_navigation'))
       {!! wp_nav_menu([
           'theme_location'    => 'primary_navigation',
@@ -71,7 +71,7 @@
           'items_wrap'        => '%3$s'
           ]) !!}
     @endif
-    <a class="button red-bg-blue lg:red-bg-white mt-8 float-left inline-block w-1/2" target="_blank" href="{{ get_field('client_login', 'options') }}">Client Login</a>
+    <a class="button white-bg-orange lg:white-bg-orange mt-8 float-left inline-block w-1/2" target="_blank" href="{{ get_field('client_login', 'options') }}">Client Login</a>
   </div>
 
 </header>
