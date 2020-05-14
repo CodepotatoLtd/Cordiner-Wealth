@@ -453,6 +453,18 @@
 </footer>
 
 <div class="container py-4">
-  <p class="montserrat-light text-09 text-center lg:text-left px-10 lg:px-0">Cordiner Wealth is a trading style of TPFA Limited, which is authorised and regulated by the Financial Conduct Authority. FCA reference number 611188. Registered in England and Wales as a Limited Company No. 8453762.</p>
+  <p class="montserrat-light text-09 text-center lg:text-left px-10 lg:px-0">
+      Cordiner Wealth is a trading style of TPFA Limited, which is authorised and regulated by the Financial Conduct Authority. FCA reference number 611188. Registered in England and Wales as a Limited Company No. 8453762.
+
+      Registered address: The Gatehouse Business Centre, Mansion Gate, Leeds, LS7 4RF<br/><br/>
+
+      The value of investments and the income from them can go down as well as up, so you could get back less than you invested. In the investment world, the past is not a reliable guide to the future.<br/><br/>
+
+      The guidance and/or advice contained in this website is subject to UK regulatory regime and is therefore restricted to consumers based in the UK.<br/><br/>
+
+      Decisions should not be taken based solely on the content of the website and individual advice should be sought first. Regulations, levels and bases of taxation are subject to change, content of the website may not reflect the latest changes.<br/><br/>
+
+      Cordiner Wealth is not responsible for the content of external links.
+  </p>
 </div>
 
