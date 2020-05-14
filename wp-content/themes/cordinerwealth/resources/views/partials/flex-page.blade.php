@@ -76,7 +76,7 @@
 
         <div class="container">
             <div class="@if (get_sub_field('layout')) : bg-darkblue @else bg-green md:w-10/12 @endif flex flex-col justify-center text-center mx-auto w-full px-16 py-16">
-                <h2 class="merriweather-light text-orange text-4xl leading-tight pr-4 mb-4"
+                <h2 class="merriweather-light text-orange text-4xl leading-tight md:pr-4 mb-4"
                     data-aos="fade">@php the_sub_field('title') @endphp</h2>
                 <div class="montserrat-medium text-white" data-aos="fade-left">@php the_sub_field('text') @endphp</div>
             </div>
@@ -112,8 +112,8 @@
                         </div>
                         <div class="w-full lg:w-5/12 text-center py-16">
                             <div class="lg:ml-n145">
-                                <h2 class="merriweather-light text-orange text-4xl leading-tight pr-4 mb-4">@php the_sub_field('title') @endphp</h2>
-                                <div class="mb-6">@php the_sub_field('text') @endphp</div>
+                                <h2 class="merriweather-light text-orange text-4xl leading-tight md:pr-4 mb-4">@php the_sub_field('title') @endphp</h2>
+                                <div class="mb-6 px-4">@php the_sub_field('text') @endphp</div>
                                 <a class="button white-bg-orange py-2 px-16 text-white text-center uppercase" href="@php the_sub_field('file') @endphp">@php the_sub_field('button_text') @endphp</a>
                             </div>
                         </div>
@@ -126,8 +126,8 @@
 
                     <div class="flex flex-col-reverse lg:flex-row">
                         <div class="w-full lg:w-1/2 text-center py-16">
-                            <h2 class="merriweather-light text-orange text-4xl leading-tight pr-4 mb-4">@php the_sub_field('title') @endphp</h2>
-                            <div class="mb-6">@php the_sub_field('text') @endphp</div>
+                            <h2 class="merriweather-light text-orange text-4xl leading-tight md:pr-4 mb-4">@php the_sub_field('title') @endphp</h2>
+                            <div class="mb-6 px-4">@php the_sub_field('text') @endphp</div>
                             <a class="button white-bg-orange py-2 px-16 text-white text-center uppercase" href="@php the_sub_field('button_link') @endphp">@php the_sub_field('button_text') @endphp</a>
                         </div>
                         <div class="w-full lg:w-1/2">
@@ -146,8 +146,8 @@
                             </div>
                         </div>
                         <div class="w-full lg:w-1/2 text-center py-16">
-                            <h2 class="merriweather-light text-orange text-4xl leading-tight pr-4 mb-4">@php the_sub_field('title') @endphp</h2>
-                            <div class="mb-6">@php the_sub_field('text') @endphp</div>
+                            <h2 class="merriweather-light text-orange text-4xl leading-tight md:pr-4 mb-4">@php the_sub_field('title') @endphp</h2>
+                            <div class="mb-6 px-4">@php the_sub_field('text') @endphp</div>
                             <a class="button white-bg-orange py-2 px-16 text-white text-center uppercase" href="@php the_sub_field('button_link') @endphp">@php the_sub_field('button_text') @endphp</a>
                         </div>
                     </div>
@@ -187,7 +187,7 @@
         <div class="flex flex-col-reverse lg:flex-row my-16">
             <div class="w-full lg:w-2/3 text-center mx-auto px-4">
                 <h2 class="merriweather-light text-orange text-4xl leading-tight pr-4 mb-4">@php the_sub_field('title') @endphp</h2>
-                <div class="mb-6">@php the_sub_field('text') @endphp</div>
+                <div class="mb-6 px-4">@php the_sub_field('text') @endphp</div>
                 <a class="button white-bg-orange py-2 px-16 text-white text-center uppercase" href="@php the_sub_field('button_link') @endphp">@php the_sub_field('button_text') @endphp</a>
             </div>
         </div>

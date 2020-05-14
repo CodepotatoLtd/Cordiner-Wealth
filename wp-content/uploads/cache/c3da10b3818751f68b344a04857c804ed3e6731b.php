@@ -76,7 +76,7 @@
 
         <div class="container">
             <div class="<?php if(get_sub_field('layout')): ?> : bg-darkblue <?php else: ?> bg-green md:w-10/12 <?php endif; ?> flex flex-col justify-center text-center mx-auto w-full px-16 py-16">
-                <h2 class="merriweather-light text-orange text-4xl leading-tight pr-4 mb-4"
+                <h2 class="merriweather-light text-orange text-4xl leading-tight md:pr-4 mb-4"
                     data-aos="fade"><?php the_sub_field('title') ?></h2>
                 <div class="montserrat-medium text-white" data-aos="fade-left"><?php the_sub_field('text') ?></div>
             </div>
@@ -106,14 +106,14 @@
                 <div class="bg-cream py-16 mb-16 lg:ml-100">
                     <div class="flex flex-col lg:flex-row">
                         <div class="w-full lg:w-7/12">
-                            <div class="flex justify-center lg:justify-start">
+                            <div class="md:flex md:justify-center lg:flex lg:justify-start">
                                 <img class="lg:ml-n100" src="<?php the_sub_field('image') ?>" alt="Cordiner Image">
                             </div>
                         </div>
                         <div class="w-full lg:w-5/12 text-center py-16">
                             <div class="lg:ml-n145">
-                                <h2 class="merriweather-light text-orange text-4xl leading-tight pr-4 mb-4"><?php the_sub_field('title') ?></h2>
-                                <div class="mb-6"><?php the_sub_field('text') ?></div>
+                                <h2 class="merriweather-light text-orange text-4xl leading-tight md:pr-4 mb-4"><?php the_sub_field('title') ?></h2>
+                                <div class="mb-6 px-4"><?php the_sub_field('text') ?></div>
                                 <a class="button white-bg-orange py-2 px-16 text-white text-center uppercase" href="<?php the_sub_field('file') ?>"><?php the_sub_field('button_text') ?></a>
                             </div>
                         </div>
@@ -126,13 +126,13 @@
 
                     <div class="flex flex-col-reverse lg:flex-row">
                         <div class="w-full lg:w-1/2 text-center py-16">
-                            <h2 class="merriweather-light text-orange text-4xl leading-tight pr-4 mb-4"><?php the_sub_field('title') ?></h2>
-                            <div class="mb-6"><?php the_sub_field('text') ?></div>
+                            <h2 class="merriweather-light text-orange text-4xl leading-tight md:pr-4 mb-4"><?php the_sub_field('title') ?></h2>
+                            <div class="mb-6 px-4"><?php the_sub_field('text') ?></div>
                             <a class="button white-bg-orange py-2 px-16 text-white text-center uppercase" href="<?php the_sub_field('button_link') ?>"><?php the_sub_field('button_text') ?></a>
                         </div>
                         <div class="w-full lg:w-1/2">
-                            <div class="flex justify-center lg:justify-end">
-                                <img class="h-300 md:h-auto" src="<?php the_sub_field('image') ?>" alt="Cordiner Image">
+                            <div class="md:flex md:justify-center lg:flex lg:justify-end">
+                                <img src="<?php the_sub_field('image') ?>" alt="Cordiner Image">
                             </div>
                         </div>
                     </div>
@@ -141,13 +141,13 @@
 
                     <div class="flex flex-col lg:flex-row">
                         <div class="w-full lg:w-1/2">
-                            <div class="flex justify-center lg:justify-start">
+                            <div class="md:flex md:justify-center lg:flex lg:justify-start">
                                 <img src="<?php the_sub_field('image') ?>" alt="Cordiner Image">
                             </div>
                         </div>
                         <div class="w-full lg:w-1/2 text-center py-16">
-                            <h2 class="merriweather-light text-orange text-4xl leading-tight pr-4 mb-4"><?php the_sub_field('title') ?></h2>
-                            <div class="mb-6"><?php the_sub_field('text') ?></div>
+                            <h2 class="merriweather-light text-orange text-4xl leading-tight md:pr-4 mb-4"><?php the_sub_field('title') ?></h2>
+                            <div class="mb-6 px-4"><?php the_sub_field('text') ?></div>
                             <a class="button white-bg-orange py-2 px-16 text-white text-center uppercase" href="<?php the_sub_field('button_link') ?>"><?php the_sub_field('button_text') ?></a>
                         </div>
                     </div>
@@ -187,7 +187,7 @@
         <div class="flex flex-col-reverse lg:flex-row my-16">
             <div class="w-full lg:w-2/3 text-center mx-auto px-4">
                 <h2 class="merriweather-light text-orange text-4xl leading-tight pr-4 mb-4"><?php the_sub_field('title') ?></h2>
-                <div class="mb-6"><?php the_sub_field('text') ?></div>
+                <div class="mb-6 px-4"><?php the_sub_field('text') ?></div>
                 <a class="button white-bg-orange py-2 px-16 text-white text-center uppercase" href="<?php the_sub_field('button_link') ?>"><?php the_sub_field('button_text') ?></a>
             </div>
         </div>
