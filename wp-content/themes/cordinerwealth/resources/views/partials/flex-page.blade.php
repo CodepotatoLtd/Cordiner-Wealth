@@ -131,8 +131,8 @@
                             <a class="button white-bg-orange py-2 px-16 text-white text-center uppercase" href="@php the_sub_field('button_link') @endphp">@php the_sub_field('button_text') @endphp</a>
                         </div>
                         <div class="w-full lg:w-1/2">
-                            <div class="flex justify-center lg:justify-end">
-                                <img class="h-300 md:h-auto" src="@php the_sub_field('image') @endphp" alt="Cordiner Image">
+                            <div class="md:flex md:justify-center lg:flex lg:justify-end">
+                                <img src="@php the_sub_field('image') @endphp" alt="Cordiner Image">
                             </div>
                         </div>
                     </div>
