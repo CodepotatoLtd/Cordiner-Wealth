@@ -740,10 +740,12 @@
                                     <h2 class="merriweather-light text-orange text-4xl leading-tight mb-2" data-aos="fade-left">
                                         {{ the_sub_field('title') }}
                                     </h2>
-                                    <h3 class="text-black text-lg font-bold mb-2">{{ the_sub_field('subtitle') }}</h3>
+                                    @if (get_sub_field('subtitle'))
+                                        <h3 class="text-black text-lg font-bold mb-2">{{ the_sub_field('subtitle') }}</h3>
+                                    @endif
                                     <span data-aos="fade-left" data-aos-delay="300">{{ the_sub_field('text') }}</span>
-                                    @if (the_sub_field('button_text'))
-                                        <a class="button white-bg-orange py-2 px-16 text-white text-center uppercase" href="{{ the_sub_field('button_url') }}" @if (the_sub_field('external_url')) target="_blank" @endif>{{ the_sub_field('button_text') }}</a>
+                                    @if (get_sub_field('button_text'))
+                                        <a class="button white-bg-orange py-2 px-16 text-white text-center uppercase" href="{{ the_sub_field('button_url') }}" @if (get_sub_field('external_url')) target="_blank" @endif>{{ the_sub_field('button_text') }}</a>
                                     @endif
                                 </div>
                             @php $n++ @endphp
