@@ -736,12 +736,16 @@
                         <?php if(have_rows('graphics')): ?>
                             <?php $n = 0 ?>
                             <?php while(have_rows('graphics')): ?> <?php the_row() ?>
-                                <div class="it info-text-<?php echo $n ?> <?php if($n === 0): ?> block <?php else: ?> hidden <?php endif; ?>">
-                                    <h2 class="merriweather-light text-orange text-4xl leading-tight mb-8" data-aos="fade-left">
+                                <div class="text-center it info-text-<?php echo $n ?> <?php if($n === 0): ?> block <?php else: ?> hidden <?php endif; ?>">
+                                    <h2 class="merriweather-light text-orange text-4xl leading-tight mb-2" data-aos="fade-left">
                                         <?php echo e(the_sub_field('title')); ?>
 
                                     </h2>
+                                    <h3 class="text-black text-lg font-bold mb-2">Subtitle<?php echo e(the_sub_field('subtitle')); ?></h3>
                                     <span data-aos="fade-left" data-aos-delay="300"><?php echo e(the_sub_field('text')); ?></span>
+                                    <?php if(the_sub_field('button_text')): ?>
+                                        <a class="button white-bg-orange py-2 px-16 text-white text-center uppercase" href="<?php echo e(the_sub_field('button_url')); ?>" <?php if(the_sub_field('external_url')): ?> target="_blank" <?php endif; ?>><?php echo e(the_sub_field('button_text')); ?></a>
+                                    <?php endif; ?>
                                 </div>
                             <?php $n++ ?>
                             <?php endwhile; ?>
