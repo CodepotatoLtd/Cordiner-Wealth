@@ -110,10 +110,10 @@
                                 <img class="lg:ml-n100" src="<?php the_sub_field('image') ?>" alt="Cordiner Image">
                             </div>
                         </div>
-                        <div class="w-full lg:w-5/12 text-center py-16">
-                            <div class="lg:ml-n145">
-                                <h2 class="merriweather-light text-orange text-4xl leading-tight md:pr-4 mb-4"><?php the_sub_field('title') ?></h2>
-                                <div class="mb-6 px-4"><?php the_sub_field('text') ?></div>
+                        <div class="w-full lg:w-5/12 text-center px-8 py-16">
+                            <div class="lg:ml-n145 md:pl-8">
+                                <h2 class="merriweather-light text-orange text-4xl leading-tight mb-4"><?php the_sub_field('title') ?></h2>
+                                <div class="mb-6"><?php the_sub_field('text') ?></div>
                                 <a class="button white-bg-orange py-2 px-16 text-white text-center uppercase" href="<?php the_sub_field('file') ?>"><?php the_sub_field('button_text') ?></a>
                             </div>
                         </div>
@@ -125,9 +125,9 @@
                 <?php if(get_sub_field('layout')): ?>
 
                     <div class="flex flex-col-reverse lg:flex-row">
-                        <div class="w-full lg:w-1/2 text-center py-16">
-                            <h2 class="merriweather-light text-orange text-4xl leading-tight md:pr-4 mb-4"><?php the_sub_field('title') ?></h2>
-                            <div class="mb-6 px-4"><?php the_sub_field('text') ?></div>
+                        <div class="w-full lg:w-1/2 text-center px-8 py-16">
+                            <h2 class="merriweather-light text-orange text-4xl leading-tight mb-4"><?php the_sub_field('title') ?></h2>
+                            <div class="mb-6"><?php the_sub_field('text') ?></div>
                             <a class="button white-bg-orange py-2 px-16 text-white text-center uppercase" href="<?php the_sub_field('button_link') ?>"><?php the_sub_field('button_text') ?></a>
                         </div>
                         <div class="w-full lg:w-1/2">
@@ -145,9 +145,9 @@
                                 <img src="<?php the_sub_field('image') ?>" alt="Cordiner Image">
                             </div>
                         </div>
-                        <div class="w-full lg:w-1/2 text-center py-16">
-                            <h2 class="merriweather-light text-orange text-4xl leading-tight md:pr-4 mb-4"><?php the_sub_field('title') ?></h2>
-                            <div class="mb-6 px-4"><?php the_sub_field('text') ?></div>
+                        <div class="w-full lg:w-1/2 text-center px-8 py-16">
+                            <h2 class="merriweather-light text-orange text-4xl leading-tight mb-4"><?php the_sub_field('title') ?></h2>
+                            <div class="mb-6"><?php the_sub_field('text') ?></div>
                             <a class="button white-bg-orange py-2 px-16 text-white text-center uppercase" href="<?php the_sub_field('button_link') ?>"><?php the_sub_field('button_text') ?></a>
                         </div>
                     </div>
@@ -715,6 +715,40 @@
 
             <?php wp_reset_postdata() ?>
 
+        </div>
+
+    <?php elseif(get_row_layout() === 'infographics'): ?>
+
+        <div class="py-16 my-16 bg-lightgrey md:text-left">
+            <div class="container">
+                <h2 class=" text-red text-center mx-auto mb-8" data-aos="fade">Here's how they work</h2>
+                <div class="flex flex-col lg:flex-row">
+                    <div class="w-full lg:w-1/2">
+                        <div class="w-445 h-445 mx-auto relative">
+                            <?php for($i = 0; $i < 6; $i++): ?>
+                                <a class="absolute info-<?php echo e($i); ?>" href="#"></a>
+                                <img id="info-<?php echo e($i); ?>" class=" ig <?php if($i !== 0): ?> hidden <?php endif; ?>"
+                                     src="<?= App\asset_path('images/infographic-'.$i.'.png'); ?>">
+                            <?php endfor; ?>
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-1/2 mx-auto flex flex-col justify-start md:justify-center leading-snug">
+                        <?php if(have_rows('graphics')): ?>
+                            <?php $n = 0 ?>
+                            <?php while(have_rows('graphics')): ?> <?php the_row() ?>
+                                <div class="it info-text-<?php echo $n ?> <?php if($n === 0): ?> block <?php else: ?> hidden <?php endif; ?>">
+                                    <h2 class="merriweather-light text-orange text-4xl leading-tight mb-8" data-aos="fade-left">
+                                        <?php echo e(the_sub_field('title')); ?>
+
+                                    </h2>
+                                    <span data-aos="fade-left" data-aos-delay="300"><?php echo e(the_sub_field('text')); ?></span>
+                                </div>
+                            <?php $n++ ?>
+                            <?php endwhile; ?>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
         </div>
 
     <?php elseif(get_row_layout() === 'news_section'): ?>

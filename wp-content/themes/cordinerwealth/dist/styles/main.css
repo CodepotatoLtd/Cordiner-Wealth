@@ -6911,6 +6911,10 @@ video {
   padding: 1.95rem;
 }
 
+.p-445{
+  padding: 445px;
+}
+
 .p-px{
   padding: 1px;
 }
@@ -7127,6 +7131,16 @@ video {
 .px-195{
   padding-left: 1.95rem;
   padding-right: 1.95rem;
+}
+
+.py-445{
+  padding-top: 445px;
+  padding-bottom: 445px;
+}
+
+.px-445{
+  padding-left: 445px;
+  padding-right: 445px;
 }
 
 .py-px{
@@ -7483,6 +7497,22 @@ video {
 
 .pl-195{
   padding-left: 1.95rem;
+}
+
+.pt-445{
+  padding-top: 445px;
+}
+
+.pr-445{
+  padding-right: 445px;
+}
+
+.pb-445{
+  padding-bottom: 445px;
+}
+
+.pl-445{
+  padding-left: 445px;
 }
 
 .pt-px{
@@ -12061,6 +12091,18 @@ video {
   width: 16rem;
 }
 
+.w-445{
+  width: 445px;
+}
+
+.w-490{
+  width: 490px;
+}
+
+.w-512{
+  width: 512px;
+}
+
 .w-auto{
   width: auto;
 }
@@ -13665,52 +13707,60 @@ h2 a {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
 }
 
-.info-1 {
-  width: 120px;
-  height: 120px;
-  top: 40px;
-  right: 65px;
+.info-0 {
+  width: 190px;
+  height: 70px;
+  top: 30px;
+  left: 45px;
+  border-radius: 50%;
+  -webkit-transform: rotate(-30deg);
+          transform: rotate(-30deg);
 }
 
-@media (min-width: 588px) and (max-width: 767px) {
-  .info-1 {
-    right: 75px;
-  }
+.info-1 {
+  width: 190px;
+  height: 70px;
+  top: 30px;
+  right: 45px;
+  border-radius: 50%;
+  -webkit-transform: rotate(30deg);
+          transform: rotate(30deg);
 }
 
 .info-2 {
-  width: 120px;
-  height: 120px;
-  top: 200px;
+  width: 70px;
+  height: 190px;
+  top: 125px;
   right: 10px;
+  border-radius: 50%;
 }
 
 .info-3 {
-  width: 120px;
-  height: 120px;
-  bottom: 10px;
-  right: 120px;
+  width: 190px;
+  height: 70px;
+  bottom: 30px;
+  right: 45px;
+  border-radius: 50%;
+  -webkit-transform: rotate(-30deg);
+          transform: rotate(-30deg);
 }
 
 .info-4 {
-  width: 120px;
-  height: 120px;
-  bottom: 40px;
-  left: 60px;
+  width: 190px;
+  height: 70px;
+  bottom: 30px;
+  left: 45px;
+  border-radius: 50%;
+  -webkit-transform: rotate(30deg);
+          transform: rotate(30deg);
 }
 
 .info-5 {
-  width: 120px;
-  height: 120px;
-  top: 140px;
+  width: 70px;
+  height: 190px;
+  top: 125px;
   left: 10px;
-}
-
-.info-6 {
-  width: 120px;
-  height: 120px;
-  top: 10px;
-  left: 120px;
+  border-radius: 50%;
 }
 
 .grid {
@@ -18920,6 +18970,10 @@ body#tinymce p {
     padding: 1.95rem;
   }
 
+  .sm\:p-445{
+    padding: 445px;
+  }
+
   .sm\:p-px{
     padding: 1px;
   }
@@ -19136,6 +19190,16 @@ body#tinymce p {
   .sm\:px-195{
     padding-left: 1.95rem;
     padding-right: 1.95rem;
+  }
+
+  .sm\:py-445{
+    padding-top: 445px;
+    padding-bottom: 445px;
+  }
+
+  .sm\:px-445{
+    padding-left: 445px;
+    padding-right: 445px;
   }
 
   .sm\:py-px{
@@ -19492,6 +19556,22 @@ body#tinymce p {
 
   .sm\:pl-195{
     padding-left: 1.95rem;
+  }
+
+  .sm\:pt-445{
+    padding-top: 445px;
+  }
+
+  .sm\:pr-445{
+    padding-right: 445px;
+  }
+
+  .sm\:pb-445{
+    padding-bottom: 445px;
+  }
+
+  .sm\:pl-445{
+    padding-left: 445px;
   }
 
   .sm\:pt-px{
@@ -24068,6 +24148,18 @@ body#tinymce p {
 
   .sm\:w-64{
     width: 16rem;
+  }
+
+  .sm\:w-445{
+    width: 445px;
+  }
+
+  .sm\:w-490{
+    width: 490px;
+  }
+
+  .sm\:w-512{
+    width: 512px;
   }
 
   .sm\:w-auto{
@@ -29070,6 +29162,10 @@ body#tinymce p {
     padding: 1.95rem;
   }
 
+  .md\:p-445{
+    padding: 445px;
+  }
+
   .md\:p-px{
     padding: 1px;
   }
@@ -29286,6 +29382,16 @@ body#tinymce p {
   .md\:px-195{
     padding-left: 1.95rem;
     padding-right: 1.95rem;
+  }
+
+  .md\:py-445{
+    padding-top: 445px;
+    padding-bottom: 445px;
+  }
+
+  .md\:px-445{
+    padding-left: 445px;
+    padding-right: 445px;
   }
 
   .md\:py-px{
@@ -29642,6 +29748,22 @@ body#tinymce p {
 
   .md\:pl-195{
     padding-left: 1.95rem;
+  }
+
+  .md\:pt-445{
+    padding-top: 445px;
+  }
+
+  .md\:pr-445{
+    padding-right: 445px;
+  }
+
+  .md\:pb-445{
+    padding-bottom: 445px;
+  }
+
+  .md\:pl-445{
+    padding-left: 445px;
   }
 
   .md\:pt-px{
@@ -34218,6 +34340,18 @@ body#tinymce p {
 
   .md\:w-64{
     width: 16rem;
+  }
+
+  .md\:w-445{
+    width: 445px;
+  }
+
+  .md\:w-490{
+    width: 490px;
+  }
+
+  .md\:w-512{
+    width: 512px;
   }
 
   .md\:w-auto{
@@ -39220,6 +39354,10 @@ body#tinymce p {
     padding: 1.95rem;
   }
 
+  .lg\:p-445{
+    padding: 445px;
+  }
+
   .lg\:p-px{
     padding: 1px;
   }
@@ -39436,6 +39574,16 @@ body#tinymce p {
   .lg\:px-195{
     padding-left: 1.95rem;
     padding-right: 1.95rem;
+  }
+
+  .lg\:py-445{
+    padding-top: 445px;
+    padding-bottom: 445px;
+  }
+
+  .lg\:px-445{
+    padding-left: 445px;
+    padding-right: 445px;
   }
 
   .lg\:py-px{
@@ -39792,6 +39940,22 @@ body#tinymce p {
 
   .lg\:pl-195{
     padding-left: 1.95rem;
+  }
+
+  .lg\:pt-445{
+    padding-top: 445px;
+  }
+
+  .lg\:pr-445{
+    padding-right: 445px;
+  }
+
+  .lg\:pb-445{
+    padding-bottom: 445px;
+  }
+
+  .lg\:pl-445{
+    padding-left: 445px;
   }
 
   .lg\:pt-px{
@@ -44368,6 +44532,18 @@ body#tinymce p {
 
   .lg\:w-64{
     width: 16rem;
+  }
+
+  .lg\:w-445{
+    width: 445px;
+  }
+
+  .lg\:w-490{
+    width: 490px;
+  }
+
+  .lg\:w-512{
+    width: 512px;
   }
 
   .lg\:w-auto{
@@ -49370,6 +49546,10 @@ body#tinymce p {
     padding: 1.95rem;
   }
 
+  .xl\:p-445{
+    padding: 445px;
+  }
+
   .xl\:p-px{
     padding: 1px;
   }
@@ -49586,6 +49766,16 @@ body#tinymce p {
   .xl\:px-195{
     padding-left: 1.95rem;
     padding-right: 1.95rem;
+  }
+
+  .xl\:py-445{
+    padding-top: 445px;
+    padding-bottom: 445px;
+  }
+
+  .xl\:px-445{
+    padding-left: 445px;
+    padding-right: 445px;
   }
 
   .xl\:py-px{
@@ -49942,6 +50132,22 @@ body#tinymce p {
 
   .xl\:pl-195{
     padding-left: 1.95rem;
+  }
+
+  .xl\:pt-445{
+    padding-top: 445px;
+  }
+
+  .xl\:pr-445{
+    padding-right: 445px;
+  }
+
+  .xl\:pb-445{
+    padding-bottom: 445px;
+  }
+
+  .xl\:pl-445{
+    padding-left: 445px;
   }
 
   .xl\:pt-px{
@@ -54518,6 +54724,18 @@ body#tinymce p {
 
   .xl\:w-64{
     width: 16rem;
+  }
+
+  .xl\:w-445{
+    width: 445px;
+  }
+
+  .xl\:w-490{
+    width: 490px;
+  }
+
+  .xl\:w-512{
+    width: 512px;
   }
 
   .xl\:w-auto{

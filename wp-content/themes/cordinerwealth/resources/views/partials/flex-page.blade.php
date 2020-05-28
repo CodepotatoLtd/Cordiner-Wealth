@@ -717,6 +717,39 @@
 
         </div>
 
+    @elseif (get_row_layout() === 'infographics')
+
+        <div class="py-16 my-16 bg-lightgrey md:text-left">
+            <div class="container">
+                <h2 class=" text-red text-center mx-auto mb-8" data-aos="fade">Here's how they work</h2>
+                <div class="flex flex-col lg:flex-row">
+                    <div class="w-full lg:w-1/2">
+                        <div class="w-445 h-445 mx-auto relative">
+                            @for($i = 0; $i < 6; $i++)
+                                <a class="absolute info-{{ $i }}" href="#"></a>
+                                <img id="info-{{ $i }}" class=" ig @if ($i !== 0) hidden @endif"
+                                     src="@asset('images/infographic-'.$i.'.png')">
+                            @endfor
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-1/2 mx-auto flex flex-col justify-start md:justify-center leading-snug">
+                        @if (have_rows('graphics'))
+                            @php $n = 0 @endphp
+                            @while (have_rows('graphics')) @php the_row() @endphp
+                                <div class="it info-text-@php echo $n @endphp @if ($n === 0) block @else hidden @endif">
+                                    <h2 class="merriweather-light text-orange text-4xl leading-tight mb-8" data-aos="fade-left">
+                                        {{ the_sub_field('title') }}
+                                    </h2>
+                                    <span data-aos="fade-left" data-aos-delay="300">{{ the_sub_field('text') }}</span>
+                                </div>
+                            @php $n++ @endphp
+                            @endwhile
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+
     @elseif (get_row_layout() === 'news_section')
 
         <div class="bg-white pt-16">

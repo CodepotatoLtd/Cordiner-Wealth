@@ -957,6 +957,75 @@
                     "min": "",
                     "max": ""
                 },
+                "layout_5ece37f9fcf9f": {
+                    "key": "layout_5ece37f9fcf9f",
+                    "name": "infographics",
+                    "label": "Infographics",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_5ece3815fcfa0",
+                            "label": "Graphics",
+                            "name": "graphics",
+                            "type": "repeater",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "collapsed": "",
+                            "min": 0,
+                            "max": 0,
+                            "layout": "block",
+                            "button_label": "Add graphic",
+                            "sub_fields": [
+                                {
+                                    "key": "field_5ece382dfcfa1",
+                                    "label": "Title",
+                                    "name": "title",
+                                    "type": "text",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "placeholder": "",
+                                    "prepend": "",
+                                    "append": "",
+                                    "maxlength": ""
+                                },
+                                {
+                                    "key": "field_5ece3839fcfa2",
+                                    "label": "Text",
+                                    "name": "text",
+                                    "type": "wysiwyg",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "tabs": "all",
+                                    "toolbar": "full",
+                                    "media_upload": 1,
+                                    "delay": 0
+                                }
+                            ]
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
+                },
                 "layout_5e85bb7ff6cf8": {
                     "key": "layout_5e85bb7ff6cf8",
                     "name": "news_section",
@@ -1220,5 +1289,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1587738717
+    "modified": 1590573432
 }

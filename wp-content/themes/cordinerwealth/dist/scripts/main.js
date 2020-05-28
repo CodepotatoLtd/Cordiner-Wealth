@@ -41180,8 +41180,8 @@ __webpack_require__.r(__webpack_exports__);
       jQuery(this).hide();
       jQuery(this).prev('input').focus();
     });
-    var i = 1;
-    var arr = [1, 2, 3, 4, 5, 6, 7];
+    var i = 0;
+    var arr = [0, 1, 2, 3, 4, 5, 6];
     var info = jQuery('.info-' + i);
     jQuery.each(arr, function (i) {
       jQuery('.info-' + i).hover(function () {
