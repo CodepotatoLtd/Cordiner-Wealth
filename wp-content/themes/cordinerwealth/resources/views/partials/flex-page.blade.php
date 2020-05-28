@@ -741,7 +741,7 @@
                                         {{ the_sub_field('title') }}
                                     </h2>
                                     @if (get_sub_field('subtitle'))
-                                        <h3 class="text-black text-lg font-bold mb-2">{{ the_sub_field('subtitle') }}</h3>
+                                        <h3 class="text-black text-lg font-bold leading-tight mb-2">{{ the_sub_field('subtitle') }}</h3>
                                     @endif
                                     <span data-aos="fade-left" data-aos-delay="300">{{ the_sub_field('text') }}</span>
                                     @if (get_sub_field('button_text'))
