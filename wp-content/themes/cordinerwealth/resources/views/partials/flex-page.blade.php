@@ -727,7 +727,7 @@
                         <div class="w-445 h-445 mx-auto relative">
                             @for($i = 0; $i < 6; $i++)
                                 <a class="absolute info-{{ $i }}" href="#"></a>
-                                <img id="info-{{ $i }}" class=" ig @if ($i !== 0) hidden @endif"
+                                <img id="info-{{ $i }}" class="ignore-smush ig @if ($i !== 0) hidden @endif"
                                      src="@asset('images/infographic-'.$i.'.png')">
                             @endfor
                         </div>

@@ -727,7 +727,7 @@
                         <div class="w-445 h-445 mx-auto relative">
                             <?php for($i = 0; $i < 6; $i++): ?>
                                 <a class="absolute info-<?php echo e($i); ?>" href="#"></a>
-                                <img id="info-<?php echo e($i); ?>" class=" ig <?php if($i !== 0): ?> hidden <?php endif; ?>"
+                                <img id="info-<?php echo e($i); ?>" class="ignore-smush ig <?php if($i !== 0): ?> hidden <?php endif; ?>"
                                      src="<?= App\asset_path('images/infographic-'.$i.'.png'); ?>">
                             <?php endfor; ?>
                         </div>
@@ -741,10 +741,12 @@
                                         <?php echo e(the_sub_field('title')); ?>
 
                                     </h2>
-                                    <h3 class="text-black text-lg font-bold mb-2">Subtitle<?php echo e(the_sub_field('subtitle')); ?></h3>
+                                    <?php if(get_sub_field('subtitle')): ?>
+                                        <h3 class="text-black text-lg font-bold leading-tight mb-2"><?php echo e(the_sub_field('subtitle')); ?></h3>
+                                    <?php endif; ?>
                                     <span data-aos="fade-left" data-aos-delay="300"><?php echo e(the_sub_field('text')); ?></span>
-                                    <?php if(the_sub_field('button_text')): ?>
-                                        <a class="button white-bg-orange py-2 px-16 text-white text-center uppercase" href="<?php echo e(the_sub_field('button_url')); ?>" <?php if(the_sub_field('external_url')): ?> target="_blank" <?php endif; ?>><?php echo e(the_sub_field('button_text')); ?></a>
+                                    <?php if(get_sub_field('button_text')): ?>
+                                        <a class="button white-bg-orange py-2 px-16 text-white text-center uppercase" href="<?php echo e(the_sub_field('button_url')); ?>" <?php if(get_sub_field('external_url')): ?> target="_blank" <?php endif; ?>><?php echo e(the_sub_field('button_text')); ?></a>
                                     <?php endif; ?>
                                 </div>
                             <?php $n++ ?>
