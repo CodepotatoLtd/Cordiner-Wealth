@@ -1666,7 +1666,10 @@ class WPMUDEV_Dashboard_Ui {
 		$urls            = $this->page_urls;
 		$active_projects = $this->get_total_active_projects( $data['projects'], false );
 		$all_plugins 	 = count( get_option('active_plugins') );
-		$member     	 = WPMUDEV_Dashboard::$api->get_profile();
+		$member          = WPMUDEV_Dashboard::$api->get_profile();
+
+		// handles multiple snapshot project.
+		$data = $this->handle_snapshot_v4( $data );
 
 		$update_plugins = 0;
 		// Show total number of available updates.
@@ -1688,6 +1691,37 @@ class WPMUDEV_Dashboard_Ui {
 			'sui/plugins',
 			compact( 'data', 'urls', 'tags', 'update_plugins', 'membership_type', 'active_projects', 'all_plugins', 'member' )
 		);
+	}
+
+	/**
+	 * Handle snapshot v4
+	 *
+	 * @since    4.9.1
+	 * @param Array $res result of get_project_infos().
+	 */
+	public function handle_snapshot_v4( $res ) {
+		$snap_v3  = WPMUDEV_Dashboard::$site->get_project_info( 257 );
+		$snap_v4  = WPMUDEV_Dashboard::$site->get_project_info( 3760011 );
+		$projects = $res['projects'];
+
+		// Show default.
+		if ( ( $snap_v3 && $snap_v4 && $snap_v3->is_installed && $snap_v4->is_installed ) || ! $snap_v3 || ! $snap_v4 ) {
+			return $res;
+		}
+
+		// Show v3.
+		if ( $snap_v3 && $snap_v3->is_installed && ( ! $snap_v4 || ! $snap_v4->is_installed ) ) {
+			unset( $projects['3760011'] );
+		}
+
+		// Show v4.
+		if ( ( $snap_v4 ) && ( ! $snap_v3 || ! $snap_v3->is_installed ) ) {
+			unset( $projects['257'] );
+		}
+
+		$res['projects'] = $projects;
+
+		return $res;
 	}
 
 	/**
@@ -1773,7 +1807,7 @@ class WPMUDEV_Dashboard_Ui {
 		 */
 		do_action( 'wpmudev_dashboard_notice-settings' );
 
-		$this->render_with_sui_wrapper( 'sui/settings', compact( 'member', 'urls', 'allowed_users', 'auto_update', 'enable_sso', 'membership_type', 'translation_update', 'enable_auto_translation', $single_id ) );			 	  				 		  
+		$this->render_with_sui_wrapper( 'sui/settings', compact( 'member', 'urls', 'allowed_users', 'auto_update', 'enable_sso', 'membership_type', 'translation_update', 'enable_auto_translation', $single_id ) );
 	}
 
 	/**

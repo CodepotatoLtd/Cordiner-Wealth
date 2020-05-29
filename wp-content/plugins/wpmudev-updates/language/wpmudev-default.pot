@@ -1,8 +1,8 @@
-# Copyright (C) 2020 WPMU DEV Dashboard 4.8.0
-# This file is distributed under the same license as the WPMU DEV Dashboard 4.8.0 package.
+# Copyright (C) 2020 WPMU DEV Dashboard 4.8.2-beta-1
+# This file is distributed under the same license as the WPMU DEV Dashboard 4.8.2-beta-1 package.
 msgid ""
 msgstr ""
-"Project-Id-Version: WPMU DEV Dashboard 4.8.0\n"
+"Project-Id-Version: WPMU DEV Dashboard 4.8.2-beta-1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1352,6 +1352,9 @@ msgstr ""
 
 #: template/sui/settings.php:371
 msgid "Update old translations or choose to have WPMU DEV automatically download and install translation updates for you."
+msgstr ""
+
+#: template/sui/settings.php:381
 msgstr ""
 
 #: template/sui/settings.php:396

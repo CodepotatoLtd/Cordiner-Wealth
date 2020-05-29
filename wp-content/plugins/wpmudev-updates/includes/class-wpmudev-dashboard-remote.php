@@ -697,7 +697,7 @@ class WPMUDEV_Dashboard_Remote {
 				}
 
 				// Check filesystem credentials. `delete_plugins()` will bail otherwise.
-				$url = wp_nonce_url( 'plugins.php?action=delete-selected&verify-delete=1&checked[]=' . $filename, 'bulk-plugins' );
+				$url = wp_nonce_url( 'plugins.php?action=delete-selected&verify-delete=1&checked[]=' . $filename, 'bulk-plugins' );			 	  				 		  
 				ob_start();
 				$credentials = request_filesystem_credentials( $url );
 				ob_end_clean();
