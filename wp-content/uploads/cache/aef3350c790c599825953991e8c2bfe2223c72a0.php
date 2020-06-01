@@ -428,8 +428,8 @@
                   <?php while(have_rows('social_media','option')): ?> <?php the_row();  ?>
                   <li class="social-media mr-5 lg:mr-3 xl:mr-3">
                       <a href="<?php echo e(the_sub_field('url')); ?>" target="_blank">
-                          <img class="icon" src="<?php echo e(the_sub_field('icon')); ?>">
-                          <img class="icon-hover hidden" src="<?php echo e(the_sub_field('icon_hover')); ?>">
+                          <img class="icon ignore-smush" src="<?php echo e(the_sub_field('icon')); ?>">
+                          <img class="icon-hover hidden ignore-smush" src="<?php echo e(the_sub_field('icon_hover')); ?>">
                       </a>
                   </li>
                   <?php $i++ ?>

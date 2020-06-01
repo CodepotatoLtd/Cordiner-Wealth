@@ -426,8 +426,8 @@
                   @while (have_rows('social_media','option')) @php the_row();  @endphp
                   <li class="social-media mr-5 lg:mr-3 xl:mr-3">
                       <a href="{{ the_sub_field('url') }}" target="_blank">
-                          <img class="icon" src="{{ the_sub_field('icon') }}">
-                          <img class="icon-hover hidden" src="{{ the_sub_field('icon_hover') }}">
+                          <img class="icon ignore-smush" src="{{ the_sub_field('icon') }}">
+                          <img class="icon-hover hidden ignore-smush" src="{{ the_sub_field('icon_hover') }}">
                       </a>
                   </li>
                   @php $i++ @endphp
