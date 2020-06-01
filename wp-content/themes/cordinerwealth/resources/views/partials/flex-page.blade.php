@@ -721,7 +721,6 @@
 
         <div class="py-16 my-16 bg-lightgrey md:text-left">
             <div class="container">
-                <h2 class=" text-red text-center mx-auto mb-8" data-aos="fade">Here's how they work</h2>
                 <div class="flex flex-col lg:flex-row">
                     <div class="w-full lg:w-1/2 mb-4 lg:mb-0">
                         <div class="w-445 h-445 mx-auto relative">

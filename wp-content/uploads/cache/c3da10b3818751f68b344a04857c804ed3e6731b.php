@@ -110,7 +110,7 @@
                                 <img class="lg:ml-n100" src="<?php the_sub_field('image') ?>" alt="Cordiner Image">
                             </div>
                         </div>
-                        <div class="w-full lg:w-5/12 text-center px-8 py-16">
+                        <div class="w-full lg:w-5/12 text-center lg:px-8 py-16">
                             <div class="lg:ml-n145 md:pl-8">
                                 <h2 class="merriweather-light text-orange text-4xl leading-tight mb-4"><?php the_sub_field('title') ?></h2>
                                 <div class="mb-6"><?php the_sub_field('text') ?></div>
@@ -125,7 +125,7 @@
                 <?php if(get_sub_field('layout')): ?>
 
                     <div class="flex flex-col-reverse lg:flex-row">
-                        <div class="w-full lg:w-1/2 text-center px-8 py-16">
+                        <div class="w-full lg:w-1/2 text-center lg:px-8 py-16">
                             <h2 class="merriweather-light text-orange text-4xl leading-tight mb-4"><?php the_sub_field('title') ?></h2>
                             <div class="mb-6"><?php the_sub_field('text') ?></div>
                             <a class="button white-bg-orange py-2 px-16 text-white text-center uppercase" href="<?php the_sub_field('button_link') ?>"><?php the_sub_field('button_text') ?></a>
@@ -145,7 +145,7 @@
                                 <img src="<?php the_sub_field('image') ?>" alt="Cordiner Image">
                             </div>
                         </div>
-                        <div class="w-full lg:w-1/2 text-center px-8 py-16">
+                        <div class="w-full lg:w-1/2 text-center lg:px-8 py-16">
                             <h2 class="merriweather-light text-orange text-4xl leading-tight mb-4"><?php the_sub_field('title') ?></h2>
                             <div class="mb-6"><?php the_sub_field('text') ?></div>
                             <a class="button white-bg-orange py-2 px-16 text-white text-center uppercase" href="<?php the_sub_field('button_link') ?>"><?php the_sub_field('button_text') ?></a>
@@ -721,7 +721,6 @@
 
         <div class="py-16 my-16 bg-lightgrey md:text-left">
             <div class="container">
-                <h2 class=" text-red text-center mx-auto mb-8" data-aos="fade">Here's how they work</h2>
                 <div class="flex flex-col lg:flex-row">
                     <div class="w-full lg:w-1/2 mb-4 lg:mb-0">
                         <div class="w-445 h-445 mx-auto relative">
