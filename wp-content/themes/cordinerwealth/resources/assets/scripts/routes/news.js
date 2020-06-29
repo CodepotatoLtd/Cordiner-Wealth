@@ -36,7 +36,7 @@ export default {
 
     // //append load more button
     jQuery('.grid').after('<div class="flex flex-row align-center">'+
-        '<a id="load-more" class="w-full md:w-1/3 mx-auto bg-red text-white text-lg roboto-light py-3 px-4 cursor-pointer category-filter text-center" href="#">Show more</a>'+
+        '<a id="load-more" class="w-full md:w-1/3 mx-auto bg-green text-white text-lg roboto-light py-3 px-4 cursor-pointer category-filter text-center" href="#">Show more</a>'+
         '</div>');
 
     //when load more button clicked
