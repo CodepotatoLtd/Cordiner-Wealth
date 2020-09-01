@@ -72,6 +72,31 @@
             </div>
         </div>
 
+    <?php elseif(get_row_layout() === 'text_content_nbp'): ?>
+
+        <div class="<?php colour('background') ?> pt-16 pb-4">
+            <div class="container">
+                <div class="flex flex-col md:flex-row">
+                    <div class="w-full md:w-5/12 mb-4">
+                        <div class="flex flex-col justify-between h-full">
+                            <h2 class="merriweather-light text-4xl leading-none pr-4 mb-auto mr-4 php <?php colour('title') ?>"
+                                data-aos="fade"><?php the_sub_field('title') ?></h2>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-7/12">
+                        <div class="montserrat-regular text-md leading-snug md:text-base mb-4 <?php colour('intro') ?>" data-aos="fade-left"
+                             data-aos-delay="200">
+                            <?php the_sub_field('intro_text') ?>
+                        </div>
+                        <div class="montserrat-regular text-md leading-snug md:text-base @endphp" data-aos="fade-left"
+                             data-aos-delay="200">
+                            <?php the_sub_field('text') ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     <?php elseif(get_row_layout() === 'images_centered'): ?>
 
         <div class="container">
@@ -188,6 +213,27 @@
             <div class="w-full lg:w-2/3 text-center mx-auto px-4">
                 <h2 class="merriweather-light text-orange text-4xl leading-tight pr-4 mb-4"><?php the_sub_field('title') ?></h2>
                 <div class="mb-6 px-4"><?php the_sub_field('text') ?></div>
+                <a class="button white-bg-orange py-2 px-16 text-white text-center uppercase" href="<?php the_sub_field('button_link') ?>"><?php the_sub_field('button_text') ?></a>
+            </div>
+        </div>
+
+    <?php elseif(get_row_layout() === 'cta_centered_app'): ?>
+
+        <div class="flex flex-col-reverse lg:flex-row my-16">
+            <div class="w-full lg:w-2/3 text-center mx-auto px-4">
+                <h2 class="merriweather-light text-orange text-4xl leading-tight pr-4 mb-4"><?php the_sub_field('title') ?></h2>
+                <div class="mb-6 px-4"><?php the_sub_field('text') ?></div>
+                <div class="app-buttons mb-6">
+                    <div class="flex flex-col text-center mx-auto w-2/3">
+                        <?php if(have_rows('app_buttons')): ?>
+                            <?php while(have_rows('app_buttons')): ?> <?php the_row() ?>
+                                <div class="button-item mx-auto mb-4">
+                                    <a href="<?php the_sub_field('link') ?>"><img class="w-200" src="<?php the_sub_field('image') ?>" alt=""></a>
+                                </div>
+                            <?php endwhile; ?>
+                        <?php endif; ?>
+                    </div>
+                </div>
                 <a class="button white-bg-orange py-2 px-16 text-white text-center uppercase" href="<?php the_sub_field('button_link') ?>"><?php the_sub_field('button_text') ?></a>
             </div>
         </div>
@@ -680,6 +726,67 @@
                     </div>
                 </div>
                 <div class="flex flex-row justify-center mt-12">
+                    <img class="" data-aos="fade-down" src="<?php the_sub_field('image') ?>">
+                </div>
+            </div>
+        </div>
+
+    <?php elseif(get_row_layout() === 'content_list_rtbp'): ?>
+
+        <div class="bg-lightgrey py-8 mt-32 my-4">
+            <div class="container">
+                <div class="mx-auto w-2/3 md:w-1/2 -mt-32 py-8 bg-lightgrey">
+                    <h2 class="merriweather-light text-orange text-4xl leading-tight pr-4 mb-4 text-center" data-aos="fade"><?php the_sub_field('title') ?></h2>
+                </div>
+                <div class="flex flex-col md:flex-row">
+                    <div class="w-full md:w-1/2">
+                        <ul>
+                            <?php if(have_rows('content_list_left')): ?>
+                                <?php $nl = 1 ?>
+                                <?php while(have_rows('content_list_left')): ?> <?php the_row() ?>
+                                <li class="flex flex-col lg:flex-row mb-6 list-item" data-aos="fade-left"
+                                    data-aos-delay="<?php echo e($nl * 50); ?>">
+                                    <div class="flex flex-row justify-between w-full">
+                                        <div class="w-1/6">
+                                            <div
+                                                class="bg-orange rounded-full mb-4 lg:mb-0 w-f40 h-f40 lg:w-f60 lg:h-f60 text-center flex flex-col text-white justify-center md:mr-4"><?php echo $nl ?></div>
+                                        </div>
+                                        <div class="w-5/6 md:mr-8">
+                                            <div class="montserrat-light mb-2"><?php the_sub_field('title') ?></div>
+                                            <div class="montserrat-light"><?php the_sub_field('text') ?></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <?php $nl++ ?>
+                                <?php endwhile; ?>
+                            <?php endif; ?>
+                        </ul>
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <ul>
+                            <?php if(have_rows('content_list_right')): ?>
+                                <?php $nr = $nl ?>
+                                <?php while(have_rows('content_list_right')): ?> <?php the_row() ?>
+                                <li class="flex flex-col lg:flex-row mb-6 list-item" data-aos="fade-left"
+                                    data-aos-delay="<?php echo e($nr * 50); ?>">
+                                    <div class="flex flex-row justify-between w-full">
+                                        <div class="w-1/6">
+                                            <div
+                                                class="bg-orange rounded-full mb-4 lg:mb-0 w-f40 h-f40 lg:w-f60 lg:h-f60 text-center flex flex-col text-white justify-center md:mr-4"><?php echo $nr ?></div>
+                                        </div>
+                                        <div class="w-5/6">
+                                            <div class="montserrat-light mb-2"><?php the_sub_field('title') ?></div>
+                                            <div class="montserrat-light"><?php the_sub_field('text') ?></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <?php $nr++ ?>
+                                <?php endwhile; ?>
+                            <?php endif; ?>
+                        </ul>
+                    </div>
+                </div>
+                <div class="flex flex-row justify-center">
                     <img class="" data-aos="fade-down" src="<?php the_sub_field('image') ?>">
                 </div>
             </div>

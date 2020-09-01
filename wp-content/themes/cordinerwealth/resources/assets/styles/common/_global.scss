@@ -367,3 +367,9 @@ ol{
         }
     }
 
+.list-item{
+    &:last-child{
+        @apply mb-0;
+        }
+    }
+
