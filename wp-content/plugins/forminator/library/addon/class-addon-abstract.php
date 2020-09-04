@@ -1692,6 +1692,52 @@ abstract class Forminator_Addon_Abstract implements Forminator_Addon_Interface {
 	}
 
 	/**
+	 * Return link markup
+	 *
+	 * @since 1.13
+	 *
+	 * @param        $url
+	 * @param        $label
+	 * @param string $classes
+	 * @param string $tooltip
+	 *
+	 * @return string
+	 */
+	public static function get_link_markup( $url, $label, $target = '_blank', $classes = '', $tooltip = '' ) {
+		$markup = '<a href="' . $url . '" target="' . $target . '" class="sui-button ';
+		if ( ! empty( $classes ) ) {
+			$markup .= $classes;
+		}
+		$markup .= '"';
+		if ( ! empty( $tooltip ) ) {
+			$markup .= 'data-tooltip="' . $tooltip . '"';
+		}
+		$markup .= '>';
+		$markup .= '<span class="sui-loading-text">' . $label . '</span>';
+		$markup .= '<i class="sui-icon-loader sui-loading" aria-hidden="true"></i>';
+		$markup .= '</a>';
+
+		/**
+		 * Filter Addon link markup for setting
+		 *
+		 * Its possible @see Forminator_Addon_Abstract::get_link_markup() overridden.
+		 * Thus this filter wont be called
+		 *
+		 * @since 1.1
+		 *
+		 * @param string $markup  Current markup
+		 * @param string $url     Link URL
+		 * @param string $label   Button label
+		 * @param string $target  Link target
+		 * @param string $classes Additional classes for `<button>`
+		 * @param string $tooltip
+		 */
+		$markup = apply_filters( 'forminator_addon_setting_link_markup', $markup, $url, $label, $target, $classes, $tooltip );
+
+		return $markup;
+	}
+
+	/**
 	 * Get Template as string
 	 *
 	 * @since 1.2

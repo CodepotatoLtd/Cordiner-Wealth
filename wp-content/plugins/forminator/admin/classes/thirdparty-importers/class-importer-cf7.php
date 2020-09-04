@@ -53,7 +53,7 @@ class Forminator_Admin_Import_CF7 extends Forminator_Import_Mediator {
 			$is_tag = strpos( $label_html, '[' );
 			//get label from form html
 
-			if ( isset( $label_html ) && ! empty( $label_html ) && 0 !== $is_tag ) {
+			if ( isset( $label_html ) && ! empty( $label_html ) && false === $is_tag ) {
 				return trim( rtrim( $label_html ) );
 			}
 		}
@@ -471,6 +471,7 @@ class Forminator_Admin_Import_CF7 extends Forminator_Import_Mediator {
 	 */
 	public function handle_select_field( $field, $options, $messages ) {
 		// Check if select field has any options
+		$options['value_type'] = 'single';
 		if ( isset( $field['options'] ) ) {
 			// Check if multiple option enabled
 			if ( in_array( 'multiple', $field['options'], true ) ) {

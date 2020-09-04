@@ -306,6 +306,13 @@ class WPMUDEV_Dashboard_Api {
 		if ( false === strpos( $endpoint, '/' . $api_key ) ) {
 			$endpoint .= '/' . $api_key;
 		}
+
+		$membership_data = $this->get_membership_data();
+		if ( isset( $membership_data['hub_site_id'] ) ) {
+			$endpoint .= '?site_id=';
+			$endpoint .= $membership_data['hub_site_id'];
+		}
+
 		$url = $this->rest_url( $endpoint );
 
 		return $url;
@@ -602,7 +609,7 @@ class WPMUDEV_Dashboard_Api {
 	 * @return array {
 	 *         Details about current membership.
 	 *
-	 * @type string $membership            [free|single|full]
+	 * @type string $membership            [free|single|unit|full]
 	 * @type string $membership_full_level [gold|bronze|silver]
 	 * }
 	 */
@@ -627,40 +634,69 @@ class WPMUDEV_Dashboard_Api {
 	 * membership-status.
 	 *
 	 * Possible return values:
-	 * 'full'   .. full membership, no restrictions.
-	 * 'single' .. single membership (i.e. only 1 project is licensed)
-	 * 'free'   .. free membership (i.e. expired/not signed up yet)
+	 * 'free'   - free membership (i.e. expired/not signed up yet)
+	 * 'single' - single membership (i.e. only 1 project is licensed)
+	 * 'unit'   - one or more projects licensed
+	 * 'full'   - full membership, no restrictions.
 	 *
 	 * @since  4.0.0
 	 *
-	 * @param  int   $project_id Output parameter. Only for a single membership
-	 *                           this param gets the project_id of the licensed project.
-	 * @param  array $data       Optional. Array of membership details to use
-	 *                           instead of the cached details from DB.
+	 * @param mixed $legacy_param - Not to be used! Remains as part of public facing
+	 *                              API, but does not affect anything.
 	 *
 	 * @return string The membership type.
 	 */
-	public function get_membership_type( &$project_id, $data = null ) {
-		$project_id = false;
-		if ( ! $data || ! is_array( $data ) || ! isset( $data['membership'] ) ) {
-			$data = $this->get_membership_data();
-		}
+	public function get_membership_type( &$legacy_param = null ) {
+		$data = $this->get_membership_data();
 
 		if ( 'full' === $data['membership'] ) {
 			$type = 'full';
+		} elseif ( 'unit' === $data['membership'] ) {
+			$type = 'unit';
 		} else {
 			if ( is_numeric( $data['membership'] ) ) {
-				$type       = 'single';
-				$project_id = intval( $data['membership'] );
-			} elseif( is_bool( $data['membership'] ) && is_numeric( $data['membership_full_level'] ) ) {
-				$type       = 'single';
-				$project_id = intval( $data['membership_full_level'] );
+				$type = 'single';
+			} elseif ( is_bool( $data['membership'] ) && is_numeric( $data['membership_full_level'] ) ) {
+				$type = 'single';
 			} else {
 				$type = 'free';
 			}
 		}
 
 		return $type;
+	}
+
+	/**
+	 * Returns a numeric id or array or numeric ids or projects avaiable on plan.
+	 * Numeric id is returned only if "single" plan is active, for backwards compatibility.
+	 *
+	 * @since  4.9.0
+	 *
+	 * @return mixed Numeric id or available project for "single" plan or array or
+	 *               numeric ids for "unit" plans.
+	 */
+	public function get_membership_projects() {
+		$data = $this->get_membership_data();
+
+		if ( 'full' === $data['membership'] ) {
+			return array();
+		}
+		if ( 'unit' === $data['membership'] ) {
+			$projects = $data['membership_projects'];
+			foreach ( $projects as $i => $p ) {
+				$projects[ $i ] = intval( $p );
+			}
+			return $projects;
+		}
+		if ( is_numeric( $data['membership'] ) ) {
+			$project_id = intval( $data['membership'] );
+			return $project_id;
+		}
+		if ( is_bool( $data['membership'] ) && is_numeric( $data['membership_full_level'] ) ) {
+			$project_id = intval( $data['membership_full_level'] );
+			return $project_id;
+		}
+		return array();
 	}
 
 	/**
@@ -1120,6 +1156,17 @@ class WPMUDEV_Dashboard_Api {
 		}
 
 		return $data;
+	}
+
+	/**
+	 * Checks if site is hosted on WPMU Dev hosting.
+	 *
+	 * @since 4.9.0
+	 *
+	 * @return boolean - is site hosted on WPMU Dev, true if it is.
+	 */
+	public function is_wpmu_dev_hosting() {
+		return isset( $_SERVER['WPMUDEV_HOSTED'] );
 	}
 
 	/**
@@ -1711,7 +1758,7 @@ class WPMUDEV_Dashboard_Api {
 		if ( empty( $api_response['membership'] ) ) {
 			return false;
 		}
-		$membership_type = $this->get_membership_type( $dummy );
+		$membership_type = $this->get_membership_type();
 
 		$field = false;
 
@@ -1842,7 +1889,7 @@ class WPMUDEV_Dashboard_Api {
 			return $data;
 		}
 
-		$my_level = $this->get_membership_type( $single_id );
+		$my_level = $this->get_membership_type();
 
 		foreach ( $data['projects'] as $id => $project ) {
 			if ( 'full' == $my_level ) {
@@ -2210,10 +2257,13 @@ class WPMUDEV_Dashboard_Api {
 
 			// Create state session cookie.
 			$api_key  = $this->get_key();
-			$pre_sso_state = uniqid( '', true );
-			setcookie( 'wdp-pre-sso-state', $pre_sso_state );
-			$hashed_pre_sso_state = hash_hmac( 'sha256', $pre_sso_state, $api_key );
 
+			$pre_sso_state = uniqid( '', true );
+			$secure_cookie = 'https' === wp_parse_url( get_option( 'home' ), PHP_URL_SCHEME );
+
+			setcookie( 'wdp-pre-sso-state', $pre_sso_state, time() + 3600, COOKIEPATH, COOKIE_DOMAIN, $secure_cookie, true );
+
+			$hashed_pre_sso_state = hash_hmac( 'sha256', $pre_sso_state, $api_key );
 			// Build hmac for OAuth.
 			$domain   = $this->network_site_url();
 			$profile  = $this->get_profile();
@@ -2261,7 +2311,16 @@ class WPMUDEV_Dashboard_Api {
 
 					wp_redirect( $redirect_upon_failure );
 					exit;
+				default:
+					$redirect_upon_failure = add_query_arg(
+						array(
+							'wdp_sso_fail' => 'unkown_reasons'
+						),
+						wp_login_url( urldecode( $redirect ) )
+					);
 
+					wp_redirect( $redirect_upon_failure );
+				exit;
 			}
 		}
 	}

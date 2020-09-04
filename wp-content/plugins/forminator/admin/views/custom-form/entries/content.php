@@ -316,8 +316,8 @@ if ( $this->total_entries() > 0 ) :
 																			$sub_key++;
 
 																			if ( $sub_key === $end ) {
-
-																				echo '<td colspan="2" style="padding-top: 5px; padding-bottom: 5px;">' . esc_html( $sub_entry['value'] ) . '</td>';
+																				// No escape for Stripe & PayPal transaction links because we generate it ourselves above
+																				echo '<td colspan="2" style="padding-top: 5px; padding-bottom: 5px;">' . $sub_entry['value']  . '</td>';//phpcs:ignore -- html output intended
 
 																			} else {
 
@@ -348,7 +348,15 @@ if ( $this->total_entries() > 0 ) :
 
 														<?php if ( empty( $sub_entries ) ) { ?>
 
-															<span class="sui-description"><?php echo ( $detail_item['value'] );//phpcs:ignore -- html output intended ?></span>
+															<?php if ( 'textarea' === $detail_item['type'] && ( isset( $detail_item['rich'] ) && 'true' === $detail_item['rich'] ) ): ?>
+
+																<div class="fui-rich-textarea"><?php echo ( $detail_item['value'] );//phpcs:ignore -- html output intended ?></div>
+
+															<?php else: ?>
+
+																<span class="sui-description"><?php echo ( $detail_item['value'] );//phpcs:ignore -- html output intended ?></span>
+
+															<?php endif; ?>
 
 														<?php } else { ?>
 

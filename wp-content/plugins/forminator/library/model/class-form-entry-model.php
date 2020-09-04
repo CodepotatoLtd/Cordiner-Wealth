@@ -1175,9 +1175,13 @@ class Forminator_Form_Entry_Model {
 			foreach ( $entry_model->meta_data as $meta_data ) {
 				$meta_value = $meta_data['value'];
 				if ( is_array( $meta_value ) && isset( $meta_value['file'] ) ) {
-					$file_path = $meta_value['file']['file_path'];
-					if ( ! empty( $file_path ) && file_exists( $file_path ) ) {
-						wp_delete_file( $file_path );
+					$file_path = is_array( $meta_value['file']['file_path'] ) ? $meta_value['file']['file_path'] : array( $meta_value['file']['file_path'] );
+					if ( ! empty( $file_path ) ) {
+						foreach ( $file_path as $path ) {
+							if ( ! empty( $path ) && file_exists( $path ) ) {
+								wp_delete_file( $path );
+							}
+						}
 					}
 				}
 			}
@@ -1323,19 +1327,23 @@ class Forminator_Form_Entry_Model {
 					$file = $meta_value['file'];
 				}
 				if ( ! empty( $file ) && is_array( $file ) && isset( $file['file_url'] ) && ! empty( $file['file_url'] ) ) {
-					$string_value = $file['file_url'];
 					if ( $allow_html ) {
 						// make link
-						$url       = $string_value;
-						$file_name = basename( $url );
-						$file_name = ! empty( $file_name ) ? $file_name : __( '(no filename)', Forminator::DOMAIN );
-						//truncate
-						if ( strlen( $file_name ) > $truncate ) {
-							$file_name = substr( $file_name, 0, $truncate ) . '...';
+						$string_value = '';
+						$file_values  = is_array( $file['file_url'] ) ? $file['file_url'] : array( $file['file_url'] );
+						foreach ( $file_values as $file_value ) {
+							$url       = $file_value;
+							$file_name = basename( $url );
+							$file_name = ! empty( $file_name ) ? $file_name : __( '(no filename)', Forminator::DOMAIN );
+							//truncate
+							if ( strlen( $file_name ) > $truncate ) {
+								$file_name = substr( $file_name, 0, $truncate ) . '...';
+							}
+							$string_value .= '<a href="' . $url . '" rel="noopener noreferrer" target="_blank" title="' . __( 'View File', Forminator::DOMAIN ) . '">' . $file_name . '</a>';
 						}
-						$string_value = '<a href="' . $url . '" rel="noopener noreferrer" target="_blank" title="' . __( 'View File', Forminator::DOMAIN ) . '">' . $file_name . '</a>';
 					} else {
 						//truncate url
+						$string_value = is_array( $file['file_url'] ) ? implode( ', ', $file['file_url'] ) : $file['file_url'];
 						if ( strlen( $string_value ) > $truncate ) {
 							$string_value = substr( $string_value, 0, $truncate ) . '...';
 						}
@@ -1413,7 +1421,7 @@ class Forminator_Form_Entry_Model {
 				// base flattener
 				// implode on array
 				if ( is_array( $meta_value ) ) {
-					$string_value = implode( ', ', $meta_value );
+					$string_value = json_encode( $meta_value );
 				} else {
 					// or juggling to string
 					$string_value = (string) $meta_value;

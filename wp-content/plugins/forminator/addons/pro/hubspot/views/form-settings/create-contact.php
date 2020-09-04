@@ -9,6 +9,7 @@ $vars = array(
 	'form_fields'   => array(),
 	'email_fields'  => array(),
 	'lists'         => array(),
+	'properties'    => array()
 );
 /** @var array $template_vars */
 
@@ -22,12 +23,13 @@ if ( empty( $vars['lists'] ) ) {
 	$list_selector_class = 'fui-select-disabled';
 }
 
+$custom_field_map = isset( $vars['custom_fields_map'] ) ? array_filter( $vars['custom_fields_map'] ) : array();
 ?>
 <div class="integration-header">
 
 	<h3 id="dialogTitle2" class="sui-box-title"><?php echo esc_html( __( 'Create Contact', Forminator::DOMAIN ) ); ?></h3>
 
-	<p class="sui-description" style="max-width: 400px; margin: 20px auto 0; line-height: 22px;"><?php esc_html_e( 'Let\'s start with choosing a HubSpot list and matching up your form fields with the default HubSpot contact fields to make sure we’re sending data to the right place.', Forminator::DOMAIN ); ?></p>
+	<p class="sui-description" style="max-width: 400px; margin: 20px auto 0; line-height: 22px;"><?php esc_html_e( 'Let\'s start with choosing a HubSpot list and matching up your form fields with the default HubSpot contact fields to make sure weâ€™re sending data to the right place.', Forminator::DOMAIN ); ?></p>
 
 	<?php if ( ! empty( $vars['error_message'] ) ) : ?>
 		<span class="sui-notice sui-notice-error"><p><?php echo esc_html( $vars['error_message'] ); ?></p></span>
@@ -58,8 +60,8 @@ if ( empty( $vars['lists'] ) ) {
 				<?php
 				endforeach; ?>
 
-			<?php
-			// Empty notice.
+				<?php
+				// Empty notice.
 			} else { ?>
 				<option value=""><?php esc_html_e( 'No static lists found on your HubSpot account', Forminator::DOMAIN ); ?></option>
 			<?php } ?>
@@ -86,10 +88,10 @@ if ( empty( $vars['lists'] ) ) {
 
 			<thead>
 
-				<tr>
-					<th><?php esc_html_e( 'HubSpot Fields', Forminator::DOMAIN ); ?></th>
-					<th><?php esc_html_e( 'Forminator Fields', Forminator::DOMAIN ); ?></th>
-				</tr>
+			<tr>
+				<th><?php esc_html_e( 'HubSpot Fields', Forminator::DOMAIN ); ?></th>
+				<th><?php esc_html_e( 'Forminator Fields', Forminator::DOMAIN ); ?></th>
+			</tr>
 
 			</thead>
 
@@ -98,8 +100,7 @@ if ( empty( $vars['lists'] ) ) {
 			<?php
 			if ( ! empty( $vars['fields'] ) ) :
 
-				foreach ( $vars['fields'] as $key => $field_title ) :
-					?>
+				foreach ( $vars['fields'] as $key => $field_title ) : ?>
 
 					<tr>
 
@@ -130,30 +131,116 @@ if ( empty( $vars['lists'] ) ) {
 									<option value=""><?php esc_html_e( 'None', Forminator::DOMAIN ); ?></option>
 									<?php
 									if ( ! empty( $forminator_fields ) ) :
-										foreach ( $forminator_fields as $forminator_field ) :
-											?>
+										foreach ( $forminator_fields as $forminator_field ) : ?>
 											<option value="<?php echo esc_attr( $forminator_field['element_id'] ); ?>"
 												<?php selected( $current_selected, $forminator_field['element_id'] ); ?>>
 												<?php echo esc_html( $forminator_field['field_label'] . ' | ' . $forminator_field['element_id'] ); ?>
 											</option>
-											<?php
-										endforeach;
+										<?php endforeach;
 									endif;
 									?>
 								</select>
 								<?php if ( ! empty( $current_error ) ) : ?>
 									<span class="sui-error-message"
-										style="margin-top: 5px; margin-bottom: 5px;"><?php echo esc_html( $current_error ); ?></span>
+										  style="margin-top: 5px; margin-bottom: 5px;"><?php echo esc_html( $current_error ); ?></span>
 								<?php endif; ?>
 							</div>
 						</td>
-
-					<tr>
-
+					</tr>
 				<?php endforeach;
-
 			endif;
-			?>
+			if ( ! empty( $custom_field_map ) ) {
+				foreach ( $custom_field_map as $custom=> $custom_field ) { ?>
+					<tr class="custom-field" id="custom-field">
+						<td>
+							<div class="sui-form-field">
+								<select class="sui-select" name=custom_property[]">
+									<option value=""><?php esc_html_e( 'None', Forminator::DOMAIN ); ?></option>
+									<?php if ( ! empty( $vars['properties'] ) ) {
+										foreach ( $vars['properties'] as $p => $prop ) { ?>
+											<option value="<?php echo esc_html( $p ); ?>" <?php selected( $custom, $p ); ?>><?php echo esc_html( $prop ); ?></option>
+										<?php }
+									} ?>
+								</select>
+							</div>
+						</td>
+						<td>
+							<div class="fui-select-with-delete">
+
+								<div class="sui-form-field">
+									<select class="sui-select" name="custom_field[]">
+										<option value=""><?php esc_html_e( 'None', Forminator::DOMAIN ); ?></option>
+										<?php
+										if ( ! empty( $forminator_fields ) ) :
+											foreach ( $forminator_fields as $forminator_field ) : ?>
+												<option value="<?php echo esc_attr( $forminator_field['element_id'] ); ?>" <?php selected( $custom_field, $forminator_field['element_id'] ); ?>>
+													<?php echo esc_html( $forminator_field['field_label'] . ' | ' . $forminator_field['element_id'] ); ?>
+												</option>
+											<?php endforeach;
+										endif;
+										?>
+									</select>
+								</div>
+
+								<button class="sui-button-icon sui-button-red fui-option-remove delete-hubspot-field">
+									<i class="sui-icon-trash" aria-hidden="true"></i>
+								</button>
+
+							</div>
+						</td>
+					</tr>
+				<?php  }
+			} else { ?>
+				<tr class="custom-field" id="custom-field" style="display: none;">
+					<td>
+						<div class="sui-form-field">
+							<select class="sui-select" name=custom_property[]">
+								<option value=""><?php esc_html_e( 'None', Forminator::DOMAIN ); ?></option>
+								<?php if ( ! empty( $vars['properties'] ) ) {
+									foreach ( $vars['properties'] as $p => $prop ) { ?>
+										<option value="<?php echo esc_html( $p ); ?>"><?php echo esc_html( $prop ); ?></option>
+									<?php }
+								} ?>
+							</select>
+						</div>
+					</td>
+					<td>
+
+						<div class="fui-select-with-delete">
+
+							<div class="sui-form-field">
+								<select class="sui-select" name="custom_field[]">
+									<option value=""><?php esc_html_e( 'None', Forminator::DOMAIN ); ?></option>
+									<?php
+									if ( ! empty( $forminator_fields ) ) :
+										foreach ( $forminator_fields as $forminator_field ) : ?>
+											<option value="<?php echo esc_attr( $forminator_field['element_id'] ); ?>">
+												<?php echo esc_html( $forminator_field['field_label'] . ' | ' . $forminator_field['element_id'] ); ?>
+											</option>
+										<?php endforeach;
+									endif;
+									?>
+								</select>
+							</div>
+
+							<button class="sui-button-icon sui-button-red fui-option-remove delete-hubspot-field">
+								<i class="sui-icon-trash" aria-hidden="true"></i>
+							</button>
+
+						</div>
+
+					</td>
+				</tr>
+			<?php } ?>
+			<tr class="add-additional-field">
+				<td>
+					<div class="sui-button sui-button-ghost add-hubspot-field">
+						<i class="sui-icon-plus" aria-hidden="true"></i>
+						<?php esc_html_e( 'Add Additional field', Forminator::DOMAIN ); ?>
+					</div>
+				</td>
+				<td></td>
+			</tr>
 
 			</tbody>
 
@@ -163,3 +250,32 @@ if ( empty( $vars['lists'] ) ) {
 	<input type="hidden" name="multi_id" value="<?php echo esc_attr( $vars['multi_id'] ); ?>" />
 
 </form>
+<script type="text/javascript">
+	(function ($) {
+		$(document).ready(function (e) {
+            $(".add-hubspot-field").unbind().click(function(e) {
+				e.preventDefault();
+				if( $('.custom-field:visible').length < 1 ) {
+					$('#custom-field').show();
+				} else {
+					var clone_field = $('#custom-field').clone();
+					$('.add-additional-field').before( clone_field );
+					clone_field.find('.select2').remove();
+					clone_field.find('select.sui-select').val('').removeAttr('selected');
+					clone_field.find( '.sui-select' ).SUIselect2({
+						dropdownCssClass: 'sui-variables-dropdown sui-color-accessible'
+					});
+				}
+			});
+			$(document).on("click",".delete-hubspot-field",function(e){
+				e.preventDefault();
+				if( $('.custom-field:visible').length < 2 ) {
+					$(this).closest('.custom-field').find('select.sui-select').val('');
+					$(this).closest('.custom-field').hide();
+				} else {
+					$(this).closest('.custom-field').remove();
+				}
+			});
+		});
+	})(jQuery);
+</script>

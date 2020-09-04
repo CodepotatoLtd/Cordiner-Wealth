@@ -60,6 +60,7 @@
 
 		this._defaults = defaults;
 		this._name     = pluginName;
+		this.form_id   = 0;
 		this.init();
 	}
 
@@ -67,6 +68,10 @@
 	$.extend(ForminatorFront.prototype, {
 		init: function () {
 			var self = this;
+
+			if (this.$el.find('input[name=form_id]').length > 0) {
+				this.form_id = this.$el.find('input[name=form_id]').val();
+			}
 
 			$(this.forminator_loader_selector).remove();
 
@@ -109,9 +114,11 @@
 				chart_options: self.settings.chart_options,
 				fadeout: self.settings.fadeout,
 				fadeout_time: self.settings.fadeout_time,
+				has_quiz_loader: self.settings.has_quiz_loader,
 				has_loader: self.settings.has_loader,
 				loader_label: self.settings.loader_label,
 				resetEnabled: self.settings.is_reset_enabled,
+				inline_validation: self.settings.inline_validation
 			});
 
 
@@ -160,7 +167,7 @@
 			// initiate payment if exist
 			var first_payment = $(this.element).find('div[data-is-payment="true"], input[data-is-payment="true"]').first();
 
-			if (first_payment.length) {
+			if ( first_payment.length ) {
 				var payment_type = first_payment.data('paymentType');
 				if (payment_type === 'stripe') {
 					$(this.element).forminatorFrontPayment({
@@ -207,13 +214,13 @@
 			this.field_time();
 
 			// Handle upload field change
+			$(this.element).find('.forminator-multi-upload').forminatorFrontMultiFile( this.$el );
+
 			this.upload_field();
 
 			// Handle function on resize
 			$(window).on('resize', function () {
-
 				self.responsive_captcha();
-
 			});
 
 		},
@@ -311,13 +318,13 @@
 			this.$el.on('click', '.forminator-social--icon a', function (e) {
 				e.preventDefault();
 				var social        = $(this).data('social'),
-				    url       = $(this).closest('.forminator-social--icons').data('url'),
+				    url           = $(this).closest('.forminator-social--icons').data('url'),
 				    message       = $(this).closest('.forminator-social--icons').data('message'),
 				    message       = encodeURIComponent(message),
 					social_shares = {
 						'facebook': 'https://www.facebook.com/sharer/sharer.php?u=' + window.location.href + '&t=' + message,
-						'twitter': 'https://twitter.com/intent/tweet?&url=' + url + '&text=' + message,
-						'google': 'https://plus.google.com/share?url=' + window.location.href,
+						'twitter' : 'https://twitter.com/intent/tweet?&url=' + url + '&text=' + message,
+						'google'  : 'https://plus.google.com/share?url=' + window.location.href,
 						'linkedin': 'https://www.linkedin.com/shareArticle?mini=true&url=' + window.location.href + '&title=' + message
 					};
 
@@ -431,7 +438,13 @@
 				select2     = form.find( '.forminator-select2' ),
 				multiselect = form.find( '.forminator-multiselect' ),
 				stripe		= form.find( '.forminator-stripe-element' )
-			;
+				;
+
+			var isDefault  = ( form.attr( 'data-design' ) === 'default' ),
+				isBold     = ( form.attr( 'data-design' ) === 'bold' ),
+				isFlat     = ( form.attr( 'data-design' ) === 'flat' ),
+				isMaterial = ( form.attr( 'data-design' ) === 'material' )
+				;
 
 			if ( input.length ) {
 				input.each( function() {
@@ -449,7 +462,8 @@
 				FUI.select2();
 			}
 
-			if ( select.length ) {
+			if ( ( isDefault || isBold || isFlat || isMaterial ) && select.length ) {
+
 				select.each( function() {
 					FUI.select( this );
 				});
@@ -618,7 +632,7 @@
 
 				element.on( 'load change keyup keydown', function( e ) {
 
-					if ( undefined !== typeof elementTime && false !== elementTime ) {
+					if ( 'undefined' !== typeof elementTime && false !== elementTime ) {
 
 						if ( 'hours' === element.data( 'field' ) ) {
 
@@ -833,7 +847,6 @@
 			var self = this,
 			    form = $(this.element)
 			;
-
 			// Toggle file remove button
 			this.toggle_file_input();
 
@@ -854,31 +867,28 @@
 
 			});
 
-			form.find( '.forminator-button-upload' ).on( 'click', function (e) {
+			form.find( '.forminator-input-file, .forminator-input-file-required' ).change(function () {
+				var $nameLabel = $(this).closest( '.forminator-file-upload' ).find( '> span' ),
+					vals = $(this).val(),
+					val  = vals.length ? vals.split('\\').pop() : ''
+				;
 
-				e.preventDefault();
+				$nameLabel.text(val);
+
+				self.toggle_file_input();
+			});
+
+			form.find( '.forminator-button-upload' ).on( 'click', function (e) {
+				e.preventDefault();;
 
 				var $id        = $(this).attr('data-id'),
-				    $target    = form.find('input#' + $id),
-				    $nameLabel = $(this).closest( '.forminator-file-upload' ).find( '> span' )
+				    $target    = form.find('input#' + $id)
 					;
 
 				$target.trigger('click');
-
-				$target.change(function () {
-
-					var vals = $(this).val(),
-					    val  = vals.length ? vals.split('\\').pop() : ''
-					;
-
-					$nameLabel.text(val);
-
-					self.toggle_file_input();
-
-				});
 			});
 
-			form.find( '.forminator-input-file' ).on('change', function (e) {
+			form.find( '.forminator-input-file, .forminator-input-file-required' ).on('change', function (e) {
 
 				e.preventDefault();
 

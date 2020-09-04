@@ -1,5 +1,5 @@
 <?php
-$membership_type = WPMUDEV_Dashboard::$api->get_membership_type( $project_id );
+$membership_type = WPMUDEV_Dashboard::$api->get_membership_type();
 $hide_footer     = false;
 $footer_text     = sprintf( __( 'Made with %s by WPMU DEV', 'wpmudev' ), ' <i class="sui-icon-heart"></i>' );
 if ( 'full' === $membership_type ) {

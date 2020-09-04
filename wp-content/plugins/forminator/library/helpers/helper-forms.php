@@ -630,18 +630,20 @@ function forminator_prepare_css( $css_string, $prefix, $as_array = false, $separ
 		$count = count( $a_styles );
 		for ( $a = 0; $a < $count; $a ++ ) {
 			if ( trim( $a_styles[ $a ] ) !== '' ) {
-				$a_key_value = explode( ':', $a_styles[ $a ] );
+				$a_key_value = array_map( 'trim', explode( ':', $a_styles[ $a ] ) );
 				// build the master css array
-				if ( count( $a_key_value ) > 2 ) {
+				if ( count( $a_key_value ) >= 2 ) {
 					$a_key_value_to_join = array_slice( $a_key_value, 1 );
-					$a_key_value[1]      = implode( ':', $a_key_value_to_join );
+
+					$a_key_value[1]      = implode( ":", $a_key_value_to_join );
+
+					$css_array[ $name ][ $a_key_value[0] ] = $a_key_value[1];
+					$prepared                              .= ( $a_key_value[0] . ": " . $a_key_value[1] );// . strpos($a_key_value[1], "!important") === false ? " !important;": ";";
+					if ( strpos( $a_key_value[1], "!important" ) === false ) {
+						$prepared .= " !important";
+					}
+					$prepared .= ";";
 				}
-				$css_array[ $name ][ $a_key_value[0] ] = $a_key_value[1];
-				$prepared                             .= ( $a_key_value[0] . ': ' . $a_key_value[1] );// . strpos($a_key_value[1], "!important") === false ? " !important;": ";";
-				if ( strpos( $a_key_value[1], '!important' ) === false ) {
-					$prepared .= ' !important';
-				}
-				$prepared .= ';';
 			}
 		}
 		$prepared .= '}';
@@ -1071,7 +1073,7 @@ function forminator_get_chart_data( Forminator_Poll_Form_Model $poll ) {
 		foreach ( $fields as $field ) {
 
 			// Label
-			$label = addslashes( $field->title );
+			$label =  sanitize_text_field( $field->title );
 
 			// Votes
 			$slug    = isset( $field->slug ) ? $field->slug : sanitize_title( $label );
@@ -1100,7 +1102,13 @@ function forminator_get_chart_data( Forminator_Poll_Form_Model $poll ) {
 		}
 	}
 
-	return $chart_datas;
+	/**
+	 * Filters chart datas. Can be helpful in reordering data in charts.
+	 *
+	 * @param array $chart_datas Array with labels, number of votes and colors.
+	 * @since 1.13
+	 */
+	return apply_filters( 'forminator_polls_chart_datas', $chart_datas );
 }
 
 /**

@@ -29,7 +29,7 @@ class GDPR_Modules {
 	/**
 	 * Language code.
 	 *
-	 * @var string $wmpl_lang Language code.
+	 * @var string $wpml_lang Language code.
 	 */
 	protected $wpml_lang;
 
@@ -332,7 +332,7 @@ class GDPR_Modules {
 		$wpml_lang            = $this->wpml_lang;
 		$gdpr_default_content = new Moove_GDPR_Content();
 		$layout               = isset( $modal_options['moove_gdpr_plugin_layout'] ) ? $modal_options['moove_gdpr_plugin_layout'] : 'v1';
-		$tab_title            = isset( $modal_options[ 'moove_gdpr_cookie_policy_tab_nav_label' . $wpml_lang ] ) && $modal_options[ 'moove_gdpr_cookie_policy_tab_nav_label' . $wpml_lang ] ? $modal_options[ 'moove_gdpr_cookie_policy_tab_nav_label' . $wpml_lang ] : __( '3rd Party Cookies', 'gdpr-cookie-compliance' );
+		$tab_title            = isset( $modal_options[ 'moove_gdpr_cookie_policy_tab_nav_label' . $wpml_lang ] ) && $modal_options[ 'moove_gdpr_cookie_policy_tab_nav_label' . $wpml_lang ] ? $modal_options[ 'moove_gdpr_cookie_policy_tab_nav_label' . $wpml_lang ] : __( 'Cookie Policy', 'gdpr-cookie-compliance' );
 		$tab_content          = isset( $modal_options[ 'moove_gdpr_cookies_policy_tab_content' . $wpml_lang ] ) && $modal_options[ 'moove_gdpr_cookies_policy_tab_content' . $wpml_lang ] ? $modal_options[ 'moove_gdpr_cookies_policy_tab_content' . $wpml_lang ] : $gdpr_default_content->moove_gdpr_get_cookie_policy_content();
 		$data                 = new stdClass();
 		$data->options        = $modal_options;

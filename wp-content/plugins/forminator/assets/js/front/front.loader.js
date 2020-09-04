@@ -160,8 +160,13 @@
 				message = wrapper_message.get(0).outerHTML;
 			}
 
-			this.$el
+			if ( this.$el.parent().hasClass( 'forminator-guttenberg' ) ) {
+				this.$el.parent()
+				    .html(html);
+			} else {
+				this.$el
 			    .replaceWith(html);
+			}
 
 			if (message) {
 				$('#forminator-module-' + id + '[data-forminator-render=' + render_id + '] .forminator-response-message')

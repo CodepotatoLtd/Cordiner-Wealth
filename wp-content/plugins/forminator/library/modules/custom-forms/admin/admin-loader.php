@@ -313,6 +313,7 @@ class Forminator_Custom_Form_Admin extends Forminator_Admin_Module {
 					'recipients'       => get_option( 'admin_email' ),
 					'email-subject'    => __( "New Form Entry #{submission_id} for {form_name}", Forminator::DOMAIN ),
 					'email-editor'     => __( "You have a new website form submission: <br/> {all_fields} <br/>---<br/> This message was sent from {site_url}.", Forminator::DOMAIN ),
+					'email-attachment' => "true",
 				)
 			);
 		}

@@ -1412,8 +1412,49 @@ class Forminator_Poll_Front extends Forminator_Render_Form {
 	 * @return array
 	 */
 	public function ajax_display( $id, $is_preview = false, $data = false, $hide = true, $last_submit_data = array(), $extra = array() ) {
+		//The first module and preview for it
+		$id = isset( $id ) ? intval( $id ) : null;
 
-		if ( $data && ! empty( $data ) ) {
+		if ( ( is_null( $id ) || $id <= 0 ) && $is_preview && $data ) {
+			$answers = $settings = [];
+
+			$form_model = new Forminator_Poll_Form_Model();
+			$status = Forminator_Poll_Form_Model::STATUS_PUBLISH;
+
+			// Check if answers exist
+			if ( isset( $data['answers'] ) ) {
+				$answers = forminator_sanitize_field( $data['answers'] );
+			}
+
+			if ( isset( $data['settings'] ) ) {
+				// Sanitize settings
+				$settings = forminator_sanitize_field( $data['settings'] );
+				$form_model->set_var_in_array( 'name', 'formName', $settings );
+			}else{
+				$form_model->set_var_in_array( 'name', 'formName', $data, 'forminator_sanitize_field' );
+			}
+
+			// Sanitize admin email message
+			if ( isset( $data['settings']['admin-email-editor'] ) ) {
+				$settings['admin-email-editor'] = $data['settings']['admin-email-editor'];
+			}
+
+			$settings['version'] = '1.0';
+
+			$form_model->settings = $settings;
+			foreach ( $answers as $answer ) {
+				$field_model  = new Forminator_Form_Field_Model();
+				$answer['id'] = $answer['element_id'];
+				$field_model->import( $answer );
+				$field_model->slug = $answer['element_id'];
+				$form_model->add_field( $field_model );
+			}
+
+			$form_model->status = $status;
+
+			$this->model = $form_model;
+			$this->model->id = $id;
+		} elseif ( $data && ! empty( $data ) ) {
 			$this->model = Forminator_Poll_Form_Model::model()->load_preview( $id, $data );
 
 			// its preview!

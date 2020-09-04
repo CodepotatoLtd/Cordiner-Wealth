@@ -102,9 +102,6 @@ class Forminator_GFBlock_Quizzes extends Forminator_GFBlock_Abstract {
 
 		forminator_print_front_styles( FORMINATOR_VERSION );
 		forminator_print_front_scripts( FORMINATOR_VERSION );
-
-		// Forminator UI
-		wp_enqueue_style( 'forminator-quizzes', forminator_plugin_url() . 'assets/css/front.min.css', array(), FORMINATOR_VERSION );
 	}
 
 	/**

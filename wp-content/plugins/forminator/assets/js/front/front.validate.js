@@ -290,11 +290,15 @@
 						holderError = holderField.find( '.forminator-error-message' );
 					}
 
-					// Remove invalid attribute for screen readers
+					var holderFile  = holderError.closest('ul.forminator-uploaded-files');
+
+						// Remove invalid attribute for screen readers
 					holder.removeAttr( 'aria-invalid' );
 
 					// Remove error message
-					holderError.remove();
+					if( holderFile.length < 0 ) {
+						holderError.remove();
+					}
 
 					// Remove error class
 					holderField.removeClass( 'forminator-has_error' );
@@ -308,6 +312,11 @@
 
 			});
 
+			$( this.element ).on('forminator.validate.signature', function () {
+				//validator.element( $( this ).find( "input[id$='_data']" ) );
+				var validator = $( this ).validate();
+				validator.form();
+			});
 		}
 	});
 
@@ -455,6 +464,24 @@
 		score = natLog / Math.LN2;
 
 		return score < 56 ? false : true;
+	});
+
+	$.validator.addMethod("extension", function (value, element, param) {
+		var check = false;
+		if ($.trim(value) !== '') {
+			var extension = value.replace(/^.*\./, '');
+			if (extension == value) {
+				extension = 'notExt';
+			} else {
+				extension = extension.toLowerCase();
+			}
+
+			if (param.indexOf(extension) != -1) {
+				check = true;
+			}
+		}
+
+		return this.optional(element) || check;
 	});
 
 	// $.validator.methods.required = function(value, element, param) {

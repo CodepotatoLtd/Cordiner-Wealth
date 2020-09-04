@@ -149,7 +149,10 @@ class Forminator_Addon_Hubspot_Form_Hooks extends Forminator_Addon_Form_Hooks_Ab
 
 			$list_id = $connection_settings['list_id'];
 
-			$fields_map = $connection_settings['fields_map'];
+			$deafult_fields = $connection_settings['fields_map'];
+			$custom_fields_map = array_filter( $connection_settings['custom_fields_map'] );
+
+			$fields_map = array_merge( $deafult_fields, $custom_fields_map );
 
 			$email_element_id = $connection_settings['fields_map']['email'];
 			if ( ! isset( $submitted_data[ $email_element_id ] ) || empty( $submitted_data[ $email_element_id ] ) ) {
@@ -167,6 +170,15 @@ class Forminator_Addon_Hubspot_Form_Hooks extends Forminator_Addon_Form_Hooks_Ab
 				'lastname',
 				'jobtitle',
 			);
+			$extra_field = array();
+			if ( ! empty( $custom_fields_map ) ) {
+				foreach( $custom_fields_map as $custom => $custom_field ) {
+					if( ! empty( $custom ) ) {
+						$extra_field[] = $custom;
+					}
+				}
+			}
+			$common_fields = array_merge( $common_fields, $extra_field );
 			foreach ( $common_fields as $common_field ) {
 				// not setup
 				if ( ! isset( $fields_map[ $common_field ] ) ) {
@@ -219,7 +231,6 @@ class Forminator_Addon_Hubspot_Form_Hooks extends Forminator_Addon_Form_Hooks_Ab
 				$form_settings,
 				$form_settings_instance
 			);
-
 			$contact_id = $api->add_update_contact( $args );
 			// Add contact to contact list
 			$toObjectId = null;
@@ -241,7 +252,17 @@ class Forminator_Addon_Hubspot_Form_Hooks extends Forminator_Addon_Form_Hooks_Ab
 				$ticket_description           = forminator_addon_replace_custom_vars( $connection_settings['ticket_description'], $submitted_data, $this->custom_form, $form_entry_fields, false );
 				$ticket['ticket_description'] = $ticket_description;
 				$supported_file               = isset( $submitted_data[ $connection_settings['supported_file'] ] ) ? $submitted_data[ $connection_settings['supported_file'] ] : array();
-				$ticket['supported_file']     = ! empty( $supported_file['file_url'] ) ? $supported_file['file_url'] : '';
+				$supported_file_url           = '';
+
+				if ( ! empty( $supported_file['file_url'] ) ) {
+					if ( is_array( $supported_file['file_url'] ) ) {
+						$supported_file_url = implode( ', ', $supported_file['file_url'] );
+					} else {
+						$supported_file_url = $supported_file['file_url'];
+					}
+				}
+
+				$ticket['supported_file'] = $supported_file_url;
 
 				$object_id = $api->create_ticket( $ticket );
 

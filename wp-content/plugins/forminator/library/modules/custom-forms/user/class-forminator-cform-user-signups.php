@@ -311,7 +311,7 @@ class Forminator_CForm_User_Signups {
 			return new WP_Error( 'email_already_exists', __( 'Sorry, that email address is already used!', Forminator::DOMAIN ), $signup );
 		}
 
-		if ( is_multisite() ) {
+		if ( forminator_is_main_site() ) {
 			remove_action( 'forminator_cform_user_registered', array( 'Forminator_CForm_Front_User_Registration', 'create_site' ) );
 		}
 
@@ -336,7 +336,8 @@ class Forminator_CForm_User_Signups {
 
 		do_action( 'forminator_activate_user', $user_id, $signup->meta );
 
-		if ( is_multisite() ) {
+		//Create site only on main site and if option for that is enabled
+		if ( forminator_is_main_site() ) {
 			$option_create_site = forminator_get_property( $signup->settings, 'site-registration' );
 			if ( isset( $option_create_site ) && 'enable' === $option_create_site ) {
 				$forminator_user_registration->create_site( $user_id, $signup->form, $signup->entry, $password, $signup->submitted_data );

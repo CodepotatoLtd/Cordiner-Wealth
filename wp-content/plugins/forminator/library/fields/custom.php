@@ -247,16 +247,17 @@ class Forminator_Custom extends Forminator_Field {
 	 * Field back-end validation
 	 *
 	 * @since 1.0
-	 * @param array $field
+	 * @param array        $field
 	 * @param array|string $data
+	 * @param array        $post_data
 	 */
-	public function validate( $field, $data ) {
+	public function validate( $field, $data, $post_data = array() ) {
 		if ( $this->is_required( $field ) ) {
 			$id   = self::get_property( 'element_id', $field );
 			$name = self::get_property( 'custom_field_name', $field, __( 'field name', Forminator::DOMAIN ) );
 			if ( empty( $data ) ) {
 				/* translators: ... */
-				$this->validation_message[ $id ] = sprintf( __( 'This field is required. Please enter the %s', Forminator::DOMAIN ), $name );
+				$this->validation_message[ $id ] = sprintf( __( 'This field is required. Please enter the %s.', Forminator::DOMAIN ), $name );
 			}
 		}
 	}

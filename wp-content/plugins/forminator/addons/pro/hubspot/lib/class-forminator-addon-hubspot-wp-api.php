@@ -646,4 +646,19 @@ class Forminator_Addon_Hubspot_Wp_Api {
 		return $response;
 	}
 
+	/**
+	 * Get Properties list
+	 *
+	 * @param array $args
+	 *
+	 * @return array|mixed|object
+	 * @throws Forminator_Addon_Hubspot_Wp_Api_Exception
+	 * @throws Forminator_Addon_Hubspot_Wp_Api_Not_Found_Exception
+	 */
+	public function get_properties( $args = array() ) {
+		$response = $this->send_authenticated( 'GET', 'properties/v1/contacts/properties', $args );
+
+		return $response;
+	}
+
 }

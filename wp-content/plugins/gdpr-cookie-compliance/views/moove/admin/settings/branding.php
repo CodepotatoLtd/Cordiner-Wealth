@@ -16,6 +16,7 @@ $option_name          = $gdpr_default_content->moove_gdpr_get_option_name();
 $gdpr_options         = get_option( $option_name );
 $wpml_lang            = $gdpr_default_content->moove_gdpr_get_wpml_lang();
 $gdpr_options         = is_array( $gdpr_options ) ? $gdpr_options : array();
+
 if ( isset( $_POST ) && isset( $_POST['moove_gdpr_nonce'] ) ) :
 	$nonce = sanitize_key( $_POST['moove_gdpr_nonce'] );
 	if ( ! wp_verify_nonce( $nonce, 'moove_gdpr_nonce_field' ) ) :

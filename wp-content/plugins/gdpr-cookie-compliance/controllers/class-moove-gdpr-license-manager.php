@@ -41,22 +41,36 @@ class Moove_GDPR_License_Manager {
 		
 		$response = wp_remote_get( 
 			$request_url,
-			 array(
+			array(
         'timeout'     => 40,
         'httpversion' => '1.1',
     	)
 		);
 
-		if ( ! isset( $response['body'] ) || ! json_decode( $response['body'], true ) ) {
+		if ( is_wp_error( $response ) || ! isset( $response['body'] ) || ! json_decode( $response['body'], true ) ) {
 			$error = $response;
 			return array(
 				'valid'   => false,
+				'key'			=> $license_key,
 				'message' => array(
 					'Our Activation Server appears to be temporarily unavailable, please try again later or <a href="mailto:plugins@mooveagency.com" class="error_admin_link">contact support</a>.',
 				),
 			);
 		} else {
-			return json_decode( $response['body'], true );
+			$body = wp_remote_retrieve_body( $response );
+			if ( $body ) :
+				return json_decode( $body, true );
+			else :
+				$error = $response;
+				return array(
+					'valid'   => false,
+					'key'			=> $license_key,
+					'message' => array(
+						'Our Activation Server appears to be temporarily unavailable, please try again later or <a href="mailto:plugins@mooveagency.com" class="error_admin_link">contact support</a>.',
+					),
+				);
+			endif;
+			
 		}
 	}
 

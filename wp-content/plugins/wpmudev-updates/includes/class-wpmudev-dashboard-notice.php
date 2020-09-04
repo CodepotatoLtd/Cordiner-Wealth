@@ -311,10 +311,10 @@ class WPMUDEV_Dashboard_Message {
 	 * @since  4.0.0
 	 * @param  string $msg_id Message ID.
 	 */
-	protected function mark_as_done( $msg_id ) {
+	protected function mark_as_done( $msg_id, $force = 0 ) {
 		$this->load_queue();
 
-		if ( isset( $this->queue[ $msg_id ] ) ) {
+		if ( isset( $this->queue[ $msg_id ] ) || $force ) {
 			$this->queue[ $msg_id ]['dismissed'] = true;
 			$this->save_queue();
 		}
@@ -333,9 +333,10 @@ class WPMUDEV_Dashboard_Message {
 	 */
 	public function ajax_dismiss() {
 		$msg_id = intval( $_POST['msg_id'] );
+		$force  = isset( $_POST['force'] ) ? intval( $_POST['force'] ) : 0;
 
 		if ( ! empty( $msg_id ) ) {
-			$this->mark_as_done( $msg_id );
+			$this->mark_as_done( $msg_id, $force );
 			wp_send_json_success();
 		}
 

@@ -220,7 +220,7 @@
 					$target_message.html('<label class="forminator-label--error"><span>' + error_msg + '</span></label>');
 					self.focus_to_element($target_message);
 				},
-			}).render('#paypal-button-container-' + paypalData.form_id);
+			}).render( $form.find( '.forminator-button-paypal' )[0] );
 		},
 
 		configurePayPal: function () {

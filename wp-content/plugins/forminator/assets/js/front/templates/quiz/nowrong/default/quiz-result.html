@@ -138,7 +138,7 @@
 	<?php } ?>
 }
 
-.forminator-ui.forminator-quiz-<?php echo $properties['form_id'] ?> .forminator-quiz--result .forminator-result .forminator-button-refresh {
+.forminator-ui.forminator-quiz-<?php echo $properties['form_id'] ?> .forminator-quiz--result .forminator-result .forminator-result--retake {
 	<?php if ( forminator_array_value_exists( $properties, 'nowrong-toggle-palette' ) ) { ?>
 		<?php if ( forminator_array_value_exists( $properties, 'nowrong-result-retake-background-static' ) ) { ?>
 			background-color: <?php echo $properties['nowrong-result-retake-background-static'] ?>;
@@ -180,7 +180,7 @@
 	<?php } ?>
 }
 
-.forminator-ui.forminator-quiz-<?php echo $properties['form_id'] ?> .forminator-quiz--result .forminator-result .forminator-button-refresh:hover {
+.forminator-ui.forminator-quiz-<?php echo $properties['form_id'] ?> .forminator-quiz--result .forminator-result .forminator-result--retake:hover {
 	<?php if ( forminator_array_value_exists( $properties, 'nowrong-toggle-palette' ) ) { ?>
 		<?php if ( forminator_array_value_exists( $properties, 'nowrong-result-retake-background-hover' ) ) { ?>
 			background-color: <?php echo $properties['nowrong-result-retake-background-hover'] ?>;
@@ -198,8 +198,8 @@
 	<?php } ?>
 }
 
-.forminator-ui.forminator-quiz-<?php echo $properties['form_id'] ?> .forminator-quiz--result .forminator-result .forminator-button-refresh:focus,
-.forminator-ui.forminator-quiz-<?php echo $properties['form_id'] ?> .forminator-quiz--result .forminator-result .forminator-button-refresh:active {}
+.forminator-ui.forminator-quiz-<?php echo $properties['form_id'] ?> .forminator-quiz--result .forminator-result .forminator-result--retake:focus,
+.forminator-ui.forminator-quiz-<?php echo $properties['form_id'] ?> .forminator-quiz--result .forminator-result .forminator-result--retake:active {
 	<?php if ( forminator_array_value_exists( $properties, 'nowrong-toggle-palette' ) ) { ?>
 		<?php if ( forminator_array_value_exists( $properties, 'nowrong-result-retake-background-active' ) ) { ?>
 			background-color: <?php echo $properties['nowrong-result-retake-background-active'] ?>;
@@ -214,5 +214,53 @@
 	<?php } else { ?>
 		background-color: #17A8E3;
 		color: #FFFFFF;
+	<?php } ?>
+}
+
+.forminator-ui.forminator-quiz-<?php echo $properties['form_id'] ?> .forminator-quiz--result .forminator-quiz--social .forminator-social--text {
+	<?php if ( forminator_array_value_exists( $properties, 'nowrong-toggle-palette' ) ) { ?>
+		<?php if ( forminator_array_value_exists( $properties, 'nowrong-sshare-color' ) ) { ?>
+			color: <?php echo $properties['nowrong-sshare-color'] ?>;
+		<?php } else { ?>
+			color: #4D4D4D;
+		<?php } ?>
+	<?php } else { ?>
+		color: #4D4D4D;
+	<?php } ?>
+}
+
+.forminator-ui.forminator-quiz-<?php echo $properties['form_id'] ?> .forminator-quiz--result .forminator-quiz--social .forminator-social--icons li a .forminator-icon-social-facebook {
+	<?php if ( forminator_array_value_exists( $properties, 'nowrong-toggle-palette' ) ) { ?>
+		<?php if ( forminator_array_value_exists( $properties, 'nowrong-social-facebook' ) ) { ?>
+			color: <?php echo $properties['nowrong-social-facebook'] ?>;
+		<?php } else { ?>
+			color: #0084BF;
+		<?php } ?>
+	<?php } else { ?>
+		color: #0084BF;
+	<?php } ?>
+}
+
+.forminator-ui.forminator-quiz-<?php echo $properties['form_id'] ?> .forminator-quiz--result .forminator-quiz--social .forminator-social--icons li a .forminator-icon-social-twitter {
+	<?php if ( forminator_array_value_exists( $properties, 'nowrong-toggle-palette' ) ) { ?>
+		<?php if ( forminator_array_value_exists( $properties, 'nowrong-social-twitter' ) ) { ?>
+			color: <?php echo $properties['nowrong-social-twitter'] ?>;
+		<?php } else { ?>
+			color: #1DA1F2;
+		<?php } ?>
+	<?php } else { ?>
+		color: #1DA1F2;
+	<?php } ?>
+}
+
+.forminator-ui.forminator-quiz-<?php echo $properties['form_id'] ?> .forminator-quiz--result .forminator-quiz--social .forminator-social--icons li a .forminator-icon-social-linkedin {
+	<?php if ( forminator_array_value_exists( $properties, 'nowrong-toggle-palette' ) ) { ?>
+		<?php if ( forminator_array_value_exists( $properties, 'nowrong-social-linkedin' ) ) { ?>
+			color: <?php echo $properties['nowrong-social-linkedin'] ?>;
+		<?php } else { ?>
+			color: #0084BF;
+		<?php } ?>
+	<?php } else { ?>
+		color: #0084BF;
 	<?php } ?>
 }

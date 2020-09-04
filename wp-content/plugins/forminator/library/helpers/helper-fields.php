@@ -166,6 +166,17 @@ function forminator_get_fields() {
 }
 
 /**
+ * Return the array of PRO fields for promotion PRO version
+ *
+ * @return array
+ */
+function forminator_get_pro_fields() {
+	$forminator = Forminator_Core::get_instance();
+
+	return $forminator->pro_fields;
+}
+
+/**
  * Return field objects as array
  *
  * @since 1.0
@@ -815,10 +826,35 @@ function forminator_get_formatted_form_name( Forminator_Custom_Form_Model $custo
  * @return string
  */
 function forminator_get_submission_id( Forminator_Custom_Form_Model $custom_form, $data, Forminator_Form_Entry_Model $entry ) {
-	return esc_html( $entry->form_id . $entry->entry_id );
+	return esc_html( $entry->entry_id );
 }
 
 /**
+ * Get referer url
+ *
+ * @since ?
+ *
+ * @param string $embed_url
+ * @return string
+ */
+function forminator_get_referer_url( $embed_url = '' ) {
+	$referer_url = "";
+	if ( isset( $_REQUEST['extra'] ) && is_array( $_REQUEST['extra'] ) && isset( $_REQUEST['extra']['referer_url'] ) ) {
+		$referer_url = sanitize_text_field( $_REQUEST['extra']['referer_url'] );
+	} elseif ( isset( $_REQUEST['referer_url'] ) ) {
+		$referer_url = sanitize_text_field( $_REQUEST['referer_url'] );
+	} elseif ( isset ( $_SERVER['HTTP_REFERER'] ) ) {
+		$referer_url = $_SERVER['HTTP_REFERER'];
+	}
+
+	if ( $referer_url == "" ) {
+		$referer_url = $embed_url;
+	}
+
+	return $referer_url;
+}
+
+/*
  * Get Submission URL
  *
  * @since 1.11
@@ -940,7 +976,7 @@ function forminator_replace_variables( $content, $id = false, $data_current_url 
 		$content  = str_replace( '{site_url}', $site_url, $content );
 
 		// Handle HTTP Refer URL variable
-		$refer_url = isset( $_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : $embed_url;
+		$refer_url = forminator_get_referer_url( $embed_url );
 		$content   = str_replace( '{refer_url}', $refer_url, $content );
 		$content   = str_replace( '{http_refer}', $refer_url, $content );
 
@@ -1027,9 +1063,12 @@ function render_entry( $item, $column_name, $field = null, $type = '' ) {
 				foreach ( $data as $key => $value ) {
 					if ( is_array( $value ) ) {
 						if ( 'file' === $key && isset( $value['file_url'] ) ) {
-							$file_name = basename( $value['file_url'] );
-							$file_name = "<a href='" . esc_url( $value['file_url'] ) . "' target='_blank' rel='noreferrer' title='" . __( 'View File', Forminator::DOMAIN ) . "'>$file_name</a> ,";
-							$output    .= $file_name;
+							$file_urls = is_array( $value['file_url'] ) ? $value['file_url'] : array( $value['file_url'] );
+							foreach ( $file_urls as $file_url ) {
+								$file_name = basename( $file_url );
+								$file_name = "<a href='" . esc_url( $file_url ) . "' target='_blank' rel='noreferrer' title='" . __( 'View File', Forminator::DOMAIN ) . "'>$file_name</a><br>";
+								$output    .= $file_name;
+							}
 						}
 
 					} else {
@@ -1759,6 +1798,17 @@ function forminator_replace_quiz_form_data( $content, Forminator_Quiz_Form_Model
 }
 
 /**
+ * Return uniq key value
+ *
+ * @since 1.13
+ *
+ * @return string
+ */
+function forminator_unique_key() {
+	return wp_rand( 1000, 9999 ) . '-' . wp_rand( 1000, 9999 );
+}
+
+/**
  * Return vars for quiz
  *
  * @since 1.6.2
@@ -1871,4 +1921,34 @@ function datepicker_default_format( $format ) {
 	}
 
 	return $format;
+}
+
+/**
+ * Forminator upload path
+ *
+ * @return string|null
+ */
+function forminator_upload_root() {
+	$dir = wp_upload_dir();
+
+	if ( $dir['error'] ) {
+		return null;
+	}
+
+	return trailingslashit( $dir['basedir'] ) . 'forminator_temp';
+}
+
+/**
+ * Forminator upload url
+ *
+ * @return string|null
+ */
+function formninator_upload_url_root() {
+	$dir = wp_upload_dir();
+
+	if ( $dir['error'] ) {
+		return null;
+	}
+
+	return $dir['baseurl'] . 'forminator_upload';
 }

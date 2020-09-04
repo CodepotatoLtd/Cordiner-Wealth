@@ -290,12 +290,6 @@ class Forminator_Entries_Page extends Forminator_Admin_Page {
 			'3.0.3',
 			true
 		);
-		wp_enqueue_style(
-			'forminator-entries-datepicker-range',
-			forminator_plugin_url() . 'assets/css/daterangepicker.min.css',
-			array(),
-			'3.0.3'
-		);
 
 		// use inline script to allow hooking into this
 		$daterangepicker_ranges

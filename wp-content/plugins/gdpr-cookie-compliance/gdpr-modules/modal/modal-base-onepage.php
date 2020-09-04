@@ -5,9 +5,12 @@
 ?>
 
 <!-- V2 -->
-<div id="moove_gdpr_cookie_modal" class="lity-hide" role="dialog">
+<div id="moove_gdpr_cookie_modal" class="lity-hide" role="complementary" aria-label="<?php esc_html_e('GDPR Settings Screen', 'gdpr-cookie-compliance'); ?>">
   <div class="moove-gdpr-modal-content moove-clearfix logo-position-<?php echo esc_attr( $content->logo_position ); ?> <?php echo esc_attr( $content->theme ); ?>">
-    <a href="#" class="moove-gdpr-modal-close" rel="nofollow"><span class="gdpr-icon moovegdpr-arrow-close"></span></a>
+    <button class="moove-gdpr-modal-close">
+      <span class="gdpr-sr-only"><?php esc_html_e( 'Close GDPR Cookie Settings', 'gdpr-cookie-compliance' ); ?></span>
+      <span class="gdpr-icon moovegdpr-arrow-close"></span>
+    </button>
     <div class="moove-gdpr-modal-left-content">
       <ul id="moove-gdpr-menu">
         <?php echo gdpr_get_module('tab-navigation'); ?>

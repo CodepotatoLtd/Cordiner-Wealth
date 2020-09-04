@@ -298,6 +298,8 @@ abstract class Forminator_Render_Form {
 
 		$html .= $this->render_fields( false );
 
+		$html .= $this->referer_url_field( false );
+
 		if ( function_exists( 'wp_defender' ) ) {
 			$html .= $this->render_form_authentication();
 		}
@@ -560,6 +562,32 @@ abstract class Forminator_Render_Form {
 		} else {
 			/** @noinspection PhpInconsistentReturnPointsInspection */
 			return apply_filters( 'forminator_render_fields_markup', $html, $fields );
+		}
+	}
+
+	/**
+	 * Return referer url field markup
+	 *
+	 * @since ?
+	 *
+	 * @param bool $render
+	 *
+	 * @return string|void
+	 */
+	public function referer_url_field( $render = true ) {
+		$referer_url = "";
+		if( isset( $_REQUEST['extra'] ) && is_array( $_REQUEST['extra'] ) && isset( $_REQUEST['extra']['referer_url'] ) ) {
+			$referer_url = sanitize_text_field($_REQUEST['extra']['referer_url']);
+		} elseif ( isset ( $_SERVER['HTTP_REFERER'] ) ) {
+			$referer_url = $_SERVER['HTTP_REFERER'];
+		}
+
+		$html = sprintf( '<input type="hidden" name="referer_url" value="%s" />', esc_attr( $referer_url ) );
+
+		if ( $render ) {
+			echo wp_kses_post( $html ); // WPCS: XSS ok.
+		} else {
+			return $html;
 		}
 	}
 
@@ -830,6 +858,7 @@ abstract class Forminator_Render_Form {
 				'extra'            => array(
 					'_wp_http_referer' => wp_unslash( $_SERVER['REQUEST_URI'] ),
 					'page_id'          => $this->get_post_id(),
+					'referer_url'	=> '',//Original referer url where the user come from. This field will be set via JS
 				),
 			)
 		);
@@ -839,11 +868,28 @@ abstract class Forminator_Render_Form {
 				"use strict";
 				(function () {
 					$(document).ready(function () {
+						if (window.elementorFrontend) {
+							if (typeof elementorFrontend.hooks !== "undefined") {
+								elementorFrontend.hooks.addAction("frontend/element_ready/global", function ( $scope ) {
+									if ( $scope.find( "#forminator-module-' . $id . '" ).length > 0 ) {
+										if (typeof ($.fn.forminatorLoader) !== \'undefined\') {
+											var front_loader_config = ' . $front_loader_config . ';
+											front_loader_config.extra.referer_url = document.referrer;
+											$(\'#forminator-module-' . $id . '[data-forminator-render="' . self::$render_ids[ $id ] . '"]\')
+												.forminatorLoader(front_loader_config);
+										}
+									}
+								});
+							}
+						}
+
 						if (typeof ($.fn.forminatorLoader) === \'undefined\') {
 							console.log(\'forminator scripts not loaded\');
 						} else {
+							var front_loader_config = ' . $front_loader_config . ';
+							front_loader_config.extra.referer_url = document.referrer;
 							$(\'#forminator-module-' . $id . '[data-forminator-render="' . self::$render_ids[ $id ] . '"]\')
-								.forminatorLoader(' . $front_loader_config . ');
+								.forminatorLoader(front_loader_config);
 						}
 					});
 				})();

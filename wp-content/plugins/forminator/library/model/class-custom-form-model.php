@@ -265,10 +265,12 @@ class Forminator_Custom_Form_Model extends Forminator_Base_Form_Model {
 	/**
 	 * Check if can show the form
 	 *
+	 * @param $is_preview
+	 *
 	 * @since 1.0
 	 * @return bool
 	 */
-	public function form_is_visible() {
+	public function form_is_visible( $is_preview ) {
 		$form_settings = $this->settings;
 		$can_show      = true;
 
@@ -283,7 +285,7 @@ class Forminator_Custom_Form_Model extends Forminator_Base_Form_Model {
 					if ( isset( $form_settings['expire_submits'] ) && ! empty( $form_settings['expire_submits'] ) ) {
 						$submits       = intval( $form_settings['expire_submits'] );
 						$total_entries = Forminator_Form_Entry_Model::count_entries( $this->id );
-						if ( $total_entries >= $submits ) {
+						if ( $total_entries >= $submits && ! $is_preview ) {
 							$can_show = false;
 						}
 					}
@@ -291,7 +293,7 @@ class Forminator_Custom_Form_Model extends Forminator_Base_Form_Model {
 					if ( isset( $form_settings['expire_date'] ) && ! empty( $form_settings['expire_date'] ) ) {
 						$expire_date  = strtotime( $form_settings['expire_date'] );
 						$current_date = strtotime( 'now' );
-						if ( $current_date > $expire_date ) {
+						if ( $current_date > $expire_date && ! $is_preview ) {
 							$can_show = false;
 						}
 					}
@@ -733,5 +735,4 @@ class Forminator_Custom_Form_Model extends Forminator_Base_Form_Model {
 
 		return false;
 	}
-
 }

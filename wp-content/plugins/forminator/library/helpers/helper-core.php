@@ -127,16 +127,16 @@ function forminator_admin_enqueue_fonts( $version ) {
 function forminator_admin_enqueue_styles( $version ) {
 	wp_enqueue_style( 'select2-forminator-css', forminator_plugin_url() . 'assets/css/select2.min.css', array(), '4.0.3', false ); // Select2
 	wp_enqueue_style( 'shared-ui', forminator_plugin_url() . 'assets/css/shared-ui.min.css', array(), $version, false );
-	wp_enqueue_style( 'forminator-form-styles', forminator_plugin_url() . 'assets/css/front.min.css', array(), $version, false );
 }
 
 /**
  * Enqueue jQuery UI scripts on admin
  *
+ * @since 1.13 Loaded locally
  * @since 1.0
  */
 function forminator_admin_jquery_ui() {
-	wp_enqueue_script( 'jquery-ui', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js', array(), '1.12.1', false );
+	wp_enqueue_script( 'jquery-ui-forminator', forminator_plugin_url() . 'assets/js/library/jquery-ui.min.js', array( 'jquery' ), '1.12.1', false );
 }
 
 /**
@@ -247,6 +247,7 @@ function forminator_admin_enqueue_scripts_forms( $version, $data = array(), $l10
 		true
 	);
 	wp_enqueue_script( 'wp-color-picker-alpha', forminator_plugin_url() . 'assets/js/library/wp-color-picker-alpha.min.js', array( 'wp-color-picker' ), $version, true );
+
 	wp_localize_script( 'forminator-admin', 'forminatorData', $data );
 	wp_localize_script( 'forminator-admin', 'forminatorl10n', $l10n );
 	wp_enqueue_script( 'forminator-admin' );
@@ -323,6 +324,8 @@ function forminator_admin_enqueue_scripts_knowledge( $version, $data = array(), 
 		true
 	);
 	wp_enqueue_script( 'wp-color-picker-alpha', forminator_plugin_url() . 'assets/js/library/wp-color-picker-alpha.min.js', array( 'wp-color-picker' ), $version, true );
+	wp_enqueue_script( 'forminator-jquery-ui-touch', forminator_plugin_url() . 'assets/js/library/jquery.ui.touch-punch.min.js', array( 'jquery' ), $version, true );
+
 	wp_localize_script( 'forminator-admin', 'forminatorData', $data );
 	wp_localize_script( 'forminator-admin', 'forminatorl10n', $l10n );
 	wp_enqueue_script( 'forminator-admin' );
@@ -362,6 +365,8 @@ function forminator_admin_enqueue_scripts_personality( $version, $data = array()
 		true
 	);
 	wp_enqueue_script( 'wp-color-picker-alpha', forminator_plugin_url() . 'assets/js/library/wp-color-picker-alpha.min.js', array( 'wp-color-picker' ), $version, true );
+	wp_enqueue_script( 'forminator-jquery-ui-touch', forminator_plugin_url() . 'assets/js/library/jquery.ui.touch-punch.min.js', array( 'jquery' ), $version, true );
+
 	wp_localize_script( 'forminator-admin', 'forminatorData', $data );
 	wp_localize_script( 'forminator-admin', 'forminatorl10n', $l10n );
 	wp_enqueue_script( 'forminator-admin' );
@@ -413,7 +418,6 @@ function forminator_print_front_styles( $version = '1.0' ) {
 	// Load old styles.
 	// Remove on v1.12.0 quizzes migrate to Forminator UI.
 	wp_enqueue_style( 'forminator-ui', forminator_plugin_url() . 'assets/forminator-ui/css/src/forminator-ui.min.css', array(), $version );
-
 }
 
 /**
@@ -544,6 +548,7 @@ function forminator_localize_data() {
 			'no_file_chosen'            => __( 'No file chosen', Forminator::DOMAIN ),
 			// This is the file "/build/js/utils.js" found into intlTelInput plugin. Renamed so it makes sense within the "js/library" directory context.
 			'intlTelInput_utils_script' => forminator_plugin_url() . 'assets/js/library/intlTelInputUtils.js',
+			'process_error'             => __( 'Please try again', Forminator::DOMAIN ),
 		),
 		'poll'    => array(
 			'processing' => __( 'Submitting vote, please wait', Forminator::DOMAIN ),
@@ -896,6 +901,47 @@ function forminator_get_current_url() {
 	global $wp;
 
 	return add_query_arg( esc_attr( $_SERVER['QUERY_STRING'] ), '', trailingslashit( home_url( $wp->request ) ) );
+}
+
+/**
+ * Detect whether current request comes from any page builder preveiw page
+ *
+ * @since 1.13
+ *
+ * @return bool
+ */
+function forminator_is_page_builder_preview() {
+	static $decision;
+	if( isset( $decision ) ) {
+		return $decision;
+	}
+	$decision = false;
+	global $wp;
+
+	//Check Pro theme by Themeco https://theme.co/
+	if( defined( 'X_TEMPLATE_PATH' ) && $wp->request === 'cornerstone-endpoint' ) {
+		$decision = true;
+		return $decision;
+	}
+
+	// Check DIVI theme page builder
+	// Note : following lines of codes are perfect to detect DIVI builder.
+	// But DIVI builder is not showing Forminator forms in preview mood.
+	// So commenting out these code for now.
+	/*
+	if( defined( 'ET_CORE_VERSION' ) && isset( $_REQUEST['et_pb_preview'] ) && $_REQUEST['et_pb_preview'] ) {
+		$decision = true;
+		return $decision;
+	}
+	*/
+
+	//Check Elementor plugin
+	if( defined( 'ELEMENTOR_VERSION' ) && isset( $_REQUEST['action'] ) && $_REQUEST['action'] === 'elementor_ajax' && isset( $_REQUEST['editor_post_id'] ) && intval( $_REQUEST['editor_post_id'] ) ) {
+		$decision = true;
+		return $decision;
+	}
+
+	return $decision;
 }
 
 /**
@@ -1379,4 +1425,102 @@ function forminator_reset_plugin() {
 function forminator_addcslashes( $value, $char = '"\\/' ) {
 
 	return addcslashes( $value, $char );
+}
+
+/**
+ * Return URL link.
+ *
+ * @since 1.13
+ *
+ * @param string $link_for Accepts: 'docs', 'plugin', 'rate', 'support', 'roadmap'.
+ * @param string $campaign  Utm campaign tag to be used in link. Default: ''.
+ * @param string $adv_path  Advanced path. Default: ''.
+ *
+ * @return string
+ */
+function forminator_get_link( $link_for, $campaign = '', $adv_path = '' ) {
+	$domain   = 'https://premium.wpmudev.org';
+	$wp_org   = 'https://wordpress.org';
+	$utm_tags = "?utm_source=forminator&utm_medium=plugin&utm_campaign={$campaign}";
+
+	switch ( $link_for ) {
+		case 'docs':
+			$link = "{$domain}/docs/wpmu-dev-plugins/forminator/{$utm_tags}";
+			break;
+		case 'plugin':
+			$link = "{$domain}/project/forminator-pro/{$utm_tags}";
+			break;
+		case 'rate':
+			$link = "{$wp_org}/support/plugin/forminator/reviews/#new-post";
+			break;
+		case 'support':
+			$link = FORMINATOR_PRO ? "{$domain}/get-support/" : "{$wp_org}/support/plugin/forminator/";
+			break;
+		case 'roadmap':
+			$link = "{$domain}/roadmap/";
+			break;
+		case 'pro_link':
+			$link = "{$domain}/$adv_path";
+			break;
+		default:
+			$link = '';
+			break;
+	}
+
+	return $link;
+}
+
+/**
+ * Get the current membership status using Dash plugin.
+ *
+ * We will get the status using WPMUDEV Dashboard plugin.
+ *
+ * @since 1.13
+ *
+ * @return string
+ */
+function forminator_membership_status() {
+	// Dashboard is active.
+	if ( class_exists( 'WPMUDEV_Dashboard' ) ) {
+		// Get membership type.
+		$status = WPMUDEV_Dashboard::$api->get_membership_type( $project_id );
+		// Check if API key is available.
+		if ( 'free' === $status && WPMUDEV_Dashboard::$api->has_key() ) {
+			$status = 'expired';
+		}
+	} else {
+		$status = 'free';
+	}
+
+	/**
+	 * Filter to modify WPMUDEV membership status.
+	 *
+	 * @since 1.13
+	 *
+	 * @param string $status Status.
+	 *
+	 */
+	return apply_filters( 'forminator_wpmudev_membership_status', $status );
+}
+
+/**
+ * Check if the plugin is active network wide.
+ *
+ * @since 1.13
+ *
+ * @return bool
+ */
+function forminator_is_networkwide() {
+	if ( is_multisite() ) {
+		// Makes sure the plugin is defined before trying to use it.
+		if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
+			require_once ABSPATH . '/wp-admin/includes/plugin.php';
+		}
+
+		$active = is_plugin_active_for_network( plugin_basename( FORMINATOR_PLUGIN_BASENAME ) );
+	} else {
+		$active = false;
+	}
+
+	return $active;
 }

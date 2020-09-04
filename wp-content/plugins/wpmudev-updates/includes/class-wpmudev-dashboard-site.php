@@ -112,7 +112,7 @@ class WPMUDEV_Dashboard_Site {
 	protected static $_cache_translationupdates = false;
 
 	/**
-	 * Stores return values of get_project_infos()
+	 * Stores return values of get_project_info()
 	 *
 	 * @var array
 	 */
@@ -166,6 +166,7 @@ class WPMUDEV_Dashboard_Site {
 			'wdp-project-delete',
 			'wdp-hub-sync',
 			'wdp-project-upgrade-free',
+			'wdp-login-success',
 			'wdp-sso-status',
 		);
 		foreach ( $ajax_actions as $action ) {
@@ -614,11 +615,13 @@ class WPMUDEV_Dashboard_Site {
 	protected function _process_action( $action ) {
 		do_action( 'wpmudev_dashboard_action-' . $action );
 		$success = 'SILENT';
+		$type    = WPMUDEV_Dashboard::$api->get_membership_type();
+
 		switch ( $action ) {
 			// Tab: Support
 			// Function Grant support access.
 			case 'remote-grant':
-				if ( ! is_wpmudev_member() ) {
+				if ( ! is_wpmudev_member() && 'unit' !== $type ) {
 					$success = false;
 				} else {
 					$success = WPMUDEV_Dashboard::$api->enable_remote_access( 'start' );
@@ -639,7 +642,7 @@ class WPMUDEV_Dashboard_Site {
 			// Tab: Support
 			// Function Extend support access.
 			case 'remote-extend':
-				if ( ! is_wpmudev_member() ) {
+				if ( ! is_wpmudev_member() && 'unit' !== $type ) {
 					$success = false;
 				} else {
 					$success = WPMUDEV_Dashboard::$api->enable_remote_access( 'extend' );
@@ -797,10 +800,15 @@ class WPMUDEV_Dashboard_Site {
 
 			// setup translation updates
 			case 'translation-setup':
+
 				$locale = empty( $_REQUEST['selected_locale'] ) ? 'en_US' : $_REQUEST['selected_locale'];
+
 				$enable_auto_translation = isset( $_REQUEST['enable_auto_translation'] ) ? absint( $_REQUEST['enable_auto_translation'] ) : 0;
+
 				$this->set_option( 'enable_auto_translation', $enable_auto_translation );
+
 				$prev_locale = WPMUDEV_Dashboard::$site->get_option( 'translation_locale' );
+
 				$this->set_option( 'translation_locale', $locale );
 
 				//hub-sync to check prev locale
@@ -808,7 +816,7 @@ class WPMUDEV_Dashboard_Site {
 					// Also, force a hub-sync, since the translation setting changed.
 					WPMUDEV_Dashboard::$api->calculate_translation_upgrades( true );
 				}
-
+				$success = true;
 				break;
 
 			// setup autoupdate dashboard
@@ -1290,12 +1298,22 @@ class WPMUDEV_Dashboard_Site {
 							}
 
 						}
+						$installed_free_projects = WPMUDEV_Dashboard::$site->get_installed_free_projects();
+						$url                     = add_query_arg(
+							array( 'view' => 'sync-plugins' ),
+							WPMUDEV_Dashboard::$ui->page_urls->dashboard_url
+						);
+
+						if ( empty( $installed_free_projects ) ) {
+							$url = WPMUDEV_Dashboard::$ui->page_urls->dashboard_url;
+							if ( is_wpmudev_single_member() || is_wpmudev_member() ) {
+								$url .= '#sync-plugins';
+							}
+						}
+
 						$this->send_json_success(
 							array(
-								'redirect' => add_query_arg(
-									array( 'view' => 'sync-plugins' ),
-									WPMUDEV_Dashboard::$ui->page_urls->dashboard_url
-								),
+								'redirect' => $url
 							)
 						);
 					}
@@ -1307,6 +1325,22 @@ class WPMUDEV_Dashboard_Site {
 							$this->send_json_success();
 						}
 					}
+					break;
+
+				case 'login-success':
+					$url = WPMUDEV_Dashboard::$ui->page_urls->dashboard_url;
+					if ( $pid ) {
+						$pid = implode( ',', $pid );
+						$url  = add_query_arg(
+							array( 'updated-plugins' => $pid ),
+							$url
+						);
+					}
+					$this->send_json_success(
+						array(
+							'redirect' => $url . '#sync-plugins',
+						)
+					);
 					break;
 
 				case 'sso-status':
@@ -1981,6 +2015,14 @@ class WPMUDEV_Dashboard_Site {
 			$res->screenshots = $remote['screenshots'];
 
 			$res->free_version_slug = $remote['free_version_slug'];
+			// Temporary fix for Branda and Beehive missing or having invalid free version slugs.
+			if ( 9135 === $pid ) {
+				$res->free_version_slug = 'branda-white-labeling/ultimate-branding.php';
+			}
+			if ( 51 === $pid ) {
+				$res->free_version_slug = 'beehive-analytics/beehive-analytics.php';
+			}
+			// Temporary fix end.
 
 			// Performance: Only fetch changelog if needed.
 			if ( $fetch_full ) {
@@ -2471,7 +2513,17 @@ class WPMUDEV_Dashboard_Site {
 	 */
 	public function user_can_install( $project_id, $only_license = false ) {
 		$data            = WPMUDEV_Dashboard::$api->get_projects_data();
-		$membership_type = WPMUDEV_Dashboard::$api->get_membership_type( $license_for );
+		$membership_type = WPMUDEV_Dashboard::$api->get_membership_type();
+		$licensed_projects = WPMUDEV_Dashboard::$api->get_membership_projects();
+
+		if ( 'unit' === $membership_type ) {
+			foreach ( $licensed_projects as $p ) {
+				$is_allowed = intval( $project_id ) === $p;
+				if ( $is_allowed ) {
+					return true;
+				}
+			}
+		}
 
 		// Basic check if we have valid data.
 		if ( empty( $data['projects'] ) ) {
@@ -2499,7 +2551,7 @@ class WPMUDEV_Dashboard_Site {
 		if ( 'full' == $membership_type ) {
 			// User has full membership.
 			$access = true;
-		} elseif ( 'single' == $membership_type && $license_for == $project_id ) {
+		} elseif ( 'single' == $membership_type && $licensed_projects == $project_id ) {
 			// User has single membership for the requested project.
 			$access = true;
 		} elseif ( 'free' == $project['paid'] ) {
@@ -2508,7 +2560,7 @@ class WPMUDEV_Dashboard_Site {
 		} elseif ( 'lite' == $project['paid'] ) {
 			// It's a lite project. All users can install this.
 			$access = true;
-		} elseif ( 'single' == $membership_type && $package && $package == $license_for ) {
+		} elseif ( 'single' == $membership_type && $package && $package == $licensed_projects ) {
 			// A packaged project that the user bought.
 			$access = true;
 		} elseif ( $is_upfront && 'single' == $membership_type ) {
@@ -3566,9 +3618,9 @@ class WPMUDEV_Dashboard_Site {
 		}
 
 		$whitelabel_settings = WPMUDEV_Dashboard::$site->get_whitelabel_settings();
-		$membership_type     = WPMUDEV_Dashboard::$api->get_membership_type( $dummy );
+		$membership_type     = WPMUDEV_Dashboard::$api->get_membership_type();
 
-		if ( $whitelabel_settings['enabled'] && 'full' === $membership_type ) {
+		if ( $whitelabel_settings['enabled'] && ( 'full' === $membership_type || 'unit' === $membership_type ) ) {
 			if ( 'hide_branding' === $type ) {
 				return $whitelabel_settings['branding_enabled'];
 			}
@@ -3583,6 +3635,9 @@ class WPMUDEV_Dashboard_Site {
 
 				} else {
 					$image = $whitelabel_settings['branding_image'];
+				}
+				if ( false === isset( $image ) ) {
+					$image = '';
 				}
 				if ( 'hero_image' === $type ) {
 					return $image;
@@ -3774,10 +3829,10 @@ class WPMUDEV_Dashboard_Site {
 		}
 
 		$whitelabel_settings = WPMUDEV_Dashboard::$site->get_whitelabel_settings();
-		$membership_type     = WPMUDEV_Dashboard::$api->get_membership_type( $dummy );
+		$membership_type     = WPMUDEV_Dashboard::$api->get_membership_type();
 
 		// activated
-		if ( ! $whitelabel_settings['enabled'] || 'full' !== $membership_type ) {
+		if ( ! $whitelabel_settings['enabled'] || ( 'full' !== $membership_type && 'unit' !== $membership_type ) ) {
 			return false;
 		}
 
@@ -4043,6 +4098,15 @@ class WPMUDEV_Dashboard_Site {
 
 		$projects                = WPMUDEV_Dashboard::$api->get_projects_data();
 		$projects                = isset( $projects['projects'] ) ? $projects['projects'] : array();
+		// Temporary fix for Branda and Beehive missing or having invalid free version slugs.
+		if ( isset( $projects[9135] ) ) {
+			$projects[9135]['free_version_slug'] = 'branda-white-labeling/ultimate-branding.php';
+		}
+		if ( isset( $projects[51] ) ) {
+			$projects[51]['free_version_slug'] = 'beehive-analytics/beehive-analytics.php';
+		}
+		// Temporary fix end.
+
 		$available_free_projects = array();
 		foreach ( $projects as $project_id => $project ) {
 			if ( isset( $project['free_version_slug'] ) && ! empty( $project['free_version_slug'] ) ) {
@@ -4149,10 +4213,10 @@ class WPMUDEV_Dashboard_Site {
 			);
 		}
 
-		// sync free plugins!, time execution will vary depends on installed plugins and server connection
+		// sync free plugins!, time execution will vary depends on installed plugins and server connection.
 		$upgraded_plugins = array();
-		$type             = WPMUDEV_Dashboard::$api->get_membership_type( $project_id );
-		if ( 'full' === $type ) {
+		$type             = WPMUDEV_Dashboard::$api->get_membership_type();
+		if ( 'full' === $type || 'unit' === $type ) {
 			$installed_free_projects = WPMUDEV_Dashboard::$site->get_installed_free_projects();
 
 			foreach ( $installed_free_projects as $installed_free_project ) {
@@ -4310,7 +4374,7 @@ class WPMUDEV_Dashboard_Site {
  * @return bool
  */
 function is_wpmudev_member() {
-	$type = WPMUDEV_Dashboard::$api->get_membership_type( $not_used );
+	$type = WPMUDEV_Dashboard::$api->get_membership_type();
 
 	return 'full' == $type;
 }
@@ -4328,11 +4392,12 @@ function is_wpmudev_member() {
  * @return bool|int
  */
 function is_wpmudev_single_member( $pid = false ) {
-	$type = WPMUDEV_Dashboard::$api->get_membership_type( $licensed_project_id );
+	$type = WPMUDEV_Dashboard::$api->get_membership_type();
+	$licensed_project_id = WPMUDEV_Dashboard::$api->get_membership_projects();
 
 	if ( 'single' == $type ) {
 		if ( $pid ) {
-			return $licensed_project_id == $pid;
+			return $licensed_project_id == intval( $pid );
 		} else {
 			return $licensed_project_id;
 		}
@@ -4396,6 +4461,12 @@ if ( ! function_exists( 'wpmudev_whitelabel_sui_plugins_branding' ) ) {
 				<?php else:?>
 				#wpbody-content .sui-wrap div.sui-box.sui-summary {
 					background-position: 3% 50%;
+				}
+
+				@media (max-width: 782px) {
+					#wpbody-content .sui-wrap div.sui-box.sui-summary {
+						background-image: none;
+					}
 				}
 				<?php endif;?>
 			</style>

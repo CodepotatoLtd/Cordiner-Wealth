@@ -27,6 +27,7 @@ if ( isset( $_POST ) && isset( $_POST['moove_gdpr_nonce'] ) ) :
 				'moove_gdpr_floating_button_enable',
 				'moove_gdpr_infobar_visibility',
 				'moove_gdpr_reject_button_enable',
+				'moove_gdpr_close_button_enable',
 				'moove_gdpr_colour_scheme',
 			);
 			// Cookie Banner Visibility.
@@ -42,6 +43,13 @@ if ( isset( $_POST ) && isset( $_POST['moove_gdpr_nonce'] ) ) :
 				$moove_gdpr_reject_enable = '1';
 			endif;
 			$gdpr_options['moove_gdpr_reject_button_enable'] = $moove_gdpr_reject_enable;
+
+			// Cookie Banner Close Button.
+			$moove_gdpr_close_enable = '0';
+			if ( isset( $_POST['moove_gdpr_close_button_enable'] ) ) :
+				$moove_gdpr_close_enable = '1';
+			endif;
+			$gdpr_options['moove_gdpr_close_button_enable'] = $moove_gdpr_close_enable;
 
 			// Cookie Banner Colour Scheme.
 			$moove_gdpr_colour_scheme = '2';
@@ -131,13 +139,24 @@ endif;
 					</p>
 				</th>
 			</tr>
-
+			
+			<tr>
+				<td colspan="2" style="padding: 0;">
+					<hr />
+				</td>
+			</tr>
+			
 			<tr>
 				<th scope="row">
 					<label for="moove_gdpr_infobar_accept_button_label"><?php esc_html_e( 'Accept - Button Label', 'gdpr-cookie-compliance' ); ?></label>
 				</th>
 				<td>
 					<input name="moove_gdpr_infobar_accept_button_label<?php echo esc_attr( $wpml_lang ); ?>" type="text" id="moove_gdpr_infobar_accept_button_label" value="<?php echo isset( $gdpr_options[ 'moove_gdpr_infobar_accept_button_label' . $wpml_lang ] ) && $gdpr_options[ 'moove_gdpr_infobar_accept_button_label' . $wpml_lang ] ? esc_attr( $gdpr_options[ 'moove_gdpr_infobar_accept_button_label' . $wpml_lang ] ) : esc_attr__( 'Accept', 'gdpr-cookie-compliance' ); ?>" class="regular-text">
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" style="padding: 0;">
+					<hr />
 				</td>
 			</tr>
 			<tr>
@@ -151,7 +170,7 @@ endif;
 						<input type="checkbox" name="moove_gdpr_reject_button_enable" id="moove_gdpr_reject_button_enable" <?php echo isset( $gdpr_options['moove_gdpr_reject_button_enable'] ) ? ( intval( $gdpr_options['moove_gdpr_reject_button_enable'] ) === 1 ? 'checked' : ( ! isset( $gdpr_options['moove_gdpr_reject_button_enable'] ) ? 'checked' : '' ) ) : ''; ?> >
 						<span class="gdpr-checkbox-slider" data-enable="<?php esc_html_e( 'Enabled', 'gdpr-cookie-compliance' ); ?>" data-disable="<?php esc_html_e( 'Disabled', 'gdpr-cookie-compliance' ); ?>"></span>
 					</label>
-					<p class="description" id="moove_gdpr_reject_button_enable-description" ><?php esc_html_e( "If it's enabled, the Cookie Banner will be extended with a button that allows users to reject all cookies.", 'gdpr-cookie-compliance' ); ?></p>
+					<p class="description" id="moove_gdpr_reject_button_enable-description" ><?php esc_html_e( "Reject button allows users to reject all cookies.", 'gdpr-cookie-compliance' ); ?></p>
 					<!--  .description -->
 				</td>
 			</tr>
@@ -161,6 +180,31 @@ endif;
 				</th>
 				<td>
 					<input name="moove_gdpr_infobar_reject_button_label<?php echo esc_attr( $wpml_lang ); ?>" type="text" id="moove_gdpr_infobar_reject_button_label" value="<?php echo isset( $gdpr_options[ 'moove_gdpr_infobar_reject_button_label' . $wpml_lang ] ) && $gdpr_options[ 'moove_gdpr_infobar_reject_button_label' . $wpml_lang ] ? esc_attr( $gdpr_options[ 'moove_gdpr_infobar_reject_button_label' . $wpml_lang ] ) : esc_attr__( 'Reject', 'gdpr-cookie-compliance' ); ?>" class="regular-text">
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" style="padding: 0;">
+					<hr />
+				</td>
+			</tr>
+
+			<tr>
+				<th scope="row">
+					<label for="moove_gdpr_close_button_enable"><?php esc_html_e( 'Close button', 'gdpr-cookie-compliance' ); ?></label>
+				</th>
+				<td>
+					<!-- GDPR Rounded switch -->
+					<label class="gdpr-checkbox-toggle">
+						<input type="checkbox" name="moove_gdpr_close_button_enable" id="moove_gdpr_close_button_enable" <?php echo isset( $gdpr_options['moove_gdpr_close_button_enable'] ) ? ( intval( $gdpr_options['moove_gdpr_close_button_enable'] ) === 1 ? 'checked' : ( ! isset( $gdpr_options['moove_gdpr_close_button_enable'] ) ? 'checked' : '' ) ) : ''; ?> >
+						<span class="gdpr-checkbox-slider" data-enable="<?php esc_html_e( 'Enabled', 'gdpr-cookie-compliance' ); ?>" data-disable="<?php esc_html_e( 'Disabled', 'gdpr-cookie-compliance' ); ?>"></span>
+					</label>
+					<p class="description" id="moove_gdpr_close_button_enable-description" ><?php esc_html_e( "Close Button allows users to hide the Cookie Banner for the duration of the current browsing session. Cookies will not be accepted or rejected and the Cookie Banner will re-appear again for the user when they next visit your site.", 'gdpr-cookie-compliance' ); ?></p>
+					<!--  .description -->
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" style="padding: 0;">
+					<hr />
 				</td>
 			</tr>
 			<tr>
@@ -174,6 +218,11 @@ endif;
 					<input name="moove_gdpr_infobar_position" type="radio" value="bottom" id="moove_gdpr_infobar_position_bottom" <?php echo isset( $gdpr_options['moove_gdpr_infobar_position'] ) ? ( 'bottom' === $gdpr_options['moove_gdpr_infobar_position'] ? 'checked' : '' ) : 'checked'; ?> class="on-off"> <label for="moove_gdpr_infobar_position_bottom"><?php esc_html_e( 'Bottom', 'gdpr-cookie-compliance' ); ?></label>
 
 					<?php do_action( 'gdpr_cc_moove_gdpr_infobar_position_settings' ); ?>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" style="padding: 0;">
+					<hr />
 				</td>
 			</tr>
 
@@ -194,7 +243,6 @@ endif;
 		</tbody>
 	</table>
 
-	<br />
 	<hr />
 	<br />
 	<button type="submit" class="button button-primary"><?php esc_html_e( 'Save changes', 'gdpr-cookie-compliance' ); ?></button>

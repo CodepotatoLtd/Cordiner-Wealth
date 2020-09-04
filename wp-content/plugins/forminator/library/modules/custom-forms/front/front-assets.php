@@ -55,6 +55,8 @@ class Forminator_Assets_Enqueue_Form extends Forminator_Assets_Enqueue {
 
 		$has_password            = $this->has_field_type( 'password' );
 
+		$has_signature           = $this->has_field_type( 'signature' );
+
 		// Forminator UI - Icons font.
 		wp_enqueue_style(
 			'forminator-icons',
@@ -101,7 +103,7 @@ class Forminator_Assets_Enqueue_Form extends Forminator_Assets_Enqueue {
 			);
 
 			// Forminator UI - Full stylesheet.
-			if ( $has_phone_settings || $has_address_country || $has_select_multiple || $has_select_settings || $has_datepicker || $has_timepicker || $has_uploader || $has_post_feat_image || ( $has_post_categories && $has_multi_categories ) || ( $has_post_tags && $has_multi_tags ) || $has_currency || $has_paypal || $has_stripe ) {
+			if ( $has_phone_settings || $has_address_country || $has_select_multiple || $has_select_settings || $has_datepicker || $has_timepicker || $has_uploader || $has_post_feat_image || ( $has_post_categories && $has_multi_categories ) || ( $has_post_tags && $has_multi_tags ) || $has_currency || $has_paypal || $has_stripe || $has_signature ) {
 				wp_enqueue_style(
 					'forminator-forms-' . $form_design . '-full',
 					forminator_plugin_url() . 'assets/forminator-ui/css/src/form/forminator-form-' . $form_design . '.full.min.css',
@@ -126,7 +128,7 @@ class Forminator_Assets_Enqueue_Form extends Forminator_Assets_Enqueue {
 		if ( $has_address_country || $has_select_settings ) {
 
 			wp_enqueue_style(
-				'select2',
+				'forminator-select2',
 				forminator_plugin_url() . 'assets/forminator-ui/css/src/form/select2.min.css',
 				array(),
 				FORMINATOR_VERSION
@@ -151,6 +153,12 @@ class Forminator_Assets_Enqueue_Form extends Forminator_Assets_Enqueue {
 	 * @since 1.11
 	 */
 	public function enqueue_scripts() {
+
+		$has_select_single       = $this->has_field_type_with_setting_value( 'select', 'value_type', 'single' );
+		$has_select_search       = $this->has_field_type_with_setting_value( 'select', 'search_status', 'enable' );
+		$has_select_with_search  = ( $has_select_single && $has_select_search );
+		$has_address_country     = $this->has_field_type_with_setting_value( 'address', 'address_country', 'true' );
+
 		// Load form base scripts.
 		$this->load_base_scripts();
 
@@ -163,8 +171,6 @@ class Forminator_Assets_Enqueue_Form extends Forminator_Assets_Enqueue {
 		if ( $this->has_field_type( 'date' ) ) {
 			$this->load_date_scripts();
 		}
-
-		// $this->get_module_design() returns the design
 	}
 
 	/**
@@ -174,13 +180,35 @@ class Forminator_Assets_Enqueue_Form extends Forminator_Assets_Enqueue {
 	 */
 	public function load_base_scripts() {
 		// LOAD: Forminator validation scripts
-		wp_enqueue_script( 'forminator-jquery-validate', forminator_plugin_url() . 'assets/js/library/jquery.validate.min.js', array( 'jquery' ), FORMINATOR_VERSION, false );
+		wp_enqueue_script(
+			'forminator-jquery-validate',
+			forminator_plugin_url() . 'assets/js/library/jquery.validate.min.js',
+			array( 'jquery' ),
+			FORMINATOR_VERSION,
+			false
+		);
+
+		wp_enqueue_script(
+			'forminator-custom-form-moment',
+			forminator_plugin_url() . 'assets/js/library/moment.min.js',
+			array( 'jquery' ),
+			'2.22.2',
+			true
+		);
+
+		wp_enqueue_script(
+			'forminator-select2',
+			forminator_plugin_url() . 'assets/forminator-ui/js/select2.full.js',
+			array( 'jquery' ),
+			FORMINATOR_VERSION,
+			false
+		);
 
 		// LOAD: Forminator UI JS
 		wp_enqueue_script(
-			'forminator-ui',
-			forminator_plugin_url() . 'assets/forminator-ui/js/forminator-ui.min.js',
-			array( 'jquery' ),
+			'forminator-form',
+			forminator_plugin_url() . 'assets/forminator-ui/js/forminator-form.min.js',
+			array( 'jquery', 'forminator-select2' ),
 			FORMINATOR_VERSION,
 			false
 		);
@@ -189,7 +217,7 @@ class Forminator_Assets_Enqueue_Form extends Forminator_Assets_Enqueue {
 		wp_enqueue_script(
 			'forminator-front-scripts',
 			forminator_plugin_url() . 'build/front/front.multi.min.js',
-			array( 'jquery', 'forminator-ui', 'forminator-jquery-validate' ),
+			array( 'jquery', 'forminator-form', 'forminator-jquery-validate' ),
 			FORMINATOR_VERSION,
 			false
 		);

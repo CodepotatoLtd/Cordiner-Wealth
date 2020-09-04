@@ -168,8 +168,9 @@ class Forminator_PayPal extends Forminator_Field {
 	 *
 	 * @param array        $field
 	 * @param array|string $data
+	 * @param array        $post_data
 	 */
-	public function validate( $field, $data ) {
+	public function validate( $field, $data, $post_data = array() ) {
 		$id = self::get_property( 'element_id', $field );
 	}
 

@@ -73,10 +73,12 @@ class Forminator_MultiValue extends Forminator_Field {
 				array(
 					'label' => __( 'Option 1', Forminator::DOMAIN ),
 					'value' => 'one',
+					'key'   => forminator_unique_key(),
 				),
 				array(
 					'label' => __( 'Option 2', Forminator::DOMAIN ),
 					'value' => 'two',
+					'key'   => forminator_unique_key(),
 				),
 			),
 		);
@@ -232,7 +234,7 @@ class Forminator_MultiValue extends Forminator_Field {
 		$is_required = $this->is_required( $field );
 
 		if ( $is_required ) {
-			$required_message = self::get_property( 'required_message', $field, __( 'This field is required. Please select a value', Forminator::DOMAIN ) );
+			$required_message = self::get_property( 'required_message', $field, __( 'This field is required. Please select a value.', Forminator::DOMAIN ) );
 			$required_message = apply_filters(
 				'forminator_multi_field_required_validation_message',
 				$required_message,
@@ -252,8 +254,9 @@ class Forminator_MultiValue extends Forminator_Field {
 	 *
 	 * @param array        $field
 	 * @param array|string $data
+	 * @param array        $post_data
 	 */
-	public function validate( $field, $data ) {
+	public function validate( $field, $data, $post_data = array() ) {
 		if ( $this->is_required( $field ) ) {
 			$id               = self::get_property( 'element_id', $field );
 			$required_message = self::get_property( 'required_message', $field, __( 'This field is required. Please select a value', Forminator::DOMAIN ) );

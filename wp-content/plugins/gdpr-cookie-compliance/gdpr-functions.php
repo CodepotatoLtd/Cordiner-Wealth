@@ -73,13 +73,13 @@ if ( ! function_exists( 'gdpr_update_field' ) ) :
 	 */
 	function gdpr_update_field( $option_key = false, $option_value = false, $site_id = false ) {
 		$results = false;
-		if ( $option_key && $option_value ) :
+		if ( $option_key ) :
 			$site_id 							= $site_id && intval( $site_id ) ? $site_id : gdpr_get_site_id();
 			$database_controller 	= new Moove_GDPR_DB_Controller();
 			$results							= $database_controller->update( 
 				array(
 					'option_key'		=> $option_key,
-					'option_value'	=> $option_value,
+					'option_value'	=> maybe_serialize( $option_value ),
 					'site_id'				=> $site_id
 				)
 			);

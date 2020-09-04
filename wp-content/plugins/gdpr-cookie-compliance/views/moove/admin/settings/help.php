@@ -24,30 +24,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <div class="gdpr-help-content-cnt">
 	<div id="gdpr_cbm_faq" class="gdpr-help-content-block help-block-open">
-		<div class="gdpr-faq-toggle gdpr-faq-open">
-			<div class="gdpr-faq-accordion-header">
-				<h3><?php esc_html_e( 'How do I setup your plugin?', 'gdpr-cookie-compliance' ); ?></h3>
-			</div>
-			<div class="gdpr-faq-accordion-content">
-				<p><?php esc_html_e( 'You can setup the plugin in the WordPress CMS -> GDPR Cookie Compliance. You can setup the branding, and other elements.', 'gdpr-cookie-compliance' ); ?></p>
-				<p><?php esc_html_e( 'To add Google Analytics, you can enable the “3rd Party Cookies” tab but selecting the “Turn” radio value to “ON”. At the bottom of the “3rd Party Cookies” tab you’ll find 3 sections to add scripts – choose the section that is appropriate for your script.', 'gdpr-cookie-compliance' ); ?></p>
-				<p><?php esc_html_e( 'For Google Analytics, we recommend using the ‘Footer’ section.', 'gdpr-cookie-compliance' ); ?></p>
-			</div>
-			<!--  .gdpr-faq-accordion-content -->
-		</div>
-		<!--  .gdpr-faq-toggle -->
 
 		<div class="gdpr-faq-toggle">
 			<div class="gdpr-faq-accordion-header">
 				<h3><?php esc_html_e( 'How can I link to the pop-up settings screen?', 'gdpr-cookie-compliance' ); ?></h3>
 			</div>
 			<div class="gdpr-faq-accordion-content" >
-				<p><?php esc_html_e( 'You can use the following link to display the modal window:', 'gdpr-cookie-compliance' ); ?></p>
+				<p><?php esc_html_e( 'You can use the following link to display the Cookie Settings Screen window:', 'gdpr-cookie-compliance' ); ?></p>
 				<p><?php esc_html_e( '[Relative Path – RECOMMENDED]', 'gdpr-cookie-compliance' ); ?></p>
 				<code>/#gdpr_cookie_modal</code>
-
 				<p><?php esc_html_e( '[Absolute Path]', 'gdpr-cookie-compliance' ); ?></p>
-				<code><?php echo esc_url( home_url() ); ?>/#gdpr_cookie_modal</code><br /><br />
+				<code><?php echo esc_url( home_url() ); ?>/#gdpr_cookie_modal</code><br />
 				<code><?php echo esc_url( home_url() ); ?>/your-internal-page/#gdpr_cookie_modal</code>
 			</div>
 			<!--  .gdpr-faq-accordion-content -->
@@ -56,11 +43,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<div class="gdpr-faq-toggle">
 			<div class="gdpr-faq-accordion-header">
-				<h3><?php esc_html_e( 'Pasted code is not visible when view-source page is viewed.', 'gdpr-cookie-compliance' ); ?></h3>
+				<h3><?php esc_html_e( 'The scripts added to the plugin settings are not visible in the page source code.', 'gdpr-cookie-compliance' ); ?></h3>
 			</div>
 			<div class="gdpr-faq-accordion-content" >
-				<p><?php esc_html_e( 'Our plugin loads the script with JavaScript, and that’s why you can’t find it in the view-source page. You can use the developer console in Chrome browser (Inspect Element feature) and find the scripts.', 'gdpr-cookie-compliance' ); ?></p>
+				<p><?php esc_html_e( 'Our plugin loads scripts using JavaScript, which is why you cannot find them when viewing the source code of the page.', 'gdpr-cookie-compliance' ); ?></p>
+				<p><?php esc_html_e( 'To view the scripts, you can use the Developer Console in Chrome browser (Inspect Element feature).', 'gdpr-cookie-compliance' ); ?></p>
 			</div>
+			<!--  .gdpr-faq-accordion-content -->
+		</div>
+		<!--  .gdpr-faq-toggle -->
+    
+		<div class="gdpr-faq-toggle">
+			<div class="gdpr-faq-accordion-header">
+				<h3><?php esc_html_e( 'What are "Strictly Necessary Cookies"?', 'gdpr-cookie-compliance' ); ?></h3>
+			</div>
+			<div class="gdpr-faq-accordion-content" >
+				<p><?php esc_html_e( 'The "Strictly Necessary Cookies", sometimes called Essential Cookies, are cookies that are necessary for your site to function properly.', 'gdpr-cookie-compliance' ); ?></p>
+				<p><?php esc_html_e( 'For example, we use Strictly Necessary Cookies to save information about which cookies the user consented to.', 'gdpr-cookie-compliance' ); ?></p>
+				<p><?php esc_html_e( 'We are not storing any sensitive or personal data there, the cookie file contains only one of the following strings:', 'gdpr-cookie-compliance' ); ?></p>
+				<code>Disabled state: strictly: 1, thirdparty: 0, advanced: 0</code><br />
+				<code>Enabled state: strictly: 1, thirdparty: 1, advanced: 1</code>   
+      </div>
 			<!--  .gdpr-faq-accordion-content -->
 		</div>
 		<!--  .gdpr-faq-toggle -->
@@ -70,7 +73,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<h3><?php esc_html_e( 'Can I use custom code or hooks with your plugin?', 'gdpr-cookie-compliance' ); ?></h3>
 			</div>
 			<div class="gdpr-faq-accordion-content" >
-				<p><?php esc_html_e( 'Yes. We have implemented hooks that allow you to implement custom scripts, for some examples see the list of pre-defined hooks here:', 'gdpr-cookie-compliance' ); ?> <a href="#gdpr_cbm_dh" class="gdpr-help-tab-toggle"><?php esc_html_e( 'Default Hooks', 'gdpr-cookie-compliance' ); ?></a></p>
+				<p><?php esc_html_e( 'Yes, we have implemented hooks that allow you to implement custom code snippets.','gdpr-cookie-compliance' ); ?></p><p><?php esc_html_e('You will find the list of popular hooks here:', 'gdpr-cookie-compliance' ); ?> <a href="#gdpr_cbm_dh" class="gdpr-help-tab-toggle gdpr_admin_link"><?php esc_html_e( 'Default Hooks', 'gdpr-cookie-compliance' ); ?></a>.</p>
+				<p><?php esc_html_e( 'You can also find the list of all', 'gdpr-cookie-compliance' ); ?> <a href="https://wordpress.org/support/topic/conditional-php-script/" class="gdpr_admin_link" target="_blank"><?php esc_html_e( 'pre-defined advanced hooks here', 'gdpr-cookie-compliance' ); ?></a>.</p>
 			</div>
 			<!--  .gdpr-faq-accordion-content -->
 		</div>
@@ -78,11 +82,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<div class="gdpr-faq-toggle">
 			<div class="gdpr-faq-accordion-header">
-				<h3><?php esc_html_e( 'Does the plugin support sub domains?', 'gdpr-cookie-compliance' ); ?></h3>
+				<h3><?php esc_html_e( 'Does the plugin support subdomains?', 'gdpr-cookie-compliance' ); ?></h3>
 			</div>
 			<div class="gdpr-faq-accordion-content" >
-				<p><?php esc_html_e( 'Unfortunately not, sub domains are treated as separate domains by browsers and we’re unable to change the cookies stored by another domain. If your multi site setup use sub domain version, each sub site will be recognised as a separate domain by the browser and will create cookies for each sub domain.', 'gdpr-cookie-compliance' ); ?></p>
-			</div>
+				<p><?php esc_html_e( 'Unfortunately not, subdomains are treated as separate domains by browsers and the plugin is unable to alter cookies stored by another domain.', 'gdpr-cookie-compliance' ); ?></p>
+				<p><?php esc_html_e( 'If your multisite setup uses subdomain version, each subsite will be recognised as a separate domain by browsers and will create separate cookies for each subdomain.', 'gdpr-cookie-compliance' ); ?></p>
+      </div>
 			<!--  .gdpr-faq-accordion-content -->
 		</div>
 		<!--  .gdpr-faq-toggle -->
@@ -92,7 +97,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<h3><?php esc_html_e( 'Does this plugin block all cookies?', 'gdpr-cookie-compliance' ); ?></h3>
 			</div>
 			<div class="gdpr-faq-accordion-content" >
-				<p><?php esc_html_e( 'No. This plugin only restricts cookies for scripts that you have setup in the Settings. If you want to block all cookies, you have to add all scripts that use cookies into the Settings of this plugin.', 'gdpr-cookie-compliance' ); ?></p>
+				<p><?php esc_html_e( 'This plugin only restricts cookies for scripts that you have setup in the Plugin Settings. If you want to block all cookies, you have to add all scripts that use cookies into the Settings of this plugin.', 'gdpr-cookie-compliance' ); ?></p>
 			</div>
 			<!--  .gdpr-faq-accordion-content -->
 		</div>
@@ -114,18 +119,32 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<h3><?php esc_html_e( 'Does this plugin stop all cookies from being stored?', 'gdpr-cookie-compliance' ); ?></h3>
 			</div>
 			<div class="gdpr-faq-accordion-content" >
-				<p><?php esc_html_e( 'This plugin is just a template and needs to be setup by your developer in order to work properly. Once setup fully, it will prevent scripts that store cookies from being loaded on users computers until consent is given.', 'gdpr-cookie-compliance' ); ?></p>
+				<p><?php esc_html_e( 'This plugin only restricts cookies for scripts that you have setup in the Plugin Settings. If you want to block all cookies, you have to add all scripts that use cookies into the Settings of this plugin.', 'gdpr-cookie-compliance' ); ?></p>
 			</div>
 			<!--  .gdpr-faq-accordion-content -->
 		</div>
 		<!--  .gdpr-faq-toggle -->
 
-		<div class="gdpr-faq-toggle">
+    		<div class="gdpr-faq-toggle">
 			<div class="gdpr-faq-accordion-header">
-				<h3><?php esc_html_e( 'Does this plugin guarantee that I will comply with GDPR law?', 'gdpr-cookie-compliance' ); ?></h3>
+				<h3><?php esc_html_e( 'What information does the Consent Log store and where is it stored?', 'gdpr-cookie-compliance' ); ?></h3>
 			</div>
 			<div class="gdpr-faq-accordion-content" >
-				<p><?php esc_html_e( 'Unfortunately no. This plugin is just a template and needs to be setup by your developer in order to work properly.', 'gdpr-cookie-compliance' ); ?></p>
+				<p><?php esc_html_e( 'The Consent Log features stores all data in your WordPress website database.', 'gdpr-cookie-compliance' ); ?></p>
+				<p><?php esc_html_e( 'The data stored includes: Consent Date, User IP address, Cookies Accepted and User Email (for logged-in users).', 'gdpr-cookie-compliance' ); ?></p>
+				<p><?php esc_html_e( 'You can see the preview of', 'gdpr-cookie-compliance' ); ?> <a href="https://ps.w.org/gdpr-cookie-compliance/assets/screenshot-36.png?rev=2263873" class="gdpr_admin_link" target="_blank"><?php esc_html_e( 'Consent Log here', 'gdpr-cookie-compliance' ); ?></a> .</p>
+			</div>
+			<!--  .gdpr-faq-accordion-content -->
+		</div>
+		<!--  .gdpr-faq-toggle -->
+    
+		<div class="gdpr-faq-toggle">
+			<div class="gdpr-faq-accordion-header">
+				<h3><?php esc_html_e( 'Does this plugin guarantee that I will comply with data protection laws?' ); ?></h3>
+			</div>
+			<div class="gdpr-faq-accordion-content" >
+				<p><?php esc_html_e( 'This plugin is just a template and needs to be setup correctly in order to work properly.', 'gdpr-cookie-compliance' ); ?></p>
+				<p><?php esc_html_e( 'THIS PLUGIN DOES NOT MAKE YOUR WEBSITE COMPLIANT. YOU ARE RESPONSIBLE FOR ENSURING THAT ALL LEGAL REQUIREMENTS ARE MET ON YOUR WEBSITE.', 'gdpr-cookie-compliance' ); ?></p>
 			</div>
 			<!--  .gdpr-faq-accordion-content -->
 		</div>
@@ -298,6 +317,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 					$styles .= '#main-header { z-index: 999; }';
 					$styles .= '#top-header { z-index: 1000 }';
 					$styles .= '.lity {z-index: 99999999;}';
+					return $styles;
+				}
+				<?php $code = trim( ob_get_clean() ); ?>
+				<textarea id="<?php echo esc_attr( uniqid( strtotime( 'now' ) ) ); ?>"><?php apply_filters( 'gdpr_cc_keephtml', $code, true ); ?></textarea>
+				<div class="gdpr-code"></div><!--  .gdpr-code -->
+			</div>
+			<!--  .gdpr-faq-accordion-content -->
+		</div>
+		<!--  .gdpr-faq-toggle -->		
+
+		<div class="gdpr-faq-toggle">
+			<div class="gdpr-faq-accordion-header">
+				<h3><?php esc_html_e( 'Set custom z-index', 'gdpr-cookie-compliance' ); ?></h3>
+			</div>
+			<div class="gdpr-faq-accordion-content" >
+				<p><?php esc_html_e( 'If you find that our GDPR Cookie Compliance Banner or the Settings Screen is covered by another element on your site, you can add the following to your functions.php', 'gdpr-cookie-compliance' ); ?></p>
+				<?php ob_start(); ?>
+				add_action('moove_gdpr_inline_styles','gdpr_cookie_css_extension_zindex',10,3);
+				function gdpr_cookie_css_extension_zindex( $styles, $primary, $secondary ) {
+					$styles .= '#moove_gdpr_cookie_info_bar { z-index: 99999999; }';
+					$styles .= '.lity { z-index: 999999999; }';
 					return $styles;
 				}
 				<?php $code = trim( ob_get_clean() ); ?>

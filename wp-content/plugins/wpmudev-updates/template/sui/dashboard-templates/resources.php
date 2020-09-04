@@ -61,6 +61,11 @@ $resources = array(
                                     <i class="sui-icon-<?php echo esc_attr( $resource['icon'] ); ?>" aria-hidden="true"></i>
                                 </span>
                                 <?php echo esc_html( $resource['title'] ); ?>
+																<?php if ('free' === $membership_data['membership'] && ($resource['icon'] === 'academy' || $resource['icon'] === 'community-people')): ?>
+																	<span class="sui-tag sui-tag-purple sui-dashboard-expired-pro-tag">
+																		<?php echo __('Pro', 'wpmudev'); ?>
+																	</span>
+																<?php endif; ?>
                             </a>
                         </h4>
                     </td>

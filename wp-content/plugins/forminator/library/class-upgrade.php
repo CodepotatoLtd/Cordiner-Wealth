@@ -19,9 +19,13 @@ class Forminator_Upgrade {
 		/**
 		 * Initialize the plugin data
 		 */
-		$old_version = get_option( 'forminator_version' );
+		$old_version = get_option( 'forminator_version', false );
 		if ( $old_version ) {
 			$version_changed = version_compare( $old_version, FORMINATOR_VERSION, 'lt' );
+
+			if ( $version_changed ) {
+				update_option( 'forminator_version_upgraded', true );
+			}
 		} else {
 			$version_changed = true;
 		}

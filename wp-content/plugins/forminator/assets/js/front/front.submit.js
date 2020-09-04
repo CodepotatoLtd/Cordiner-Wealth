@@ -120,9 +120,24 @@
 				var $this = $(this),
 				    thisForm = this,
 				    submitEvent = e,
-					formData = new FormData(this),
+					formData = new FormData( this ),
 					$target_message = $this.find('.forminator-response-message'),
 					$captcha_field = $this.find('.forminator-g-recaptcha');
+
+				if( self.settings.inline_validation && self.$el.find('.forminator-uploaded-files').length > 0 ) {
+					var file_error = self.$el.find('.forminator-uploaded-files li.forminator-has_error');
+					if( file_error.length > 0 ) {
+						return false;
+					}
+				}
+
+				//check originalEvent exists and submit button is not exits or hidden
+				if( submitEvent.originalEvent !== undefined ) {
+					var submitBtn = $(this).find('.forminator-button-submit').first();
+					if( submitBtn.length === 0 || $( submitBtn ).closest('.forminator-col').hasClass('forminator-hidden') ) {
+						return false;
+					}
+				}
 
 				if (self.$el.data('forminatorFrontPayment')) {
 					if ($captcha_field.length) {
@@ -161,7 +176,6 @@
 						}
 					}
 				}
-
 				var submitCallback = function() {
 					formData = new FormData(this); // reinit values
 
@@ -226,6 +240,7 @@
 								form.addClass('forminator-fields-disabled');
 							}
 							$target_message.html('<p>' + self.settings.loader_label + '</p>');
+							self.focus_to_element( $target_message );
 
 							$target_message.removeAttr("aria-hidden")
 								.prop("tabindex", "-1")
@@ -248,7 +263,7 @@
 							success: function( data ) {
 
 								// Hide validation errors
-								$this.find( '.forminator-error-message' ).remove();
+								$this.find( '.forminator-error-message' ).not('.forminator-uploaded-files .forminator-error-message').remove();
 								$this.find( '.forminator-field' ).removeClass( 'forminator-has_error' );
 
 								$this.find( 'button' ).removeAttr( 'disabled' );
@@ -312,7 +327,7 @@
 											$target_message.html('<p>' + data.data.message + '</p>');
 										}
 
-										if(!data.data.success && data.data.errors.length) {
+										if(!data.data.success && typeof data.data.errors !== 'undefined' && data.data.errors.length) {
 											var errors_html = '<ul class="forminator-screen-reader-only">';
 											$.each(data.data.errors, function(index,value) {
 												//errors_html += '<li>' + value
@@ -328,7 +343,7 @@
 									}
 								}
 
-								if (!data.data.success && data.data.errors.length) {
+								if (!data.data.success && typeof data.data.errors !== 'undefined' && data.data.errors.length) {
 									$this.trigger('forminator:form:submit:failed', formData);
 									self.show_messages(data.data.errors);
 								}
@@ -341,6 +356,8 @@
 											$this[0].reset();
 										}
 
+										// reset signatures
+										$this.find('.forminator-field-signature img').trigger('click');
 										if (typeof data.data.select_field !== "undefined") {
 											$.each(data.data.select_field, function (index, value) {
 												if (value.length > 0) {
@@ -360,12 +377,36 @@
 										$this.find(".forminator-button-delete").hide();
 										$this.find('.forminator-file-upload input').val("");
 										$this.find('.forminator-file-upload > span').html(window.ForminatorFront.cform.no_file_chosen);
+										$this.find('ul.forminator-uploaded-files').html('');
+										self.$el.find('ul.forminator-uploaded-files').html('');
+										self.$el.find( '.forminator-multifile-hidden' ).val('');
+										//self.$el.find( '.forminator-input-file' ).val('');
 
 										// Reset selects
-										$this.find('.forminator-select').each(function () {
-											var defaultValue = $(this).data('default-value');
-											$(this).val(defaultValue).trigger("change");
-										});
+										if ( $this.find('.forminator-select').length > 0 ) {
+											$this.find('.forminator-select').each(function (index, value) {
+												var defaultValue = $(value).data('default-value');
+												if ( '' === defaultValue ) {
+													defaultValue = $(value).val();
+												}
+												$(value).val(defaultValue).trigger("fui:change");
+											});
+										}
+										// Reset multiselect
+										if ( $this.find('.multiselect-default-values').length > 0 && '' !== $this.find('.multiselect-default-values').val() ) {
+											var defaultValuesObj = $.parseJSON( $this.find('.multiselect-default-values').val() );
+											var defaultValuesArr = Object.values( defaultValuesObj );
+
+											$this.find('.forminator-multiselect input[type="checkbox"]').each(function (i, val) {
+												if( -1 !== $.inArray( $(val).val(), defaultValuesArr ) ) {
+													$(val).prop('checked', true);
+													$(val).closest('label').addClass('forminator-is_checked');
+												}else{
+													$(val).prop('checked', false);
+													$(val).closest('label').removeClass('forminator-is_checked');
+												}
+											});
+										}
 
 										$this.trigger('forminator:form:submit:success', formData);
 
@@ -484,21 +525,21 @@
 					button.text( loadLabel );
 				}
 
-				answer.each( function() {
+				if ( self.settings.has_quiz_loader ) {
+					answer.each( function() {
+						var answer = $( this ),
+							input  = answer.find( 'input' ),
+							status = answer.find( '.forminator-answer--status' ),
+							loader = '<i class="forminator-icon-loader forminator-loading"></i>'
+							;
 
-					var answer = $( this ),
-						input  = answer.find( 'input' ),
-						status = answer.find( '.forminator-answer--status' ),
-						loader = '<i class="forminator-icon-loader forminator-loading"></i>'
-						;
-
-					if ( input.is( ':checked' ) ) {
-
-						if ( 0 === status.html().length ) {
-							status.html( loader );
+						if ( input.is( ':checked' ) ) {
+							if ( 0 === status.html().length ) {
+								status.html( loader );
+							}
 						}
-					}
-				});
+					});
+				}
 
 				$.ajax({
 					type: 'POST',
@@ -522,7 +563,7 @@
 
 								window.history.pushState( 'forminator', 'Forminator', data.data.result_url );
 
-								if ( self.$el.find( '.forminator-quiz--result' ).size() > 0 ) {
+								if ( self.$el.find( '.forminator-quiz--result' ).length > 0 ) {
 									self.$el.find( '.forminator-quiz--result' ).html( data.data.finalText );
 								}
 
@@ -587,7 +628,7 @@
 				var pageId = self.$el.find('input[name="page_id"]').val();
 				var ajaxData = {
 					action: 'forminator_reload_quiz',
-					pageId: pageId,
+					pageId:	pageId,
 					nonce: self.$el.find('input[name="forminator_nonce"]').val()
 				};
 
@@ -1052,7 +1093,7 @@
 							holderError.html( errorMessage );
 							holderField.find( '.forminator-error-message' ).html( errorMessage );
 
-						} else if ( holderTime.length > 0 ) {
+						} else if ( holderTime.length > 0 && errorMessage[0].length > 0 ) {
 
 							getColumn = holderTime.parent();
 							getError  = getColumn.find( '.forminator-error-message[data-error-field="' + holder.data( 'field' ) + '"]' );

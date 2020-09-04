@@ -645,9 +645,11 @@ class Forminator_CForm_View_Page extends Forminator_Admin_Page {
 			$mapper['label']    = $field->get_label_for_entry();
 			$mapper['type']     = $field_type;
 
-
-			// fields that should be displayed as multi column (sub_metas)
-			if ( 'name' === $field_type ) {
+			if ( 'textarea' === $field_type ) {
+				$field_array = $field->to_array();
+				$mapper['rich'] = isset( $field_array['editor-type'] ) ? $field_array['editor-type'] : false;
+			} else if ( 'name' === $field_type ) {
+				// fields that should be displayed as multi column (sub_metas)
 				$is_multiple_name = filter_var( $field->__get( 'multiple_name' ), FILTER_VALIDATE_BOOLEAN );
 				if ( $is_multiple_name ) {
 					$prefix_enabled      = filter_var( $field->__get( 'prefix' ), FILTER_VALIDATE_BOOLEAN );
@@ -1077,6 +1079,7 @@ class Forminator_CForm_View_Page extends Forminator_Admin_Page {
 					'type'        => $type,
 					'label'       => $label,
 					'value'       => $value,
+					'rich'		  => isset( $mapper['rich'] ) ? $mapper['rich'] : false,
 					'sub_entries' => $sub_entries,
 				);
 

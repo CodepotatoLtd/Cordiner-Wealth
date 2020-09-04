@@ -234,7 +234,7 @@ class Forminator_Number extends Forminator_Field {
 		$messages = '"' . $this->get_id( $field ) . '": {' . "\n";
 
 		if ( $this->is_required( $field ) ) {
-			$required_validation_message = self::get_property( 'required_message', $field, __( 'This field is required. Please enter number', Forminator::DOMAIN ) );
+			$required_validation_message = self::get_property( 'required_message', $field, __( 'This field is required. Please enter number.', Forminator::DOMAIN ) );
 			$required_validation_message = apply_filters(
 				'forminator_field_number_required_validation_message',
 				$required_validation_message,
@@ -245,7 +245,7 @@ class Forminator_Number extends Forminator_Field {
 
 		$number_validation_message = apply_filters(
 			'forminator_field_number_number_validation_message',
-			__( 'This is not valid number', Forminator::DOMAIN ),
+			__( 'This is not valid number.', Forminator::DOMAIN ),
 			$field
 		);
 		$messages                 .= '"number": "' . forminator_addcslashes( $number_validation_message ) . '",' . "\n";
@@ -279,8 +279,9 @@ class Forminator_Number extends Forminator_Field {
 	 *
 	 * @param array        $field
 	 * @param array|string $data
+	 * @param array        $post_data
 	 */
-	public function validate( $field, $data ) {
+	public function validate( $field, $data, $post_data = array() ) {
 		$id  = self::get_property( 'element_id', $field );
 		$max = self::get_property( 'limit_max', $field, $data );
 		$min = self::get_property( 'limit_min', $field, $data );
@@ -294,7 +295,7 @@ class Forminator_Number extends Forminator_Field {
 
 			if ( empty( $data ) && '0' !== $data ) {
 				$require_message                 = self::get_property( 'required_message', $field, '' );
-				$required_validation_message     = ! empty( $require_message ) ? $require_message : __( 'This field is required. Please enter number', Forminator::DOMAIN );
+				$required_validation_message     = ! empty( $require_message ) ? $require_message : __( 'This field is required. Please enter number.', Forminator::DOMAIN );
 				$this->validation_message[ $id ] = apply_filters(
 					'forminator_field_number_required_field_validation_message',
 					$required_validation_message,
@@ -307,7 +308,7 @@ class Forminator_Number extends Forminator_Field {
 		} elseif ( ! is_numeric( $data ) && ! empty( $data ) ) {
 			$this->validation_message[ $id ] = apply_filters(
 				'forminator_field_number_numeric_validation_message',
-				__( 'Only numbers allowed', Forminator::DOMAIN ),
+				__( 'Only numbers allowed.', Forminator::DOMAIN ),
 				$id,
 				$field,
 				$data,
@@ -324,7 +325,7 @@ class Forminator_Number extends Forminator_Field {
 						apply_filters(
 							'forminator_field_number_max_min_validation_message',
 							/* translators: ... */
-							__( 'The number should be less than %1$d and greater than %2$d', Forminator::DOMAIN ),
+							__( 'The number should be less than %1$d and greater than %2$d.', Forminator::DOMAIN ),
 							$id,
 							$field,
 							$data

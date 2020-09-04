@@ -21,7 +21,7 @@ class Forminator_CForm_Front_User_Login extends Forminator_User {
 		parent::__construct();
 
 		$this->remember_cookie_number = 14;
-		$this->remember_cookie_type = DAY_IN_SECONDS;
+		$this->remember_cookie_type   = DAY_IN_SECONDS;
 
 		add_filter( 'auth_cookie_expiration', array( $this, 'change_cookie_expiration' ), 10, 3 );
 	}
@@ -87,7 +87,7 @@ class Forminator_CForm_Front_User_Login extends Forminator_User {
 		if ( isset( $settings['login-password-field'] ) && ! empty( $settings['login-password-field'] ) ) {
 			$password = $this->replace_value( $field_data_array, $settings['login-password-field'] );
 		}
-		$password = apply_filters( 'forminator_custom_form_login_password_before_signon', $password, $custom_form, $submitted_data, $entry );
+		$password              = apply_filters( 'forminator_custom_form_login_password_before_signon', $password, $custom_form, $submitted_data, $entry );
 		$submitted_remember_me = $this->is_submitted_remember_me( $submitted_data );
 
 		if ( $submitted_remember_me && isset( $settings['remember-me'] ) && 'true' === $settings['remember-me'] ) {
@@ -117,7 +117,7 @@ class Forminator_CForm_Front_User_Login extends Forminator_User {
 				$this->remember_cookie_type = DAY_IN_SECONDS;
 			}
 
-			$this->remember_cookie_number = isset( $settings['remember-me-cookie-number'] ) ? (int)$settings['remember-me-cookie-number'] : $this->remember_cookie_number;
+			$this->remember_cookie_number = isset( $settings['remember-me-cookie-number'] ) ? (int) $settings['remember-me-cookie-number'] : $this->remember_cookie_number;
 
 		} else {
 			$remember = false;
@@ -125,13 +125,22 @@ class Forminator_CForm_Front_User_Login extends Forminator_User {
 		$remember = apply_filters( 'forminator_custom_form_login_remember_before_signon', $remember, $custom_form, $entry );
 
 		if ( function_exists( 'wp_defender' ) ) {
-			$sign_on = wp_authenticate( $username, $password );
-			$token = uniqid();
+			$sign_on    = wp_authenticate( $username, $password );
+			$token      = uniqid();
+			$enable_otp = false;
+			$valid      = false;
 			// create and store a login token so we can query this user again
 			update_user_meta( $sign_on->ID, 'defOTPLoginToken', $token );
 			$response['lost_url'] = admin_url( 'admin-ajax.php?action=defRetrieveOTP&token=' . $token . '&nonce=' . wp_create_nonce( 'defRetrieveOTP' ) );
 			if ( ! isset( $submitted_data['auth-code'] ) ) {
-				if ( ! is_wp_error( $sign_on ) && \WP_Defender\Module\Advanced_Tools\Component\Auth_API::isUserEnableOTP( $sign_on->ID ) ) {
+				if ( class_exists( '\WP_Defender\Module\Advanced_Tools\Component\Auth_API' ) ) {
+					$enable_otp = \WP_Defender\Module\Advanced_Tools\Component\Auth_API::isUserEnableOTP( $sign_on->ID );
+				}
+				if ( class_exists( '\WP_Defender\Module\Two_Factor\Component\Auth_API' ) ) {
+					$enable_otp = \WP_Defender\Module\Two_Factor\Component\Auth_API::isUserEnableOTP( $sign_on->ID );
+				}
+
+				if ( ! is_wp_error( $sign_on ) && $enable_otp ) {
 					$response['authentication'] = 'show';
 					$response['user']           = $sign_on;
 
@@ -139,8 +148,14 @@ class Forminator_CForm_Front_User_Login extends Forminator_User {
 				}
 			}
 			if ( isset( $submitted_data['auth-code'] ) ) {
-				$secret = \WP_Defender\Module\Advanced_Tools\Component\Auth_API::getUserSecret( $sign_on->ID );
-				$valid  = \WP_Defender\Module\Advanced_Tools\Component\Auth_API::compare( $secret, $submitted_data['auth-code'] );
+				if ( class_exists( '\WP_Defender\Module\Advanced_Tools\Component\Auth_API' ) ) {
+					$secret = \WP_Defender\Module\Advanced_Tools\Component\Auth_API::getUserSecret( $sign_on->ID );
+					$valid  = \WP_Defender\Module\Advanced_Tools\Component\Auth_API::compare( $secret, $submitted_data['auth-code'] );
+				}
+				if ( class_exists( '\WP_Defender\Module\Two_Factor\Component\Auth_API' ) ) {
+					$secret = \WP_Defender\Module\Two_Factor\Component\Auth_API::getUserSecret( $sign_on->ID );
+					$valid  = \WP_Defender\Module\Two_Factor\Component\Auth_API::compare( $secret, $submitted_data['auth-code'] );
+				}
 				if ( $valid ) {
 					$response['authentication'] = 'valid';
 				} else {
@@ -174,7 +189,7 @@ class Forminator_CForm_Front_User_Login extends Forminator_User {
 	 * @return int
 	 */
 	public static function get_element_id_for_remember_me( $custom_form ) {
-		$id = 1;
+		$id      = 1;
 		$last_id = 0;
 		if ( is_object( $custom_form ) ) {
 			$fields = $custom_form->get_fields();
@@ -204,10 +219,10 @@ class Forminator_CForm_Front_User_Login extends Forminator_User {
 		$custom_form = Forminator_Custom_Form_Model::model()->load( $id );
 
 		if ( isset( $custom_form->settings['form-type'] )
-			&& 'login' === $custom_form->settings['form-type']
-			&& isset( $custom_form->settings['remember-me'] )
-			&& 'true' === $custom_form->settings['remember-me']
-			&& ! empty( $wrappers )
+		     && 'login' === $custom_form->settings['form-type']
+		     && isset( $custom_form->settings['remember-me'] )
+		     && 'true' === $custom_form->settings['remember-me']
+		     && ! empty( $wrappers )
 		) {
 			$id = self::get_element_id_for_remember_me( $custom_form );
 
@@ -221,7 +236,7 @@ class Forminator_CForm_Front_User_Login extends Forminator_User {
 				'wrapper_id' => 'wrapper-1511347711918-2169',
 				'fields'     => array(
 					array(
-						'element_id'   => 'checkbox-'. $id,
+						'element_id'   => 'checkbox-' . $id,
 						'type'         => 'checkbox',
 						'options'      => array(
 							array(
@@ -240,7 +255,7 @@ class Forminator_CForm_Front_User_Login extends Forminator_User {
 				)
 			);
 
-			array_push($wrappers, $new_wrappers );
+			array_push( $wrappers, $new_wrappers );
 		}
 
 		return $wrappers;

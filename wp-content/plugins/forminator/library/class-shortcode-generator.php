@@ -14,7 +14,7 @@ class Forminator_Shortcode_Generator {
 	 * @since 1.0
 	 */
 	public function __construct() {
-		add_filter( 'media_buttons_context', array( $this, 'attach_button' ) );
+		add_action( 'media_buttons', array( $this, 'attach_button' ) );
 		add_action( 'admin_footer', array( $this, 'enqueue_js_scripts' ) );
 		if ( function_exists( 'hustle_activated' ) ) {
 			add_action( 'admin_footer', array( $this, 'enqueue_preview_scripts_for_hustle' ) );
@@ -52,29 +52,22 @@ class Forminator_Shortcode_Generator {
 	 * Attach button
 	 *
 	 * @since 1.0
-	 * @param $content
-	 *
-	 * @return string
 	 */
-	public function attach_button( $content ) {
+	public function attach_button() {
 		global $pagenow;
-		$html = '';
 
 		// If page different than Post or Page, abort
 		if ( 'post.php' !== $pagenow && 'post-new.php' !== $pagenow && ! $this->is_hustle_wizard() ) {
-			return $content;
+			return;
 		}
 
 		// Button markup
-		$html .= sprintf(
+		printf(
 			'<button type="button" id="%s" class="button" data-editor="content" data-a11y-dialog-show="forminator-popup">%s<span>%s</span></button>',
 			'forminator-generate-shortcode',
 			'<i class="forminator-scgen-icon" aria-hidden="true"></i>',
 			esc_html__( 'Add Form', Forminator::DOMAIN )
 		);
-
-		$content .= $html;
-		return $content;
 	}
 
 	/**
@@ -154,8 +147,6 @@ class Forminator_Shortcode_Generator {
 		if ( ! $this->is_hustle_wizard() ) {
 			return $content;
 		}
-
-		wp_enqueue_style( 'forminator-shortcode-generator-front-styles', forminator_plugin_url() . 'assets/css/front.min.css', array(), FORMINATOR_VERSION );
 
 		/**
 		 * Forminator UI

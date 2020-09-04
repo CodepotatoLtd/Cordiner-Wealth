@@ -42,7 +42,19 @@
 				restrict = this.$el.data('restrict'),
 				restrictedDays = this.$el.data('restrict'),
 				minYear = this.$el.data('start-year'),
-				maxYear = this.$el.data('end-year');
+				maxYear = this.$el.data('end-year'),
+				pastDates = this.$el.data('past-dates'),
+				dateValue = this.$el.val(),
+				startOfWeek = this.$el.data('start-of-week'),
+				minDate = this.$el.data('start-date'),
+				maxDate = this.$el.data('end-date'),
+				startField = this.$el.data('start-field'),
+				endField = this.$el.data('end-field'),
+				startOffset = this.$el.data('start-offset'),
+				endOffset = this.$el.data('end-offset'),
+				disableDate = this.$el.data('disable-date'),
+				disableRange = this.$el.data('disable-range');
+
 
 			//possible restrict only one
 			if (!isNaN(parseFloat(restrictedDays)) && isFinite(restrictedDays)) {
@@ -50,6 +62,8 @@
 			} else {
 				restrictedDays = restrict.split(',');
 			}
+			disableDate = disableDate.split(',');
+			disableRange = disableRange.split(',');
 
 			if (!minYear) {
 				minYear = "c-95";
@@ -57,12 +71,8 @@
 			if (!maxYear) {
 				maxYear = "c+95";
 			}
-			var disabledWeekDays = function (current_date) {
-				if (restrictType === "week") {
-					return self.restrict_week(restrictedDays, current_date);
-				} else {
-					return self.restrict_custom(restrictedDays, current_date);
-				}
+			var disabledWeekDays = function ( current_date ) {
+				return self.restrict_date( restrictedDays, disableDate, disableRange, current_date );
 			};
 
 			var parent = this.$el.closest('.forminator-custom-form'),
@@ -81,7 +91,6 @@
 
 			this.$el.datepicker({
 				"beforeShow": function (input, inst) {
-
 					// Remove all Hustle UI related classes
 					( inst.dpDiv ).removeClass( function( index, css ) {
 						return ( css.match ( /\bhustle-\S+/g ) || []).join( ' ' );
@@ -91,9 +100,50 @@
 					( inst.dpDiv ).removeClass( function( index, css ) {
 						return ( css.match ( /\bforminator-\S+/g ) || []).join( ' ' );
 					});
-
 					( inst.dpDiv ).addClass( 'forminator-custom-form-' + parent.data( 'form-id' ) + ' ' + add_class );
+					// Enable/disable past dates
+					if ( 'disable' === pastDates ) {
+						$(this).datepicker( 'option', 'minDate', dateValue );
+					} else {
+						$(this).datepicker( 'option', 'minDate', null );
+					}
+					if( minDate ) {
+						var min_date = new Date( minDate );
+						$(this).datepicker( 'option', 'minDate', min_date );
+					}
+					if( maxDate ) {
+						var max_date = new Date( maxDate );
+						$(this).datepicker( 'option', 'maxDate', max_date );
+					}
+					if( startField ) {
+						var fieldVal = $('input[name ="'+ startField + '"]').val();
+						if( typeof fieldVal !== 'undefined' ) {
+							var startDate  = new Date( fieldVal ),
+								sdata = startOffset.split('_'),
+								start_new_date = moment( startDate ).add( sdata[1], sdata[2] );
+							if( '-' === sdata[0] ) {
+								start_new_date = moment( startDate ).subtract( sdata[1], sdata[2] );
+							}
+							var start_date_format = moment( start_new_date ).format( dateFormat.toUpperCase() ),
+								startDateVal = new Date( start_date_format );
+							$(this).datepicker( 'option', 'minDate', startDateVal );
+						}
+					}
 
+					if( endField ) {
+						var endFieldVal = $('input[name ="'+ endField + '"]').val();
+						if( typeof endFieldVal !== 'undefined' ) {
+							var endDate  = new Date( endFieldVal ),
+								edata = endOffset.split('_'),
+								end_new_date = moment( endDate ).add( edata[1], edata[2] );
+							if( '-' === edata[0] ) {
+								end_new_date = moment( endDate ).subtract( edata[1], edata[2] );
+							}
+							var end_date_format = moment( end_new_date ).format( dateFormat.toUpperCase() ),
+								endDateVal = new Date( end_date_format );
+							$(this).datepicker( 'option', 'maxDate', endDateVal );
+						}
+					}
 				},
 				"beforeShowDay": disabledWeekDays,
 				"monthNames": datepickerLang.monthNames,
@@ -107,50 +157,39 @@
 				"yearRange": minYear + ":" + maxYear,
 				"minDate": new Date(minYear, 0, 1),
 				"maxDate": new Date(maxYear, 11, 31),
+				"firstDay" : startOfWeek,
 				"onClose": function () {
 					//Called when the datepicker is closed, whether or not a date is selected
 					$(this).valid();
-				}
+				},
 			});
 		},
-		restrict_week: function (restrictedDays, date) {
-			var day = date.getDay();
 
-			if (restrictedDays.indexOf(day.toString()) !== -1) {
+		restrict_date: function ( restrictedDays, disableDate, disableRange, date ) {
+			var hasRange = true,
+				day = date.getDay(),
+				date_string = jQuery.datepicker.formatDate('mm/dd/yy', date);
+
+			for ( var i = 0; i < disableRange.length; i++ ) {
+
+				var disable_date_range = disableRange[i].split("-"),
+					start_date = new Date( $.trim( disable_date_range[0] ) ),
+					end_date = new Date( $.trim( disable_date_range[1] ) );
+				if ( date >= start_date && date <= end_date ) {
+					hasRange = false;
+					break;
+				}
+			}
+
+			if ( -1 !== restrictedDays.indexOf( day.toString() ) ||
+				-1 !== disableDate.indexOf( date_string ) ||
+				false === hasRange
+			) {
 				return [false, "disabledDate"]
 			} else {
 				return [true, "enabledDate"]
 			}
 		},
-
-		restrict_custom: function (restrictedDays, date) {
-			var month = [];
-			month[0] = "January";
-			month[1] = "February";
-			month[2] = "March";
-			month[3] = "April";
-			month[4] = "May";
-			month[5] = "June";
-			month[6] = "July";
-			month[7] = "August";
-			month[8] = "September";
-			month[9] = "October";
-			month[10] = "November";
-			month[11] = "December";
-
-			var custom_month = date.getMonth(),
-				custom_day = date.getDate(),
-				custom_year = date.getFullYear(),
-				custom_date = custom_day + " " + month[custom_month] + " " + custom_year
-			;
-
-			if (restrictedDays.indexOf(custom_date) !== -1) {
-				return [false, "disabledDate"]
-			} else {
-				return [true, "enabledDate"]
-			}
-		}
-
 	});
 
 	// A really lightweight plugin wrapper around the constructor,

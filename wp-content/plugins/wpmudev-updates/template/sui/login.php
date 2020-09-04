@@ -15,6 +15,7 @@
 $register_url      = 'https://premium.wpmudev.org/#trial';
 $reset_url         = 'https://premium.wpmudev.org/wp-login.php?action=lostpassword';
 $account_url       = 'https://premium.wpmudev.org/hub/account/';
+$skip_trial_url    = $urls->skip_trial_url;
 $hosting_url       = 'https://premium.wpmudev.org/hub/hosting/';
 $trial_info_url    = 'https://premium.wpmudev.org/manuals/how-free-trials-work/';
 $websites_url      = 'https://premium.wpmudev.org/hub/my-websites/';
@@ -53,7 +54,7 @@ if ( isset( $_GET['api_error'] ) ) { // wpcs csrf ok.
 					),
 					'<strong style="word-break: break-all;">' . esc_html( $_GET['display_name'] ) . '</strong>', // wpcs csrf ok.
 					$reset_url,
-					$account_url,
+					$skip_trial_url,
 					$trial_info_url
 				),
 				$support_url,
@@ -69,7 +70,7 @@ if ( isset( $_GET['api_error'] ) ) { // wpcs csrf ok.
 					),
 					'<strong style="word-break: break-all;">' . esc_html( $_GET['display_name'] ) . '</strong>', // wpcs csrf ok.
 					$reset_url,
-					$account_url,
+					$skip_trial_url,
 					$trial_info_url
 				),
 				$support_url,
@@ -226,7 +227,12 @@ if ( $installed_free_projects_names ) {
 
 				<?php foreach ( $login_errors as $login_error ) : ?>
 					<div class="sui-notice sui-notice-error">
-						<p><?php echo $login_error; // wpcs xss ok. ?></p>
+						<div class="sui-notice-content">
+							<div class="sui-notice-message">
+								<i class="sui-notice-icon sui-icon-info sui-md" aria-hidden="true"></i>
+								<p><?php echo $login_error; // wpcs xss ok. ?></p>
+							</div>
+						</div>
 					</div>
 				<?php endforeach; ?>
 				<div clas="dashui-login-button-wrap">

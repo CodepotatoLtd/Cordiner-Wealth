@@ -405,7 +405,7 @@ class Forminator_Address extends Forminator_Field {
 				$country_data = array(
 					'name'  => $id . '-country',
 					'id'    => $id . '-country',
-					'class' => 'forminator-select2',
+					'class' => 'forminator-select',
 				);
 
 				$countries = array(
@@ -735,9 +735,10 @@ class Forminator_Address extends Forminator_Field {
 	 *
 	 * @param array        $field
 	 * @param array|string $data
+	 * @param array        $post_data
 	 */
-	public function validate( $field, $data ) {
-		$id = self::get_property( 'element_id', $field );
+	public function validate( $field, $data, $post_data = array() ) {
+		$id       = self::get_property( 'element_id', $field );
 
 		$street  = self::get_property( 'street_address', $field, false );
 		$line    = self::get_property( 'address_line', $field, false );

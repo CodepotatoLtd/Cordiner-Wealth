@@ -36,6 +36,7 @@ class Forminator_Admin_Data {
 		$data           = $this->admin_js_defaults();
 		$data           = apply_filters( 'forminator_data', $data );
 		$data['fields'] = forminator_get_fields_sorted( 'position', SORT_ASC );
+		$data['fieldsPro'] = forminator_get_pro_fields();
 
 		return $data;
 	}
@@ -102,6 +103,7 @@ class Forminator_Admin_Data {
 
 		return array(
 			'ajaxUrl'                        => forminator_ajax_url(),
+			'adminUrl'                       => admin_url(),
 			'application'                    => '',
 			'is_touch'                       => wp_is_mobile(),
 			'dashboardUrl'                   => menu_page_url( 'forminator', false ),
@@ -119,6 +121,7 @@ class Forminator_Admin_Data {
 			'formNonce'                      => $this->get_nonce(),
 			'searchNonce'                    => wp_create_nonce( 'forminator_search_emails' ),
 			'gFontNonce'                     => wp_create_nonce( 'forminator_load_google_fonts' ),
+			'dismissNonce'							=> wp_create_nonce( 'forminator_dismiss_notification' ),
 			'addons_enabled'                 => Forminator::is_addons_feature_enabled(),
 			'pluginUrl'                      => forminator_plugin_url(),
 			'imagesUrl'                      => forminator_plugin_url() . '/assets/images',
@@ -138,6 +141,7 @@ class Forminator_Admin_Data {
 			'submissions_ip_retain_unit'     => get_option( 'forminator_retain_poll_submissions_interval_unit', 'days' ),
 			'submissions_quiz_retain_number' => get_option( 'forminator_retain_quiz_submissions_interval_number', 0 ),
 			'submissions_quiz_retain_unit'   => get_option( 'forminator_retain_quiz_submissions_interval_unit', 'days' ),
+			'skip_pro_notice'                => get_option( 'forminator_skip_pro_notice', false ),
 			'fileExts'                       => forminator_get_ext_types(),
 			'version'                        => FORMINATOR_VERSION,
 			'showDocLink'                    => forminator_is_show_documentation_link(),

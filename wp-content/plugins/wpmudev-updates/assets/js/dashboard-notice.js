@@ -1,16 +1,19 @@
 jQuery(function() {
-	var el_notice, msg_id = el_notice, btn_dismiss, btn_dismiss_wp;
+	var el_notice, msg_id = el_notice, btn_dismiss, btn_dismiss_wp,force;
 
 	// Display the notice after the page was loaded.
 	function initialize() {
 
 		el_notice = jQuery(".wdp-notice");
 		msg_id = el_notice.find("input[name=msg_id]").val();
+		force = el_notice.find("input[name=force]").val();
 		btn_dismiss = el_notice.find(".wdp-notice-dismiss");
 		btn_dismiss_wp = el_notice.find(".notice-dismiss");
 
+
 		// Dismiss the notice without any action.
 		btn_dismiss.click(function(ev) {
+
 			ev.preventDefault();
 			dismiss_dash_notice("wdev_notice_dismiss");
 		});
@@ -43,6 +46,7 @@ jQuery(function() {
 
 			ajax_data.msg_id = msg_id;
 			ajax_data.action = action;
+			ajax_data.force = force;
 			jQuery.post(
 				window.ajaxurl,
 				ajax_data,

@@ -4,10 +4,64 @@ Author: Aaron Edwards
 Change Log:
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
-4.8.2 - 05/28/2020- Aaron, Ivan, Biplav
-- Add: Improvements handling Snapshot v4 release.
+
+4.10.1 - 08/27/2020 - Aaron, Ivan
+- Fix: Translations Update modal closes before update is finished
+- Fix: Update documentation links on Analytics and Whitelabel pages
+- Fix: Fix php notices on Plugins and Main page
 
 ----------------------------------------------------------------------
+----------------------------------------------------------------------
+
+4.10.0 - 08/20/2020 - Aaron, Ivan
+- Add: Split Tools into separate Whitelabel and Analytics pages
+- Add: Hide Dashboard from plugin list when Whitelabeling is active
+- Improvement: Prevent directory listing for all directories
+- Fix: Ensure compatibility with WP 5.5
+- Fix: Support access remains active after Dashboard is deactivated
+- Fix: Click at View Changelog more than once runs plugin update
+- Fix: Support Ticket display on the main page and on My Tickets page
+- Fix: PHPSecLib's random crypt not compatible with PHP 7.3
+- Fix: Blank content showing if Check Again is clicked on Settings and Support pages
+- Fix: Whitelabel page not showing correct situation for expired membership
+- Fix: Modals not closing properly on various close buttons
+
+----------------------------------------------------------------------
+
+4.9.4 - 06/18/2020 - Aaron, Ivan, Biplav
+- Fix: improve display of Snapshot versions
+
+----------------------------------------------------------------------
+4.9.3 - 06/15/2020 - Aaron, Ivan, Biplav
+- Improvement: Reset OPcache on plugin update.
+
+----------------------------------------------------------------------
+
+4.9.2 - 06/09/2020 - Aaron, Ivan, Biplav
+- Add: Improve Plugins page performance
+
+----------------------------------------------------------------------
+
+4.9.1 - 06/03/2020 - Aaron, Ivan, Biplav
+- Add: Onboarding experience improvements
+- Fix: Error when deleting plugin from the Hub
+- Fix: Total active plugins count not correct on MU sites
+- Fix: include "Improvements handling Snapshot-v4 release"
+
+----------------------------------------------------------------------
+
+4.9.0 - 06/03/2020 - Aaron, Ivan, Biplav
+- Add: Onboarding experience improvements
+- Fix: Error when deleting plugin from the Hub
+- Fix: Total active plugins count not correct on MU sites
+
+----------------------------------------------------------------------
+
+4.8.2 - 05/28/2020- Aaron, Ivan, Biplav
+- Add: Improvements handling Snapshot-v4 release.
+
+----------------------------------------------------------------------
+
 4.8.1 - 03/10/2020- Aaron, Ivan, Biplav
 - Fix: Bugs causing styles to stop rendering
 
@@ -598,4 +652,4 @@ Added option to disable admin notices.
 Initial Release.
 
 
-59765-1590764223-au
+59765-1599206171-au

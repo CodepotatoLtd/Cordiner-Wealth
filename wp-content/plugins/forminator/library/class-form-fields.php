@@ -41,6 +41,10 @@ class Forminator_Fields {
 		 * Filters the form fields
 		 */
 		$this->fields = apply_filters( 'forminator_fields', $fields );
+
+		add_action( 'wp_footer', array( &$this, 'forminator_schedule_delete_temp_files' ) );
+
+		add_action( 'schedule_delete_temp_files_cron', array( &$this, 'schedule_delete_temp_files' ) );
 	}
 
 	/**
@@ -95,5 +99,40 @@ class Forminator_Fields {
 		 * see samples/forminator-simple-autofill-plugin for example how to use it
 		 */
 		do_action( 'forminator_register_autofill_provider' );
+	}
+
+	/**
+	 * Set up the schedule delete file
+	 *
+	 * @since 1.13
+	 */
+	public function forminator_schedule_delete_temp_files() {
+		if ( ! wp_next_scheduled( 'schedule_delete_temp_files_cron' ) ) {
+			wp_schedule_single_event( time() + 60 * 60 * 24, 'schedule_delete_temp_files_cron' );
+		}
+	}
+
+	/**
+	 * Schedule delete temp file
+	 *
+	 * @since 1.13
+	 */
+	public function schedule_delete_temp_files() {
+		$temp_path = forminator_upload_root() . '/';
+
+		// Check if the dir exist before opening it
+		if ( is_dir( $temp_path ) ) {
+			if ( $handle = opendir( $temp_path ) ) {
+				while ( false !== ( $file = readdir( $handle ) ) ) {
+					$temp_file = $temp_path . $file;
+					$file_time = filemtime( $temp_file );
+					if ( file_exists( $temp_file ) && ( time() - $file_time ) > 60 * 60 * 24 ) {
+						unlink( $temp_file );
+					}
+				}
+
+				closedir( $handle );
+			}
+		}
 	}
 }

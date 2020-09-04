@@ -1,8 +1,12 @@
-.forminator-ui.forminator-quiz-<?php echo $properties['form_id'] ?> {
+#forminator-module-<?php echo $properties['form_id'] ?>.forminator-ui {
 	width: 100%;
 	<?php if ( forminator_array_value_exists( $properties, 'quiz-size' ) ) { ?>
-		<?php if ( 'custom' == $properties['quiz-size'] && ! empty( $properties['quiz-custom-size'] ) ) { ?>
-			max-width: <?php echo $properties['quiz-custom-size'] ?>px;
+		<?php if ( 'custom' == $properties['quiz-size'] && ! empty( $properties['quiz-size'] ) ) { ?>
+			<?php if ( forminator_array_value_exists( $properties, 'quiz-custom-size' ) ) { ?>
+				max-width: <?php echo $properties['quiz-custom-size'] ?>px;
+			<?php } else { ?>
+				max-width: 600px;
+			<?php } ?>
 		<?php } ?>
 	<?php } ?>
 	<?php if ( forminator_array_value_exists( $properties, 'quiz-padding' ) ) { ?>

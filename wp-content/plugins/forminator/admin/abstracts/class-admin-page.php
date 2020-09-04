@@ -153,6 +153,7 @@ abstract class Forminator_Admin_Page {
 	 * @since 1.0
 	 */
 	public function add_page_hooks() {
+		add_filter( 'user_can_richedit', '__return_true' ); //Confirms wp editor script is loaded on Forminator admin pages.
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		add_filter( 'admin_body_class', array( $this, 'admin_body_classes' ) );
 		add_action( 'init', array( $this, 'init_scripts' ) );
@@ -281,15 +282,15 @@ abstract class Forminator_Admin_Page {
 			<ul class="sui-footer-social">
 				<li><a href="https://www.facebook.com/wpmudev" target="_blank">
 					<i class="sui-icon-social-facebook" aria-hidden="true"></i>
-					<span class="sui-screen-reader-text">Facebook</span>
+					<span class="sui-screen-reader-text"><?php esc_html_e( 'Facebook', Forminator::DOMAIN ); ?></span>
 				</a></li>
 				<li><a href="https://twitter.com/wpmudev" target="_blank">
 					<i class="sui-icon-social-twitter" aria-hidden="true"></i>
-					<span class="sui-screen-reader-text">Twitter</span>
+					<span class="sui-screen-reader-text"><?php esc_html_e( 'Twitter', Forminator::DOMAIN ); ?></span>
 				</a></li>
 				<li><a href="https://www.instagram.com/wpmu_dev/" target="_blank">
 					<i class="sui-icon-instagram" aria-hidden="true"></i>
-					<span class="sui-screen-reader-text">Instagram</span>
+					<span class="sui-screen-reader-text"><?php esc_html_e( 'Instagram', Forminator::DOMAIN ); ?></span>
 				</a></li>
 			</ul>
 		<?php endif; ?>

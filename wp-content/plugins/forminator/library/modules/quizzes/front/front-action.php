@@ -229,7 +229,7 @@ class Forminator_Quizz_Front_Action extends Forminator_Front_Action {
 
 						<hr />
 
-						<button class="forminator-button-refresh forminator-result--retake" type="button"><?php esc_html_e( 'Retake Quiz', Forminator::DOMAIN ); ?></button>
+						<button class="forminator-result--retake" type="button"><?php esc_html_e( 'Retake Quiz', Forminator::DOMAIN ); ?></button>
 
 					</div>
 
@@ -239,7 +239,7 @@ class Forminator_Quizz_Front_Action extends Forminator_Front_Action {
 
 						<span class="forminator-result--quiz-name"><?php echo forminator_get_form_name( $model->id, 'quiz' ); // WPCS: XSS ok. ?></span>
 
-						<button class="forminator-button forminator-button-refresh forminator-result--retake" type="button">
+						<button class="forminator-button forminator-result--retake" type="button">
 							<i class="forminator-icon-refresh" aria-hidden="true"></i>
 							<span><?php esc_html_e( "Retake Quiz", Forminator::DOMAIN ); ?></span>
 						</button>
@@ -550,25 +550,37 @@ class Forminator_Quizz_Front_Action extends Forminator_Front_Action {
                 $result = $right_answers . '/' . $total_answers;
                 $result_message = forminator_get_social_message( $model->settings, $model->settings['formName'], $result, $data );
 				?>
-				<p class="forminator-social--text"><?php esc_html_e( "Share your results", Forminator::DOMAIN ); ?></p>
-				<ul class="forminator-social--icons"
-					data-message="<?php echo esc_textarea( $result_message ); ?>" data-url="<?php echo isset( $data['current_url'] ) ? esc_url( $data['current_url'] ) : forminator_get_current_url(); ?>">
-					<?php if ( $is_fb ): ?>
-						<li class="forminator-social--icon">
-							<a href="#" data-social="facebook" class="wpdui-icon wpdui-icon-social-facebook" aria-label="<?php esc_html_e( 'Share on Facebook', Forminator::DOMAIN ); ?>"></a>
-						</li>
-					<?php endif; ?>
-					<?php if ( $is_tw ): ?>
-						<li class="forminator-social--icon">
-							<a href="#" data-social="twitter" class="wpdui-icon wpdui-icon-social-twitter" aria-label="<?php esc_html_e( 'Share on Twitter', Forminator::DOMAIN ); ?>"></a>
-						</li>
-					<?php endif; ?>
-					<?php if ( $is_li ): ?>
-						<li class="forminator-social--icon">
-							<a href="#" data-social="linkedin" class="wpdui-icon wpdui-icon-social-linkedin" aria-label="<?php esc_html_e( 'Share on LinkedIn', Forminator::DOMAIN ); ?>"></a>
-						</li>
-					<?php endif; ?>
-				</ul>
+                <div class="forminator-quiz--social">
+                    <p class="forminator-social--text"><?php esc_html_e( "Share your results", Forminator::DOMAIN ); ?></p>
+                    <ul class="forminator-social--icons"
+                        data-message="<?php echo esc_textarea( $result_message ); ?>"
+                        data-url="<?php echo isset( $data['current_url'] ) ? esc_url( $data['current_url'] ) : forminator_get_current_url(); ?>">
+                        <?php if ( $is_fb ): ?>
+                            <li class="forminator-social--icon">
+                                <a href="#" data-social="facebook" aria-label="<?php esc_html_e( 'Share on Facebook', Forminator::DOMAIN ); ?>">
+                                    <i class="forminator-icon-social-facebook" aria-hidden="true"></i>
+                                    <span class="forminator-screen-reader-only"><?php esc_html_e( 'Share on Facebook', Forminator::DOMAIN ); ?></span>
+                                </a>
+                            </li>
+                        <?php endif; ?>
+                        <?php if ( $is_tw ): ?>
+                            <li class="forminator-social--icon">
+                                <a href="#" data-social="twitter" aria-label="<?php esc_html_e( 'Share on Twitter', Forminator::DOMAIN ); ?>">
+                                    <i class="forminator-icon-social-twitter" aria-hidden="true"></i>
+                                    <span class="forminator-screen-reader-only"><?php esc_html_e( 'Share on Twitter', Forminator::DOMAIN ); ?></span>
+                                </a>
+                            </li>
+                        <?php endif; ?>
+                        <?php if ( $is_li ): ?>
+                            <li class="forminator-social--icon">
+                                <a href="#" data-social="linkedin" aria-label="<?php esc_html_e( 'Share on LinkedIn', Forminator::DOMAIN ); ?>">
+                                    <i class="forminator-icon-social-linkedin" aria-hidden="true"></i>
+                                    <span class="forminator-screen-reader-only"><?php esc_html_e( 'Share on LinkedIn', Forminator::DOMAIN ); ?></span>
+                                </a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </div>
 			<?php endif; ?>
 
 		<?php } ?>

@@ -31,13 +31,13 @@ class Moove_GDPR_DB_Controller {
 	 * Construct
 	 */
 	public function __construct() {
-		global $wpdb;
 		/**
 		 * Creating database structure on the first time
 		 */
-		if ( $wpdb->get_var( "SHOW TABLES LIKE '{$wpdb->prefix}gdpr_cc_options'" ) != $wpdb->prefix . 'gdpr_cc_options' ) :
-			$wpdb->query(
-				"CREATE TABLE {$wpdb->prefix}gdpr_cc_options(
+		if ( ! get_option('gdpr_cc_db_created') ) :
+			global $wpdb;
+			$gdpr_db_init = $wpdb->query(
+				"CREATE TABLE IF NOT EXISTS {$wpdb->prefix}gdpr_cc_options(
           id INTEGER NOT NULL auto_increment,
           option_key VARCHAR(255) NOT NULL DEFAULT 1,
           option_value LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
@@ -46,6 +46,19 @@ class Moove_GDPR_DB_Controller {
           PRIMARY KEY (id)
         );"
 			);
+			if ( $gdpr_db_init && ! is_wp_error( $gdpr_db_init ) ) :
+				add_action('init',function(){
+					$gdpr_default_content = new Moove_GDPR_Content();
+					$option_name          = $gdpr_default_content->moove_gdpr_get_option_name();
+					$gdpr_options         = get_option( $option_name );
+					if ( $gdpr_options && is_array( $gdpr_options ) ) :
+						foreach ( $gdpr_options as $go_key => $go_value ) :
+							gdpr_update_field( $go_key, $go_value );
+						endforeach;
+					endif;
+				});
+				update_option( 'gdpr_cc_db_created', true );
+			endif;
 		endif;
 	}
 

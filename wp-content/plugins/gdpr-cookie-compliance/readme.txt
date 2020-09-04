@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Stable tag: trunk
 Tags: gdpr, cookie, notice, consent, law
 Requires at least: 4.5
-Tested up to: 5.4
+Tested up to: 5.5
 Requires PHP: 5.6 or higher
 License: GPLv2
 
@@ -28,10 +28,11 @@ GDPR Cookie Compliance can assist you with GDPR, PIPEDA, CCPA, LGPD, AAP, cookie
 * Sleek animations to enhance the user experience
 * **Mobile responsive** design
 * **SEO friendly**
+* Optimised for **WCAG/ADA compliance**
 * WPML, QTranslate, WP Multilang and Polylang compatible, .pot file for translations included
 * **CDN** Base URL supported
 * Supports all major **caching** servers and plugins
-* Available in **9 languages**
+* Available in **11 languages**
 
 **The plugin is especially useful in preparing your site for the following cookie law, data protection and privacy regulations:**
 * **GDPR**: The General Data Protection Regulation (European Union)
@@ -44,20 +45,21 @@ GDPR Cookie Compliance can assist you with GDPR, PIPEDA, CCPA, LGPD, AAP, cookie
 
 ### Premium Features Available
 
-* **Cookie wall / Full-screen layout** - If enabled, the Cookie Consent Banner will be display in a full screen mode, and force users to either accept or reject cookies before they can see your content
-* **Export & import settings** - Transfer your custom settings between sites with ease
-* **WordPress Multisite extension** - You can manage the plugin settings globally, and clone them from one site to another within your multi-site setup
-* **Accept on Scroll / Hide timer** - Allow users to accept cookies by scrolling down the page OR by setting a timer (ie. Hide banner after 5 seconds)
+* **Cookie wall / Full-screen layout** - if enabled, the Cookie Consent Banner will be display in a full screen mode, and force users to either accept or reject cookies before they can see your content
+* **Export & import settings** - transfer your custom settings between sites with ease
+* **WordPress Multisite extension** - you can manage the plugin settings globally, and clone them from one site to another within your multi-site setup
+* **Accept on Scroll / Hide timer** - allow users to accept cookies by scrolling down the page OR by setting a timer (ie. Hide banner after 5 seconds)
 * **Renew Consent** - ask users to renew their consent if there is a change in privacy or cookie policy on your site
-* **Geo-location** - If enabled, the Cookie Consent Banner will only be shown to visitors from the European Union or selected countries (ie. Canada, United States etc.)
+* **Geo-location** - if enabled, the Cookie Consent Banner will only be shown to visitors from the European Union or selected countries (ie. Canada, United States etc.)
 * **iFrame Blocker** - blocks users from viewing 3rd party resources (such as Youtube) until they accept cookies
 * **Premium Shortcodes** that can be added to your ‘Privacy & Cookie Policy’ and allow your users to manage their consent with ease.
 * **Hide Cookie Banner** allows you to hide the Cookie Notice Banner on selected pages
 * **Cookie Declaration** allows you to manually declare the exact type of cookies that your site uses, including the cookie name, provider, purpose and expiration
 * **Consent Log** - gives you the ability to store user consent information in the event that you need to prove that consent was given.
-* **Analytics** - Stats and charts showing you how many users accepted your cookies (all anonymous)
+* **Analytics** - stats and charts showing you how many users accepted your cookies (all anonymous)
+* **Local Data Storage** - all user data is stored locally on your website only (ie. Consent log, Analytics features) - we do not collect or store any of your user data on our servers
 * **Fast Premium Support** from our friendly team
-* **12 months** of updates included
+* **12 months** of premium updates included
 
 [Buy GDPR Premium Add-on here](https://www.mooveagency.com/wordpress-plugins/gdpr-cookie-compliance/)
 
@@ -121,26 +123,40 @@ You can use the following link to display the Cookie Settings Screen window:
 https://www.example.com/#gdpr_cookie_modal
 https://www.example.com/your-internal-page/#gdpr_cookie_modal
 
-= Pasted code is not visible when view-source page is viewed. =
-* Our plugin loads the scripts with Javascript, and that’s why you can’t find it in the view-source page. 
-* You can use the developer console in Chrome browser (Inspect Element feature) and you'll find the scripts there.
+= The scripts added to the plugin settings are not visible in the page source code. =
+* Our plugin loads scripts using JavaScript, which is why you cannot find them when viewing the source code of the page.
+* To view the scripts, you can use the Developer Console in Chrome browser (Inspect Element feature).
+
+= What are "Strictly Necessary Cookies"? =
+* The "Strictly Necessary Cookies", sometimes called Essential Cookies, are cookies that are necessary for your site to function properly.
+* For example, we use Strictly Necessary Cookies to save information about which cookies the user consented to.
+* We are not storing any sensitive or personal data there, the cookie file contains only one of the following strings:
+
+Disabled state: strictly: 1, thirdparty: 0, advanced: 0
+Enabled state: strictly: 1, thirdparty: 1, advanced: 1
+
+= Once I add scripts to this plugin, should I delete them from the website’s code? =
+Yes. Once you setup the plugin, you should delete the scripts you uploaded to the plugin from your website’s code to ensure that your scripts are not loaded twice.
 
 = Can I use custom code or hooks with your plugin? =
 * Yes, we have implemented hooks that allow you to implement custom code snippets. 
-* You can also find the list of all pre-defined hooks here: https://wordpress.org/support/topic/conditional-php-script/
+* You will find the list of popular hooks in the plugin setttings: CMS > GDPR Cookie Compliance > Help, Hooks, Filters & Shortcodes
+* You can also find the list of all [pre-defined advanced hooks here:](https://wordpress.org/support/topic/conditional-php-script/)
 
 = Does the plugin support subdomains? =
 * Unfortunately not, subdomains are treated as separate domains by browsers and the plugin is unable to alter cookies stored by another domain. 
 * If your multisite setup uses subdomain version, each subsite will be recognised as a separate domain by browsers and will create separate cookies for each subdomain.
 
-= Once I add scripts to this plugin, should I delete them from the website’s code? =
-Yes. Once you setup the plugin, you should delete the scripts you uploaded to the plugin from your website’s code to ensure that your scripts are not loaded twice.
-
 = Does this plugin block all cookies? =
 This plugin only restricts cookies for scripts that you have setup in the Settings. If you want to block all cookies, you have to add all scripts that use cookies into the Settings of this plugin. 
+
+= What information does the Consent Log store and where is it stored? = 
+The Consent Log features stores all data in your WordPress website's database. 
+The data stored includes: Consent Date, User's IP address, Cookies Accepted and User Email (for logged-in users)
+You can see the preview of Consent Log here: [Consent Log here:](https://ps.w.org/gdpr-cookie-compliance/assets/screenshot-36.png?rev=2263873)
  
 = Does this plugin guarantee that I will comply with data protection laws?=
-This plugin is just a template and needs to be setup by a developer in order to work properly. 
+This plugin is just a template and needs to be setup correctly in order to work properly.
 THIS PLUGIN DOES NOT MAKE YOUR WEBSITE COMPLIANT. YOU ARE RESPONSIBLE FOR ENSURING THAT ALL LEGAL REQUIREMENTS ARE MET ON YOUR WEBSITE.
 
 = Do you provide support? = 
@@ -168,7 +184,7 @@ The Brazilian General Data Protection Law (“Lei Geral de Proteção de Dados�
 2. Activate the plugin on the \'Plugins\' screen in WordPress.
 3. You can adjust all settings in the "GDPR Cookie Compliance" main menu link.
 4. You can link directly to the Cookie Settings Screen on your website using the following: /#gdpr_cookie_modal
-5. WPML and WP Multilang is supported: once you switch the language in your CMS, you can translate all text.
+5. WPML, QTranslate, WP Multilang and Polylang is supported: once you switch the language in your CMS, you can translate all text in our plugin too.
 6. You can find list of all pre-defined hooks here: https://wordpress.org/support/topic/conditional-php-script/
 7. You can buy the [Premium Add-on with additional features here](https://www.mooveagency.com/wordpress-plugins/gdpr-cookie-compliance/)
 
@@ -216,6 +232,47 @@ The Brazilian General Data Protection Law (“Lei Geral de Proteção de Dados�
 39. GDPR Cookie Compliance - Front-end - Cookie Shortcode [Premium]
 
 == Changelog ==
+= 4.2.9: August 28, 2020 =
+* Database Controller Improvements
+
+= 4.2.8: August 25, 2020 =
+* WordPress plugins API request improved
+* Enable all button fixed
+* Safari mobile CSS fix
+* JS improvements
+
+= 4.2.7: August 10, 2020 =
+* Settings button fixed
+
+= 4.2.6: August 5, 2020 =
+* WCAG/ADA improvements
+* Bugfixes
+
+= 4.2.5: July 28, 2020 =
+* Empty cookie name warning fixed
+* Legacy option support fixed
+* Licence manager error handling improved
+
+= 4.2.4: June 24, 2020 =
+* Improved GDPR custom table for get_option and update_option
+
+= 4.2.3: June 15, 2020 =
+* Cookie cleaner feature improved
+
+= 4.2.2: June 8, 2020 =
+* Added close button option to Cookie Banner
+* Help section extended
+* Fixed Privacy title in module
+* POT file updated
+
+= 4.2.1: June 1, 2020 =
+* Reject button CSS fix
+
+= 4.2.0: May 29, 2020 =
+* Default script inject improved
+* Reject button style updated
+* Bugfixes
+
 = 4.1.9: April 22, 2020 =
 * WordPress 5.4 compatibility
 * JavaScript fixes

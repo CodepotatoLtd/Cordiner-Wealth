@@ -283,7 +283,18 @@ class Forminator_Stripe extends Forminator_Field {
 		Forminator_Gateway_Stripe::set_stripe_app_info();
 
 		$metadata_object = array();
-		foreach ( $metadata as $meta ) {
+
+		foreach( $metadata as $meta ) {
+			$label = trim( $meta['label'] );
+			// Payment doesn't work with empty meta labels
+			if ( '' === $label && '' === $meta['value'] ) {
+				continue;
+			}
+
+			if ( '' === $label ) {
+				$meta['label'] = $meta['value'];
+			}
+
 			$metadata_object[ $meta['label'] ] = $meta['value'];
 		}
 
@@ -420,14 +431,24 @@ class Forminator_Stripe extends Forminator_Field {
 
 		$submitted_data_combined = array_merge( $submitted_data, $pseudo_submitted_data );
 
-		if( ! empty( $stored_metadata ) ) {
+		if ( ! empty( $stored_metadata ) ) {
 			foreach( (array) $stored_metadata as $key => $meta ) {
 				$metadata[ $key ] = forminator_replace_form_data( '{' . $meta . '}', $submitted_data_combined );
 			}
 		}
 
+		// Throw error if payment ID is empty
+		if ( empty( $id ) || "" === $id ) {
+			$response = array(
+				'message' => __( 'Your Payment ID is empty, please reload the page and try again!', Forminator::DOMAIN ),
+				'errors' => array()
+			);
+
+			wp_send_json_error( $response );
+		}
+
 		// Check if the PaymentIntent already succeeded and continue
-		if( "succeeded" === $intent->status ) {
+		if ( "succeeded" === $intent->status ) {
 			wp_send_json_success(
 				array(
 					'paymentid' => $id,
@@ -438,7 +459,7 @@ class Forminator_Stripe extends Forminator_Field {
 			try {
 				// Check payment amount
 				if ( 0 > $amount ) {
-					throw new Exception( __( 'Payment amount should be larger than 0', Forminator::DOMAIN ) );
+					throw new Exception( __( 'Payment amount should be larger than 0.', Forminator::DOMAIN ) );
 				}
 
 				// Check payment ID
@@ -506,8 +527,9 @@ class Forminator_Stripe extends Forminator_Field {
 	 *
 	 * @param array        $field
 	 * @param array|string $data
+	 * @param array        $post_data
 	 */
-	public function validate( $field, $data ) {
+	public function validate( $field, $data, $post_data = array() ) {
 		$id = self::get_property( 'element_id', $field );
 	}
 

@@ -66,7 +66,7 @@ class Forminator_Date extends Forminator_Field {
 		return array(
 			'field_type'        => 'picker',
 			'date_format'       => 'mm/dd/yy',
-			'default_date'      => 'today',
+			'default_date'      => 'none',
 			'field_label'       => __( 'Date', Forminator::DOMAIN ),
 			'placeholder'       => __( 'Choose Date', Forminator::DOMAIN ),
 			'icon'              => 'true',
@@ -76,6 +76,7 @@ class Forminator_Date extends Forminator_Field {
 			'month_placeholder' => __( 'E.g. 01', Forminator::DOMAIN ),
 			'year_label'        => __( 'Year', Forminator::DOMAIN ),
 			'year_placeholder'  => __( 'E.g. 2000', Forminator::DOMAIN ),
+			'restrict_message'  => __( 'Please select one of the available dates.', Forminator::DOMAIN ),
 		);
 	}
 
@@ -127,6 +128,12 @@ class Forminator_Date extends Forminator_Field {
 		$has_icon    = self::get_property( 'icon', $field, false, 'bool' );
 		$has_icon    = filter_var( $has_icon, FILTER_VALIDATE_BOOLEAN );
 		$date_format = esc_html( self::get_property( 'date_format', $field, 'm/d/Y' ) );
+		$start_date_type = self::get_property( 'start-date', $field, '' );
+		$end_date_type   = self::get_property( 'end-date', $field, '' );
+		$start_of_week = self::get_property( 'start_of_week', $field, get_option('start_of_week') );
+		$disabled_dates = self::get_property( 'disabled-dates', $field, array() );
+		$disabled_range = self::get_property( 'disable-date-range', $field, array() );
+
 		if ( false !== strpos( $date_format, '-' ) ) {
 			$sep = '-';
 		} elseif ( false !== strpos( $date_format, '.' ) ) {
@@ -197,7 +204,7 @@ class Forminator_Date extends Forminator_Field {
 
 			if ( 'today' === $default_date ) {
 				$datepicker_format = $this->normalize_date_format( $date_format );
-				$default_value     = date( $datepicker_format );// phpcs:ignore
+				$default_value     = date( $datepicker_format );
 			}
 
 			if ( 'custom' === $default_date ) {
@@ -209,11 +216,59 @@ class Forminator_Date extends Forminator_Field {
 				$default_value = $prefill;
 			}
 
+			$past_dates = self::get_property( 'past_dates', $field );
+			$past_dates = '' !== $default_value && 'disable' === $past_dates ? 'disable' : 'enable';
+
+			$start_date       = '';
+			$end_date         = '';
+			$start_date_field = '';
+			$end_date_field   = '';
+			$start_offset     = '';
+			$end_offset       = '';
+			if ( ! empty( $start_date_type ) ) {
+				if ( 'specific' === $start_date_type ) {
+					$start_date = self::get_property( 'start-specific-date', $field, '' );
+				} else {
+					$start_offset_operator = self::get_property( 'start-offset-operator', $field, '+' );
+					$start_offset_value    = self::get_property( 'start-offset-value', $field, '0' );
+					$start_offset_duration = self::get_property( 'start-offset-duration', $field, 'days' );
+					if ( 'today' === $start_date_type ) {
+						$start_date = date_i18n( datepicker_default_format( $date_format ), strtotime( $start_offset_operator . $start_offset_value . ' ' . $start_offset_duration ) );
+					} else {
+						$start_date_field = $start_date_type;
+						$start_offset     = $start_offset_operator . '_' . $start_offset_value . '_' . $start_offset_duration;
+					}
+				}
+			}
+			if ( ! empty( $end_date_type ) ) {
+				if ( 'specific' === $end_date_type ) {
+					$end_date = self::get_property( 'end-specific-date', $field, '' );
+				} else {
+					$end_offset_operator = self::get_property( 'end-offset-operator', $field, '+' );
+					$end_offset_value    = self::get_property( 'end-offset-value', $field, '0' );
+					$end_offset_duration = self::get_property( 'end-offset-duration', $field, 'days' );
+					if ( 'today' === $end_date_type ) {
+						$end_date = date_i18n( datepicker_default_format( $date_format ), strtotime( $end_offset_operator . $end_offset_value . ' ' . $end_offset_duration ) );
+					} else {
+						$end_date_field = $end_date_type;
+						$end_offset     = $end_offset_operator . '_' . $end_offset_value . '_' . $end_offset_duration;
+					}
+				}
+			}
+
 			$icon_markup = array(
 				'<div class="forminator-input-with-icon">',
 				'</div>',
-				'calendar',
+				'calendar'
 			);
+
+			if ( ! empty( $start_date ) ) {
+				$min_year = date( 'Y', strtotime( $start_date ) );
+			}
+
+			if ( ! empty( $end_date ) ) {
+				$max_year = date( 'Y', strtotime( $end_date ) );
+			}
 
 			$html .= self::create_input(
 				array(
@@ -227,9 +282,19 @@ class Forminator_Date extends Forminator_Field {
 					'data-required'      => $required,
 					'data-format'        => $date_format,
 					'data-restrict-type' => $restrict_type,
-					'data-restrict'      => implode( ',', $restrict ),
+					'data-restrict'      => implode( ",", $restrict ),
 					'data-start-year'    => $min_year,
 					'data-end-year'      => $max_year,
+					'data-past-dates'    => $past_dates,
+					'data-start-of-week' => $start_of_week,
+					'data-start-date'    => $start_date,
+					'data-end-date'      => $end_date,
+					'data-start-field'   => $start_date_field,
+					'data-end-field'     => $end_date_field,
+					'data-start-offset'  => $start_offset,
+					'data-end-offset'    => $end_offset,
+					'data-disable-date'  => implode( ',', $disabled_dates ),
+					'data-disable-range' => implode( ',', $disabled_range ),
 				),
 				$label,
 				$description,
@@ -294,168 +359,168 @@ class Forminator_Date extends Forminator_Field {
 			// START: Row
 			$html .= '<div class="forminator-date-select">';
 
-				$html .= '<div class="forminator-row" data-multiple="true">';
+			$html .= '<div class="forminator-row" data-multiple="true">';
 
-					foreach ( $formats as $format ) {
+			foreach ( $formats as $format ) {
 
-						switch ( $format ) {
+				switch ( $format ) {
 
-							case 'dd':
-								$day_id = $id . '-day';
-								$html  .= '<div id="' . $day_id . '" class="forminator-col">';
+					case 'dd':
+						$day_id = $id . '-day';
+						$html  .= '<div id="' . $day_id . '" class="forminator-col">';
 
-								$html .= '<div class="forminator-field">';
+						$html .= '<div class="forminator-field">';
 
-									$day_data = array(
-										'name'        => $id . '-day',
-										'id'          => 'forminator-field-' . $id . '-day',
-										'class'       => 'forminator-select',
-										'data-format' => $date_format,
-										'data-parent' => $id,
-									);
+						$day_data = array(
+							'name'        => $id . '-day',
+							'id'          => 'forminator-field-' . $id . '-day',
+							'class'       => 'forminator-select',
+							'data-format' => $date_format,
+							'data-parent' => $id,
+						);
 
-									if ( $required ) {
+						if ( $required ) {
 
-										$label = self::get_property( 'day_label', $field );
+							$label = self::get_property( 'day_label', $field );
 
-										if ( ! empty( $label ) ) {
-											$html .= sprintf(
-												'<label for="%s" class="forminator-label">%s %s</label>',
-												$day_data['id'],
-												$this->sanitize_value( $label ),
-												'<span class="forminator-required">*</span>'
-											);
-										}
-
-										$html .= self::create_select(
-											$day_data,
-											false,
-											$this->get_day(),
-											$day
-										);
-
-									} else {
-
-										$html .= self::create_select(
-											$day_data,
-											$this->sanitize_value( self::get_property( 'day_label', $field ) ),
-											$this->get_day(),
-											$day
-										);
-									}
-
-									$html .= '</div>';
-
-									$html .= '</div>';
-
-								break;
-
-							case 'mm':
-								$month_id = $id . '-month';
-								$html    .= '<div id="' . $month_id . '" class="forminator-col">';
-
-								$html .= '<div class="forminator-field">';
-
-								$month_data = array(
-									'name'        => $id . '-month',
-									'id'          => 'forminator-field-' . $id . '-month',
-									'class'       => 'forminator-select',
-									'data-format' => $date_format,
-									'data-parent' => $id,
+							if ( ! empty( $label ) ) {
+								$html .= sprintf(
+									'<label for="%s" class="forminator-label">%s %s</label>',
+									$day_data['id'],
+									$this->sanitize_value( $label ),
+									'<span class="forminator-required">*</span>'
 								);
+							}
 
-								if ( $required ) {
+							$html .= self::create_select(
+								$day_data,
+								false,
+								$this->get_day(),
+								$day
+							);
 
-									$label = self::get_property( 'month_label', $field );
+						} else {
 
-									if ( ! empty( $label ) ) {
-										$html .= sprintf(
-											'<label for="%s" class="forminator-label">%s %s</label>',
-											$month_data['id'],
-											$this->sanitize_value( $label ),
-											'<span class="forminator-required">*</span>'
-										);
-									}
-
-									$html .= self::create_select(
-										$month_data,
-										false,
-										$this->get_months(),
-										$month
-									);
-
-								} else {
-
-									$html .= self::create_select(
-										$month_data,
-										$this->sanitize_value( self::get_property( 'month_label', $field ) ),
-										$this->get_months(),
-										$month
-									);
-								}
-
-								$html .= '</div>';
-
-								$html .= '</div>';
-
-								break;
-
-							case 'yy':
-								$year_id = $id . '-year';
-								$html   .= '<div id="' . $year_id . '" class="forminator-col">';
-
-								$html .= '<div class="forminator-field">';
-
-								$year_data = array(
-									'name'        => $id . '-year',
-									'id'          => 'forminator-field-' . $id . '-year',
-									'class'       => 'forminator-select',
-									'data-format' => $date_format,
-									'data-parent' => $id,
-								);
-
-								if ( $required ) {
-
-									$label = self::get_property( 'year_label', $field );
-
-									if ( ! empty( $label ) ) {
-
-										$html .= sprintf(
-											'<label for="%s" class="forminator-label">%s %s</label>',
-											$year_data['id'],
-											$this->sanitize_value( $label ),
-											'<span class="forminator-required">*</span>'
-										);
-									}
-
-									$html .= self::create_select(
-										$year_data,
-										false,
-										$this->get_years( $min_year, $max_year ),
-										$year
-									);
-
-								} else {
-
-									$html .= self::create_select(
-										$year_data,
-										$this->sanitize_value( self::get_property( 'year_label', $field ) ),
-										$this->get_years( $min_year, $max_year ),
-										$year
-									);
-								}
-
-								$html .= '</div>';
-
-								$html .= '</div>';
-
-								break;
-							default:
-								break;
+							$html .= self::create_select(
+								$day_data,
+								$this->sanitize_value( self::get_property( 'day_label', $field ) ),
+								$this->get_day(),
+								$day
+							);
 						}
-					}
 
-				$html .= '</div>';
+						$html .= '</div>';
+
+						$html .= '</div>';
+
+						break;
+
+					case 'mm':
+						$month_id = $id . '-month';
+						$html    .= '<div id="' . $month_id . '" class="forminator-col">';
+
+						$html .= '<div class="forminator-field">';
+
+						$month_data = array(
+							'name'        => $id . '-month',
+							'id'          => 'forminator-field-' . $id . '-month',
+							'class'       => 'forminator-select',
+							'data-format' => $date_format,
+							'data-parent' => $id,
+						);
+
+						if ( $required ) {
+
+							$label = self::get_property( 'month_label', $field );
+
+							if ( ! empty( $label ) ) {
+								$html .= sprintf(
+									'<label for="%s" class="forminator-label">%s %s</label>',
+									$month_data['id'],
+									$this->sanitize_value( $label ),
+									'<span class="forminator-required">*</span>'
+								);
+							}
+
+							$html .= self::create_select(
+								$month_data,
+								false,
+								$this->get_months(),
+								$month
+							);
+
+						} else {
+
+							$html .= self::create_select(
+								$month_data,
+								$this->sanitize_value( self::get_property( 'month_label', $field ) ),
+								$this->get_months(),
+								$month
+							);
+						}
+
+						$html .= '</div>';
+
+						$html .= '</div>';
+
+						break;
+
+					case 'yy':
+						$year_id = $id . '-year';
+						$html   .= '<div id="' . $year_id . '" class="forminator-col">';
+
+						$html .= '<div class="forminator-field">';
+
+						$year_data = array(
+							'name'        => $id . '-year',
+							'id'          => 'forminator-field-' . $id . '-year',
+							'class'       => 'forminator-select',
+							'data-format' => $date_format,
+							'data-parent' => $id,
+						);
+
+						if ( $required ) {
+
+							$label = self::get_property( 'year_label', $field );
+
+							if ( ! empty( $label ) ) {
+
+								$html .= sprintf(
+									'<label for="%s" class="forminator-label">%s %s</label>',
+									$year_data['id'],
+									$this->sanitize_value( $label ),
+									'<span class="forminator-required">*</span>'
+								);
+							}
+
+							$html .= self::create_select(
+								$year_data,
+								false,
+								$this->get_years( $min_year, $max_year ),
+								$year
+							);
+
+						} else {
+
+							$html .= self::create_select(
+								$year_data,
+								$this->sanitize_value( self::get_property( 'year_label', $field ) ),
+								$this->get_years( $min_year, $max_year ),
+								$year
+							);
+						}
+
+						$html .= '</div>';
+
+						$html .= '</div>';
+
+						break;
+					default:
+						break;
+				}
+			}
+
+			$html .= '</div>';
 
 			// END: Row
 			$html .= '</div>';
@@ -463,224 +528,223 @@ class Forminator_Date extends Forminator_Field {
 			$html .= self::get_description( $description, 'forminator-field-' . $id );
 
 		} elseif ( 'input' === $type ) {
-				$day_value = $month_value = $year_value = '';
+			$day_value = $month_value = $year_value = '';
 
-				if ( $is_prefil_valid ) {
-					$day_value   = $parsed_date['day'];
-					$month_value = $parsed_date['month'];
-					$year_value  = $parsed_date['year'];
+			if ( $is_prefil_valid ) {
+				$day_value   = $parsed_date['day'];
+				$month_value = $parsed_date['month'];
+				$year_value  = $parsed_date['year'];
+			}
+			if ( ! empty( $label ) ) {
+
+				if ( $required ) {
+
+					$html .= sprintf(
+						'<label for="%s" class="forminator-label">%s %s</label>',
+						'forminator-field-' . $id,
+						esc_html( $label ),
+						forminator_get_required_icon()
+					);
+
+				} else {
+
+					$html .= sprintf(
+						'<label for="%s" class="forminator-label">%s</label>',
+						'forminator-field-' . $id,
+						esc_html( $label )
+					);
 				}
-				if ( ! empty( $label ) ) {
+			}
 
-					if ( $required ) {
+			// START: Row
+			$html .= '<div class="forminator-date-input">';
 
-						$html .= sprintf(
-							'<label for="%s" class="forminator-label">%s %s</label>',
-							'forminator-field-' . $id,
-							esc_html( $label ),
-							forminator_get_required_icon()
+			$html .= '<div class="forminator-row" data-multiple="true">';
+
+			foreach ( $formats as $format ) {
+
+				switch ( $format ) {
+
+					case 'dd':
+						$day   = $id . '-day';
+						$html .= '<div id="' . $day . '" class="forminator-col">';
+
+						$html .= '<div class="forminator-field">';
+
+						$day_data = array(
+							'type'        => 'number',
+							'min'         => 1,
+							'max'         => 31,
+							'name'        => $id . '-day',
+							'value'       => $day_value,
+							'placeholder' => $this->sanitize_value( self::get_property( 'day_placeholder', $field ) ),
+							'id'          => 'forminator-field-' . $id . '-day',
+							'class'       => 'forminator-input',
+							'data-field'  => 'day',
+							'data-format' => $date_format,
+							'data-parent' => $id,
 						);
 
-					} else {
+						if ( $required ) {
 
-						$html .= sprintf(
-							'<label for="%s" class="forminator-label">%s</label>',
-							'forminator-field-' . $id,
-							esc_html( $label )
-						);
+							$label = self::get_property( 'day_label', $field );
 
-					}
-				}
+							if ( ! empty( $label ) ) {
 
-				// START: Row
-				$html .= '<div class="forminator-date-input">';
-
-				$html .= '<div class="forminator-row" data-multiple="true">';
-
-				foreach ( $formats as $format ) {
-
-					switch ( $format ) {
-
-						case 'dd':
-							$day   = $id . '-day';
-							$html .= '<div id="' . $day . '" class="forminator-col">';
-
-							$html .= '<div class="forminator-field">';
-
-							$day_data = array(
-								'type'        => 'number',
-								'min'         => 1,
-								'max'         => 31,
-								'name'        => $id . '-day',
-								'value'       => $day_value,
-								'placeholder' => $this->sanitize_value( self::get_property( 'day_placeholder', $field ) ),
-								'id'          => 'forminator-field-' . $id . '-day',
-								'class'       => 'forminator-input',
-								'data-field'  => 'day',
-								'data-format' => $date_format,
-								'data-parent' => $id,
-							);
-
-							if ( $required ) {
-
-								$label = self::get_property( 'day_label', $field );
-
-								if ( ! empty( $label ) ) {
-
-									$html .= sprintf(
-										'<label for="%s" class="forminator-label">%s %s</label>',
-										$day_data['id'],
-										$this->sanitize_value( $label ),
-										'<span class="forminator-required">*</span>'
-									);
-								}
-
-								$html .= self::create_input(
-									$day_data,
-									false,
-									'',
-									$required,
-									$design
-								);
-
-							} else {
-
-								$html .= self::create_input(
-									$day_data,
-									$this->sanitize_value( self::get_property( 'day_label', $field ) ),
-									'',
-									$required,
-									$design
+								$html .= sprintf(
+									'<label for="%s" class="forminator-label">%s %s</label>',
+									$day_data['id'],
+									$this->sanitize_value( $label ),
+									'<span class="forminator-required">*</span>'
 								);
 							}
 
-							$html .= '</div>';
+							$html .= self::create_input(
+								$day_data,
+								false,
+								'',
+								$required,
+								$design
+							);
 
-							$html .= '</div>';
+						} else {
 
-							break;
+							$html .= self::create_input(
+								$day_data,
+								$this->sanitize_value( self::get_property( 'day_label', $field ) ),
+								'',
+								$required,
+								$design
+							);
+						}
 
-						case 'mm':
-							$month = $id . '-month';
-							$html .= '<div id="' . $month . '" class="forminator-col">';
+						$html .= '</div>';
 
-							$html .= '<div class="forminator-field">';
+						$html .= '</div>';
 
-								$month_data = array(
-									'type'        => 'number',
-									'min'         => 1,
-									'max'         => 12,
-									'name'        => $id . '-month',
-									'value'       => $month_value,
-									'placeholder' => $this->sanitize_value( self::get_property( 'month_placeholder', $field ) ),
-									'id'          => 'forminator-field-' . $id . '-month',
-									'class'       => 'forminator-input',
-									'data-field'  => 'month',
-									'data-format' => $date_format,
-									'data-parent' => $id,
+						break;
+
+					case 'mm':
+						$month = $id . '-month';
+						$html .= '<div id="' . $month . '" class="forminator-col">';
+
+						$html .= '<div class="forminator-field">';
+
+						$month_data = array(
+							'type'        => 'number',
+							'min'         => 1,
+							'max'         => 12,
+							'name'        => $id . '-month',
+							'value'       => $month_value,
+							'placeholder' => $this->sanitize_value( self::get_property( 'month_placeholder', $field ) ),
+							'id'          => 'forminator-field-' . $id . '-month',
+							'class'       => 'forminator-input',
+							'data-field'  => 'month',
+							'data-format' => $date_format,
+							'data-parent' => $id,
+						);
+
+						if ( $required ) {
+
+							$label = self::get_property( 'month_label', $field );
+
+							if ( ! empty( $label ) ) {
+
+								$html .= sprintf(
+									'<label for="%s" class="forminator-label">%s %s</label>',
+									$month_data['id'],
+									$this->sanitize_value( $label ),
+									'<span class="forminator-required">*</span>'
 								);
+							}
 
-								if ( $required ) {
+							$html .= self::create_input(
+								$month_data,
+								false,
+								'',
+								$required,
+								$design
+							);
 
-									$label = self::get_property( 'month_label', $field );
+						} else {
 
-									if ( ! empty( $label ) ) {
+							$html .= self::create_input(
+								$month_data,
+								$this->sanitize_value( self::get_property( 'month_label', $field ) ),
+								'',
+								$required,
+								$design
+							);
+						}
 
-										$html .= sprintf(
-											'<label for="%s" class="forminator-label">%s %s</label>',
-											$month_data['id'],
-											$this->sanitize_value( $label ),
-											'<span class="forminator-required">*</span>'
-										);
-									}
+						$html .= '</div>';
 
-									$html .= self::create_input(
-										$month_data,
-										false,
-										'',
-										$required,
-										$design
-									);
+						$html .= '</div>';
 
-								} else {
+						break;
 
-									$html .= self::create_input(
-										$month_data,
-										$this->sanitize_value( self::get_property( 'month_label', $field ) ),
-										'',
-										$required,
-										$design
-									);
-								}
+					case 'yy':
+						$year  = $id . '-year';
+						$html .= '<div id="' . $year . '" class="forminator-col">';
 
-								$html .= '</div>';
+						$html .= '<div class="forminator-field">';
 
-								$html .= '</div>';
+						$year_data = array(
+							'type'        => 'number',
+							'min'         => 1,
+							'name'        => $id . '-year',
+							'placeholder' => $this->sanitize_value( self::get_property( 'year_placeholder', $field ) ),
+							'id'          => 'forminator-field-' . $id . '-year',
+							'class'       => 'forminator-input',
+							'data-field'  => 'year',
+							'value'       => $year_value,
+							'data-format' => $date_format,
+							'data-parent' => $id,
+						);
 
-							break;
+						if ( $required ) {
 
-						case 'yy':
-							$year  = $id . '-year';
-							$html .= '<div id="' . $year . '" class="forminator-col">';
+							$label = self::get_property( 'year_label', $field );
 
-							$html .= '<div class="forminator-field">';
-
-								$year_data = array(
-									'type'        => 'number',
-									'min'         => 1,
-									'name'        => $id . '-year',
-									'placeholder' => $this->sanitize_value( self::get_property( 'year_placeholder', $field ) ),
-									'id'          => 'forminator-field-' . $id . '-year',
-									'class'       => 'forminator-input',
-									'data-field'  => 'year',
-									'value'       => $year_value,
-									'data-format' => $date_format,
-									'data-parent' => $id,
+							if ( ! empty( $label ) ) {
+								$html .= sprintf(
+									'<label for="%s" class="forminator-label">%s %s</label>',
+									$year_data['id'],
+									$this->sanitize_value( $label ),
+									'<span class="forminator-required">*</span>'
 								);
+							}
 
-								if ( $required ) {
+							$html .= self::create_input(
+								$year_data,
+								false,
+								'',
+								$required,
+								$design
+							);
 
-									$label = self::get_property( 'year_label', $field );
+						} else {
 
-									if ( ! empty( $label ) ) {
-										$html .= sprintf(
-											'<label for="%s" class="forminator-label">%s %s</label>',
-											$year_data['id'],
-											$this->sanitize_value( $label ),
-											'<span class="forminator-required">*</span>'
-										);
-									}
+							$html .= self::create_input(
+								$year_data,
+								$this->sanitize_value( self::get_property( 'year_label', $field ) ),
+								'',
+								$required,
+								$design
+							);
+						}
 
-									$html .= self::create_input(
-										$year_data,
-										false,
-										'',
-										$required,
-										$design
-									);
+						$html .= '</div>';
 
-								} else {
+						$html .= '</div>';
+						break;
 
-									$html .= self::create_input(
-										$year_data,
-										$this->sanitize_value( self::get_property( 'year_label', $field ) ),
-										'',
-										$required,
-										$design
-									);
-								}
-
-								$html .= '</div>';
-
-								$html .= '</div>';
-							break;
-
-						default:
-							break;
-					}
+					default:
+						break;
 				}
+			}
 
-				$html .= '</div>';
+			$html .= '</div>';
 
 			// END: Row
 			$html .= '</div>';
@@ -875,9 +939,9 @@ class Forminator_Date extends Forminator_Field {
 	 */
 	public function check_date( $month, $day, $year ) {
 		if ( empty( $month ) || ! is_numeric( $month ) || empty( $day ) || ! is_numeric( $day )
-			|| empty( $year )
-			|| ! is_numeric( $year )
-			|| 4 !== strlen( $year ) ) {
+		     || empty( $year )
+		     || ! is_numeric( $year )
+		     || 4 !== strlen( $year ) ) {
 			return false;
 		}
 
@@ -1005,12 +1069,19 @@ class Forminator_Date extends Forminator_Field {
 	 *
 	 * @param array $field
 	 * @param array|string $data
+	 * @param array        $post_data
 	 */
-	public function validate( $field, $data ) {
+	public function validate( $field, $data, $post_data = array() ) {
 		$id = self::get_property( 'element_id', $field );
+		$start_date_type = self::get_property( 'start-date', $field, '' );
+		$end_date_type   = self::get_property( 'end-date', $field, '' );
+		$date_type       = self::get_property( 'field_type', $field, 'picker' );
+		$disabled_dates  = self::get_property( 'disabled-dates', $field, array() );
+		$disabled_range  = self::get_property( 'disable-date-range', $field, array() );
+		$restrict_type = self::get_property( 'howto-restrict', $field );
 
 		if ( $this->is_required( $field ) ) {
-			$required_validation_message = self::get_property( 'required_message', $field, __( 'This field is required. Please enter a valid date', Forminator::DOMAIN ) );
+			$required_validation_message = self::get_property( 'required_message', $field, __( 'This field is required. Please enter a valid date.', Forminator::DOMAIN ) );
 			if ( empty( $data ) ) {
 				$this->validation_message[ $id ] = apply_filters(
 					'forminator_field_date_required_field_validation_message',
@@ -1048,7 +1119,7 @@ class Forminator_Date extends Forminator_Field {
 		if ( empty( $date ) || ! $this->check_date( $date['month'], $date['day'], $date['year'] ) ) {
 			$this->validation_message[ $id ] = apply_filters(
 				'forminator_field_date_valid_date_validation_message',
-				__( 'Please enter a valid date', Forminator::DOMAIN ),
+				__( 'Please enter a valid date.', Forminator::DOMAIN ),
 				$id,
 				$data,
 				$date_format,
@@ -1064,7 +1135,7 @@ class Forminator_Date extends Forminator_Field {
 					if ( $year < $min_year || $year > $max_year ) {
 						$this->validation_message[ $id ] = apply_filters(
 							'forminator_field_date_valid_maxmin_year_validation_message',
-							__( 'Please enter a valid year', Forminator::DOMAIN )
+							__( 'Please enter a valid year.', Forminator::DOMAIN )
 						);
 					}
 				} else {
@@ -1072,7 +1143,7 @@ class Forminator_Date extends Forminator_Field {
 						if ( $year < $min_year ) {
 							$this->validation_message[ $id ] = apply_filters(
 								'forminator_field_date_valid_maxmin_year_validation_message',
-								__( 'Please enter a valid year', Forminator::DOMAIN )
+								__( 'Please enter a valid year.', Forminator::DOMAIN )
 							);
 						}
 					}
@@ -1080,9 +1151,102 @@ class Forminator_Date extends Forminator_Field {
 						if ( $year > $max_year ) {
 							$this->validation_message[ $id ] = apply_filters(
 								'forminator_field_date_valid_maxmin_year_validation_message',
-								__( 'Please enter a valid year', Forminator::DOMAIN )
+								__( 'Please enter a valid year.', Forminator::DOMAIN )
 							);
 						}
+					}
+				}
+			}
+			if ( 'picker' === $date_type ) {
+
+				if ( 'week' === $restrict_type ) {
+					$restrict = array();
+					$days = forminator_week_days();
+
+					foreach ( $days as $k => $day ) {
+
+						if ( ! self::get_property( $k, $field ) ) {
+							$restrict[] = $k;
+						}
+					}
+					if ( ! empty( $restrict ) ) {
+						$current_day = date( 'l', strtotime( $data ) );
+						if ( in_array( strtolower( $current_day ), $restrict, true ) ) {
+							$this->validation_message[ $id ] = apply_filters(
+								'forminator_field_date_valid_between_date_validation_message',
+								self::get_property( 'restrict_message', $field, __( 'Please select one of the available dates.', Forminator::DOMAIN ) )
+							);
+						}
+					}
+				}
+				if ( ! empty( $start_date_type ) ) {
+					if ( 'specific' === $start_date_type ) {
+						$start_date = self::get_property( 'start-specific-date', $field, '' );
+					} else {
+						$start_offset_operator = self::get_property( 'start-offset-operator', $field, '+' );
+						$start_offset_value    = self::get_property( 'start-offset-value', $field, '0' );
+						$start_offset_duration = self::get_property( 'start-offset-duration', $field, 'days' );
+						if ( 'today' === $start_date_type ) {
+							$start_date = date_i18n( datepicker_default_format( $date_format ), strtotime( $start_offset_operator . $start_offset_value . ' ' . $start_offset_duration ) );
+						} else {
+							$start_date_field = isset( $post_data[ $start_date_type ] ) ? $post_data[ $start_date_type ] : '';
+							$start_date       = ! empty( $start_date_field ) ? date_i18n( datepicker_default_format( $date_format ), strtotime( $start_date_field . ' ' . $start_offset_operator . $start_offset_value . ' ' . $start_offset_duration ) ) : '';
+						}
+					}
+					if ( ! empty( $start_date ) && strtotime( $data ) <= strtotime( $start_date ) ) {
+						$this->validation_message[ $id ] = apply_filters(
+							'forminator_field_date_valid_between_date_validation_message',
+							self::get_property( 'restrict_message', $field, __( 'Please select one of the available dates.', Forminator::DOMAIN ) )
+						);
+					}
+				}
+				if ( ! empty( $end_date_type ) ) {
+					if ( 'specific' === $end_date_type ) {
+						$end_date = self::get_property( 'end-specific-date', $field, '' );
+					} else {
+						$end_offset_operator = self::get_property( 'end-offset-operator', $field, '+' );
+						$end_offset_value    = self::get_property( 'end-offset-value', $field, '0' );
+						$end_offset_duration = self::get_property( 'end-offset-duration', $field, 'days' );
+						if ( 'today' === $end_date_type ) {
+							$end_date = date_i18n( datepicker_default_format( $date_format ), strtotime( $end_offset_operator . $end_offset_value . ' ' . $end_offset_duration ) );
+						} else {
+							$end_date_field = isset( $post_data[ $end_date_type ] ) ? $post_data[ $end_date_type ] : '';
+							$end_date       = date_i18n( datepicker_default_format( $date_format ), strtotime( $end_date_field . ' ' . $end_offset_operator . $end_offset_value . ' ' . $end_offset_duration ) );
+						}
+					}
+					if ( ! empty( $end_date ) && strtotime( $data ) >= strtotime( $end_date ) ) {
+						$this->validation_message[ $id ] = apply_filters(
+							'forminator_field_date_valid_between_date_validation_message',
+							self::get_property( 'restrict_message', $field, __( 'Please select one of the available dates.', Forminator::DOMAIN ) )
+						);
+					}
+				}
+
+				if ( ! empty( $disabled_dates ) && in_array( $data, $disabled_dates, true ) ) {
+					$this->validation_message[ $id ] = apply_filters(
+						'forminator_field_date_valid_disabled_validation_message',
+						self::get_property( 'restrict_message', $field, __( 'Please select one of the available dates.', Forminator::DOMAIN ) )
+					);
+				}
+
+				if ( ! empty( $disabled_range ) ) {
+					$has_range = true;
+					foreach ( $disabled_range as $range ) {
+						$range_arr = array_map( 'trim', explode( '-', $range ) );
+						if ( ! empty( $range_arr ) ) {
+							$start_date = isset( $range_arr[0] ) ? $range_arr[0] : '';
+							$end_date   = isset( $range_arr[1] ) ? $range_arr[1] : '';
+							if ( strtotime( $data ) >= strtotime( $start_date ) && strtotime( $data ) <= strtotime( $end_date ) ) {
+								$has_range = false;
+								continue;
+							}
+						}
+					}
+					if ( ! $has_range ) {
+						$this->validation_message[ $id ] = apply_filters(
+							'forminator_field_date_valid_disabled_validation_message',
+							self::get_property( 'restrict_message', $field, __( 'Please select one of the available dates.', Forminator::DOMAIN ) )
+						);
 					}
 				}
 			}

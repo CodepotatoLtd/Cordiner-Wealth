@@ -60,6 +60,23 @@ class WPMUDEV_Dashboard_Upgrader {
 	}
 
 	/**
+	 * Reset PHP opcache
+	 *
+	 * @since 4.9.3
+	 */
+	public function wp_opcache_reset() {
+		if ( ! function_exists( 'opcache_reset' ) ) {
+			return;
+		}
+
+		if ( ! empty( ini_get( 'opcache.restrict_api' ) ) && strpos( __FILE__, ini_get( 'opcache.restrict_api' ) ) !== 0 ) {
+			return;
+		}
+
+		opcache_reset();
+	}
+
+	/**
 	 * Captures core update results from hook, only way to get them
 	 *
 	 * @param $results
@@ -205,8 +222,18 @@ class WPMUDEV_Dashboard_Upgrader {
 	 * @return bool
 	 */
 	public function user_can_install( $project_id, $only_license = false ) {
-		$data            = WPMUDEV_Dashboard::$api->get_projects_data();
-		$membership_type = WPMUDEV_Dashboard::$api->get_membership_type( $license_for );
+		$data              = WPMUDEV_Dashboard::$api->get_projects_data();
+		$membership_type   = WPMUDEV_Dashboard::$api->get_membership_type();
+		$licensed_projects = WPMUDEV_Dashboard::$api->get_membership_projects();
+
+		if ( 'unit' === $membership_type ) {
+			foreach ( $licensed_projects as $p ) {
+				$is_allowed = intval( $project_id ) === $p;
+				if ( $is_allowed ) {
+					return true;
+				}
+			}
+		}
 
 		// Basic check if we have valid data.
 		if ( empty( $data['projects'] ) ) {
@@ -229,22 +256,22 @@ class WPMUDEV_Dashboard_Upgrader {
 		$package    = isset( $project['package'] ) ? $project['package'] : '';
 		$access     = false;
 
-		if ( 'full' == $membership_type ) {
+		if ( 'full' === $membership_type ) {
 			// User has full membership.
 			$access = true;
-		} else if ( 'single' == $membership_type && $license_for == $project_id ) {
+		} elseif ( 'single' === $membership_type && $licensed_projects == $project_id ) {
 			// User has single membership for the requested project.
 			$access = true;
-		} else if ( 'free' == $project['paid'] ) {
+		} elseif ( 'free' === $project['paid'] ) {
 			// It's a free project. All users can install this.
 			$access = true;
-		} else if ( 'lite' == $project['paid'] ) {
+		} elseif ( 'lite' === $project['paid'] ) {
 			// It's a lite project. All users can install this.
 			$access = true;
-		} else if ( 'single' == $membership_type && $package && $package == $license_for ) {
+		} elseif ( 'single' === $membership_type && $package && $package == $licensed_projects ) {
 			// A packaged project that the user bought.
 			$access = true;
-		} else if ( $is_upfront && 'single' == $membership_type ) {
+		} elseif ( $is_upfront && 'single' === $membership_type ) {
 			// User wants to get Upfront parent theme.
 			$access = true;
 		}
@@ -481,7 +508,6 @@ class WPMUDEV_Dashboard_Upgrader {
 		$this->clear_log();
 		$this->clear_version();
 
-
 		// Is a WPMU DEV project?
 		$is_dev = is_numeric( $pid );
 
@@ -567,6 +593,7 @@ class WPMUDEV_Dashboard_Upgrader {
 				return false;
 		}
 
+		$this->wp_opcache_reset();
 		$this->log = $skin->get_upgrade_messages();
 		if ( is_wp_error( $skin->result ) ) {
 			if ( in_array( $skin->result->get_error_code() , array( 'remove_old_failed', 'mkdir_failed_ziparchive' ) ) ) {

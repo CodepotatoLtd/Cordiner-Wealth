@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-12 09:50+0000\n"
+"POT-Creation-Date: 2020-06-08 06:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -122,13 +122,13 @@ msgstr ""
 msgid "There is a new version of GDPR Cookie Compliance - Premium Add-On."
 msgstr ""
 
-#: class-moove-gdpr-actions.php:189
-#: views/moove/admin/settings/banner-settings.php:163
+#: class-moove-gdpr-actions.php:192
+#: views/moove/admin/settings/banner-settings.php:182
 msgid "Reject"
 msgstr ""
 
 #. Name of the plugin
-#: class-moove-gdpr-actions.php:446
+#: class-moove-gdpr-actions.php:485
 msgid "GDPR Cookie Compliance"
 msgstr ""
 
@@ -152,7 +152,7 @@ msgid "Find out more or adjust your [setting]settings[/setting]."
 msgstr ""
 
 #: class-gdpr-modules.php:152
-#: views/moove/admin/settings/banner-settings.php:140
+#: views/moove/admin/settings/banner-settings.php:154
 msgid "Accept"
 msgstr ""
 
@@ -164,8 +164,9 @@ msgstr ""
 
 #: class-gdpr-modules.php:231 class-gdpr-modules.php:261
 #: class-gdpr-modules.php:289
-#: views/moove/admin/settings/general-settings.php:148
-#: views/moove/admin/settings/banner-settings.php:152
+#: views/moove/admin/settings/general-settings.php:151
+#: views/moove/admin/settings/banner-settings.php:171
+#: views/moove/admin/settings/banner-settings.php:199
 #: views/moove/admin/settings/third-party-cookies.php:109
 #: views/moove/admin/settings/advanced-cookies.php:98
 #: views/moove/admin/settings/floating-button.php:74
@@ -174,8 +175,9 @@ msgstr ""
 
 #: class-gdpr-modules.php:232 class-gdpr-modules.php:262
 #: class-gdpr-modules.php:290
-#: views/moove/admin/settings/general-settings.php:149
-#: views/moove/admin/settings/banner-settings.php:152
+#: views/moove/admin/settings/general-settings.php:154
+#: views/moove/admin/settings/banner-settings.php:171
+#: views/moove/admin/settings/banner-settings.php:199
 #: views/moove/admin/settings/third-party-cookies.php:109
 #: views/moove/admin/settings/advanced-cookies.php:98
 #: views/moove/admin/settings/floating-button.php:74
@@ -188,10 +190,16 @@ msgstr ""
 msgid "Additional Cookies"
 msgstr ""
 
-#: class-gdpr-modules.php:278 class-gdpr-modules.php:335
-#: class-gdpr-modules.php:385 views/moove/admin/settings/settings-page.php:102
+#: class-gdpr-modules.php:278 class-gdpr-modules.php:385
+#: views/moove/admin/settings/settings-page.php:102
 #: views/moove/admin/settings/third-party-cookies.php:77
 msgid "3rd Party Cookies"
+msgstr ""
+
+#: class-gdpr-modules.php:335 class-gdpr-modules.php:393
+#: views/moove/admin/settings/settings-page.php:115
+#: views/moove/admin/settings/cookie-policy.php:57
+msgid "Cookie Policy"
 msgstr ""
 
 #: class-gdpr-modules.php:355
@@ -201,11 +209,6 @@ msgstr ""
 
 #: class-gdpr-modules.php:356
 msgid "Save Settings"
-msgstr ""
-
-#: class-gdpr-modules.php:393 views/moove/admin/settings/settings-page.php:115
-#: views/moove/admin/settings/cookie-policy.php:57
-msgid "Cookie Policy"
 msgstr ""
 
 #: moove-gdpr.php:74
@@ -262,23 +265,23 @@ msgstr ""
 msgid "Checkbox Labels"
 msgstr ""
 
-#: views/moove/admin/settings/general-settings.php:156
+#: views/moove/admin/settings/general-settings.php:166
 msgid "Consent expiry"
 msgstr ""
 
-#: views/moove/admin/settings/general-settings.php:165
+#: views/moove/admin/settings/general-settings.php:175
 msgid ""
 "(Enter 0 if you want the consent to expire at the end of the current "
 "browsing session.)"
 msgstr ""
 
-#: views/moove/admin/settings/general-settings.php:172
+#: views/moove/admin/settings/general-settings.php:182
 msgid "Powered by GDPR"
 msgstr ""
 
-#: views/moove/admin/settings/general-settings.php:190
+#: views/moove/admin/settings/general-settings.php:200
 #: views/moove/admin/settings/strictly-necessary-cookies.php:175
-#: views/moove/admin/settings/banner-settings.php:200
+#: views/moove/admin/settings/banner-settings.php:248
 #: views/moove/admin/settings/branding.php:217
 #: views/moove/admin/settings/cookie-policy.php:117
 #: views/moove/admin/settings/privacy-overview.php:94
@@ -288,21 +291,21 @@ msgstr ""
 msgid "Save changes"
 msgstr ""
 
-#: views/moove/admin/settings/general-settings.php:192
+#: views/moove/admin/settings/general-settings.php:202
 msgid "Reset Settings"
 msgstr ""
 
-#: views/moove/admin/settings/general-settings.php:207
+#: views/moove/admin/settings/general-settings.php:217
 msgid ""
 "Please confirm that you would like to reset the plugin settings to the "
 "default state"
 msgstr ""
 
-#: views/moove/admin/settings/general-settings.php:207
+#: views/moove/admin/settings/general-settings.php:217
 msgid "This action will remove all of your custom modifications and settings"
 msgstr ""
 
-#: views/moove/admin/settings/general-settings.php:210
+#: views/moove/admin/settings/general-settings.php:220
 msgid "Reset plugin to default state"
 msgstr ""
 
@@ -436,87 +439,97 @@ msgstr ""
 msgid "Disable the Full Screen Mode"
 msgstr ""
 
-#: views/moove/admin/settings/banner-settings.php:86
+#: views/moove/admin/settings/banner-settings.php:94
 msgid "Cookie Banner Settings"
 msgstr ""
 
-#: views/moove/admin/settings/banner-settings.php:93
+#: views/moove/admin/settings/banner-settings.php:101
 #: views/moove/admin/settings/cookie-policy.php:67
 #: views/moove/admin/settings/third-party-cookies.php:88
 #: views/moove/admin/settings/advanced-cookies.php:77
 msgid "Turn"
 msgstr ""
 
-#: views/moove/admin/settings/banner-settings.php:99
+#: views/moove/admin/settings/banner-settings.php:107
 #: views/moove/admin/settings/cookie-policy.php:74
 #: views/moove/admin/settings/third-party-cookies.php:95
 #: views/moove/admin/settings/advanced-cookies.php:83
 msgid "On"
 msgstr ""
 
-#: views/moove/admin/settings/banner-settings.php:99
+#: views/moove/admin/settings/banner-settings.php:107
 #: views/moove/admin/settings/cookie-policy.php:74
 #: views/moove/admin/settings/third-party-cookies.php:95
 #: views/moove/admin/settings/advanced-cookies.php:83
 msgid "Off"
 msgstr ""
 
-#: views/moove/admin/settings/banner-settings.php:106
+#: views/moove/admin/settings/banner-settings.php:114
 msgid "Cookie Banner Content"
 msgstr ""
 
-#: views/moove/admin/settings/banner-settings.php:114
+#: views/moove/admin/settings/banner-settings.php:122
 msgid ""
 "<p>We are using cookies to give you the best experience on our website.</p>"
 "<p>You can find out more about which cookies we are using or switch them off "
 "in [setting]settings[/setting].</p>"
 msgstr ""
 
-#: views/moove/admin/settings/banner-settings.php:128
+#: views/moove/admin/settings/banner-settings.php:136
 msgid ""
 "You can use the following shortcut to link the Cookie Settings Screen:<br>"
 "<span><strong>[setting]</strong>settings<strong>[/setting]</strong></span>"
 msgstr ""
 
-#: views/moove/admin/settings/banner-settings.php:137
+#: views/moove/admin/settings/banner-settings.php:151
 msgid "Accept - Button Label"
 msgstr ""
 
-#: views/moove/admin/settings/banner-settings.php:145
+#: views/moove/admin/settings/banner-settings.php:164
 msgid "Reject button"
 msgstr ""
 
-#: views/moove/admin/settings/banner-settings.php:154
-msgid ""
-"If it's enabled, the Cookie Banner will be extended with a button that "
-"allows users to reject all cookies."
+#: views/moove/admin/settings/banner-settings.php:173
+msgid "Reject button allows users to reject all cookies."
 msgstr ""
 
-#: views/moove/admin/settings/banner-settings.php:160
+#: views/moove/admin/settings/banner-settings.php:179
 msgid "Reject - Button Label"
 msgstr ""
 
-#: views/moove/admin/settings/banner-settings.php:168
+#: views/moove/admin/settings/banner-settings.php:193
+msgid "Close button"
+msgstr ""
+
+#: views/moove/admin/settings/banner-settings.php:201
+msgid ""
+"Close Button allows users to hide the Cookie Banner for the duration of the "
+"current browsing session. Cookies will not be accepted or rejected and the "
+"Cookie Banner will re-appear again for the user when they next visit your "
+"site."
+msgstr ""
+
+#: views/moove/admin/settings/banner-settings.php:212
 msgid "Cookie Banner position"
 msgstr ""
 
-#: views/moove/admin/settings/banner-settings.php:171
+#: views/moove/admin/settings/banner-settings.php:215
 msgid "Top"
 msgstr ""
 
-#: views/moove/admin/settings/banner-settings.php:174
+#: views/moove/admin/settings/banner-settings.php:218
 msgid "Bottom"
 msgstr ""
 
-#: views/moove/admin/settings/banner-settings.php:182
+#: views/moove/admin/settings/banner-settings.php:231
 msgid "Colour scheme"
 msgstr ""
 
-#: views/moove/admin/settings/banner-settings.php:187
+#: views/moove/admin/settings/banner-settings.php:236
 msgid "Dark"
 msgstr ""
 
-#: views/moove/admin/settings/banner-settings.php:187
+#: views/moove/admin/settings/banner-settings.php:236
 msgid "Light"
 msgstr ""
 
@@ -729,7 +742,7 @@ msgid "FAQ"
 msgstr ""
 
 #: views/moove/admin/settings/help.php:20
-#: views/moove/admin/settings/help.php:73
+#: views/moove/admin/settings/help.php:76
 msgid "Default Hooks"
 msgstr ""
 
@@ -741,210 +754,265 @@ msgstr ""
 msgid "Premium Shortcodes"
 msgstr ""
 
-#: views/moove/admin/settings/help.php:29
-msgid "How do I setup your plugin?"
-msgstr ""
-
-#: views/moove/admin/settings/help.php:32
-msgid ""
-"You can setup the plugin in the WordPress CMS -> GDPR Cookie Compliance. You "
-"can setup the branding, and other elements."
+#: views/moove/admin/settings/help.php:30
+msgid "How can I link to the pop-up settings screen?"
 msgstr ""
 
 #: views/moove/admin/settings/help.php:33
 msgid ""
-"To add Google Analytics, you can enable the “3rd Party Cookies” tab but "
-"selecting the “Turn” radio value to “ON”. At the bottom of the “3rd Party "
-"Cookies” tab you’ll find 3 sections to add scripts – choose the section that "
-"is appropriate for your script."
+"You can use the following link to display the Cookie Settings Screen window:"
 msgstr ""
 
 #: views/moove/admin/settings/help.php:34
-msgid "For Google Analytics, we recommend using the ‘Footer’ section."
-msgstr ""
-
-#: views/moove/admin/settings/help.php:42
-msgid "How can I link to the pop-up settings screen?"
-msgstr ""
-
-#: views/moove/admin/settings/help.php:45
-msgid "You can use the following link to display the modal window:"
-msgstr ""
-
-#: views/moove/admin/settings/help.php:46
 msgid "[Relative Path – RECOMMENDED]"
 msgstr ""
 
-#: views/moove/admin/settings/help.php:49
+#: views/moove/admin/settings/help.php:36
 msgid "[Absolute Path]"
 msgstr ""
 
-#: views/moove/admin/settings/help.php:59
-msgid "Pasted code is not visible when view-source page is viewed."
+#: views/moove/admin/settings/help.php:46
+msgid ""
+"The scripts added to the plugin settings are not visible in the page source "
+"code."
+msgstr ""
+
+#: views/moove/admin/settings/help.php:49
+msgid ""
+"Our plugin loads scripts using JavaScript, which is why you cannot find them "
+"when viewing the source code of the page."
+msgstr ""
+
+#: views/moove/admin/settings/help.php:50
+msgid ""
+"To view the scripts, you can use the Developer Console in Chrome browser "
+"(Inspect Element feature)."
+msgstr ""
+
+#: views/moove/admin/settings/help.php:58
+msgid "What are \"Strictly Necessary Cookies\"?"
+msgstr ""
+
+#: views/moove/admin/settings/help.php:61
+msgid ""
+"The \"Strictly Necessary Cookies\", sometimes called Essential Cookies, are "
+"cookies that are necessary for your site to function properly."
 msgstr ""
 
 #: views/moove/admin/settings/help.php:62
 msgid ""
-"Our plugin loads the script with JavaScript, and that’s why you can’t find "
-"it in the view-source page. You can use the developer console in Chrome "
-"browser (Inspect Element feature) and find the scripts."
+"For example, we use Strictly Necessary Cookies to save information about "
+"which cookies the user consented to."
 msgstr ""
 
-#: views/moove/admin/settings/help.php:70
-msgid "Can I use custom code or hooks with your plugin?"
+#: views/moove/admin/settings/help.php:63
+msgid ""
+"We are not storing any sensitive or personal data there, the cookie file "
+"contains only one of the following strings:"
 msgstr ""
 
 #: views/moove/admin/settings/help.php:73
+msgid "Can I use custom code or hooks with your plugin?"
+msgstr ""
+
+#: views/moove/admin/settings/help.php:76
 msgid ""
-"Yes. We have implemented hooks that allow you to implement custom scripts, "
-"for some examples see the list of pre-defined hooks here:"
+"Yes, we have implemented hooks that allow you to implement custom code "
+"snippets."
 msgstr ""
 
-#: views/moove/admin/settings/help.php:81
-msgid "Does the plugin support sub domains?"
+#: views/moove/admin/settings/help.php:76
+msgid "You will find the list of popular hooks here:"
 msgstr ""
 
-#: views/moove/admin/settings/help.php:84
+#: views/moove/admin/settings/help.php:77
+msgid "You can also find the list of all"
+msgstr ""
+
+#: views/moove/admin/settings/help.php:77
+msgid "pre-defined advanced hooks here"
+msgstr ""
+
+#: views/moove/admin/settings/help.php:85
+msgid "Does the plugin support subdomains?"
+msgstr ""
+
+#: views/moove/admin/settings/help.php:88
 msgid ""
-"Unfortunately not, sub domains are treated as separate domains by browsers "
-"and we’re unable to change the cookies stored by another domain. If your "
-"multi site setup use sub domain version, each sub site will be recognised as "
-"a separate domain by the browser and will create cookies for each sub domain."
+"Unfortunately not, subdomains are treated as separate domains by browsers "
+"and the plugin is unable to alter cookies stored by another domain."
 msgstr ""
 
-#: views/moove/admin/settings/help.php:92
+#: views/moove/admin/settings/help.php:89
+msgid ""
+"If your multisite setup uses subdomain version, each subsite will be "
+"recognised as a separate domain by browsers and will create separate cookies "
+"for each subdomain."
+msgstr ""
+
+#: views/moove/admin/settings/help.php:97
 msgid "Does this plugin block all cookies?"
 msgstr ""
 
-#: views/moove/admin/settings/help.php:95
+#: views/moove/admin/settings/help.php:100
+#: views/moove/admin/settings/help.php:122
 msgid ""
-"No. This plugin only restricts cookies for scripts that you have setup in "
-"the Settings. If you want to block all cookies, you have to add all scripts "
-"that use cookies into the Settings of this plugin."
+"This plugin only restricts cookies for scripts that you have setup in the "
+"Plugin Settings. If you want to block all cookies, you have to add all "
+"scripts that use cookies into the Settings of this plugin."
 msgstr ""
 
-#: views/moove/admin/settings/help.php:103
+#: views/moove/admin/settings/help.php:108
 msgid ""
 "Once I add scripts to this plugin, should I delete them from the website’s "
 "code?"
 msgstr ""
 
-#: views/moove/admin/settings/help.php:106
+#: views/moove/admin/settings/help.php:111
 msgid ""
 "Yes. Once you setup the plugin, you should delete the scripts you uploaded "
 "to the plugin from your website’s code to ensure that your scripts are not "
 "loaded twice."
 msgstr ""
 
-#: views/moove/admin/settings/help.php:114
+#: views/moove/admin/settings/help.php:119
 msgid "Does this plugin stop all cookies from being stored?"
 msgstr ""
 
-#: views/moove/admin/settings/help.php:117
+#: views/moove/admin/settings/help.php:130
+msgid "What information does the Consent Log store and where is it stored?"
+msgstr ""
+
+#: views/moove/admin/settings/help.php:133
 msgid ""
-"This plugin is just a template and needs to be setup by your developer in "
-"order to work properly. Once setup fully, it will prevent scripts that store "
-"cookies from being loaded on users computers until consent is given."
+"The Consent Log features stores all data in your WordPress website database."
 msgstr ""
 
-#: views/moove/admin/settings/help.php:125
-msgid "Does this plugin guarantee that I will comply with GDPR law?"
-msgstr ""
-
-#: views/moove/admin/settings/help.php:128
+#: views/moove/admin/settings/help.php:134
 msgid ""
-"Unfortunately no. This plugin is just a template and needs to be setup by "
-"your developer in order to work properly."
+"The data stored includes: Consent Date, User IP address, Cookies Accepted "
+"and User Email (for logged-in users)."
 msgstr ""
 
-#: views/moove/admin/settings/help.php:137
+#: views/moove/admin/settings/help.php:135
+msgid "You can see the preview of"
+msgstr ""
+
+#: views/moove/admin/settings/help.php:135
+msgid "Consent Log here"
+msgstr ""
+
+#: views/moove/admin/settings/help.php:146
+msgid ""
+"This plugin is just a template and needs to be setup correctly in order to "
+"work properly."
+msgstr ""
+
+#: views/moove/admin/settings/help.php:147
+msgid ""
+"THIS PLUGIN DOES NOT MAKE YOUR WEBSITE COMPLIANT. YOU ARE RESPONSIBLE FOR "
+"ENSURING THAT ALL LEGAL REQUIREMENTS ARE MET ON YOUR WEBSITE."
+msgstr ""
+
+#: views/moove/admin/settings/help.php:156
 msgid ""
 "Here you can find the default hooks & custom scripts available in our plugin."
 msgstr ""
 
-#: views/moove/admin/settings/help.php:142
+#: views/moove/admin/settings/help.php:161
 msgid "HOOK to GDPR custom 3RD-PARTY script by php – HEAD"
 msgstr ""
 
-#: views/moove/admin/settings/help.php:161
+#: views/moove/admin/settings/help.php:180
 msgid "HOOK to GDPR custom 3RD-PARTY script by php – BODY"
 msgstr ""
 
-#: views/moove/admin/settings/help.php:180
+#: views/moove/admin/settings/help.php:199
 msgid "HOOK to GDPR custom 3RD-PARTY script by php – FOOTER"
 msgstr ""
 
-#: views/moove/admin/settings/help.php:199
+#: views/moove/admin/settings/help.php:218
 msgid "HOOK to GDPR custom ADVANCED-PARTY script by php – HEAD"
 msgstr ""
 
-#: views/moove/admin/settings/help.php:218
+#: views/moove/admin/settings/help.php:237
 msgid "HOOK to GDPR custom ADVANCED-PARTY script by php – BODY"
 msgstr ""
 
-#: views/moove/admin/settings/help.php:237
+#: views/moove/admin/settings/help.php:256
 msgid "HOOK to GDPR custom ADVANCED-PARTY script by php – FOOTER"
 msgstr ""
 
-#: views/moove/admin/settings/help.php:256
+#: views/moove/admin/settings/help.php:275
 msgid "Enable Force Reload"
 msgstr ""
 
-#: views/moove/admin/settings/help.php:270
+#: views/moove/admin/settings/help.php:289
 msgid "PHP Cookie checker"
 msgstr ""
 
-#: views/moove/admin/settings/help.php:292
+#: views/moove/admin/settings/help.php:311
 msgid "Extend Styles"
 msgstr ""
 
-#: views/moove/admin/settings/help.php:313
+#: views/moove/admin/settings/help.php:332
+msgid "Set custom z-index"
+msgstr ""
+
+#: views/moove/admin/settings/help.php:335
+msgid ""
+"If you find that our GDPR Cookie Compliance Banner or the Settings Screen is "
+"covered by another element on your site, you can add the following to your "
+"functions.php"
+msgstr ""
+
+#: views/moove/admin/settings/help.php:353
 msgid "Custom css for buttons"
 msgstr ""
 
-#: views/moove/admin/settings/help.php:334
+#: views/moove/admin/settings/help.php:374
 msgid "Disable Monster Insights based on cookie selected"
 msgstr ""
 
-#: views/moove/admin/settings/help.php:358
+#: views/moove/admin/settings/help.php:398
 msgid "Define CDN URL for Lity library"
 msgstr ""
 
-#: views/moove/admin/settings/help.php:377
+#: views/moove/admin/settings/help.php:417
 msgid "Define custom cookie attribute (SameSite)"
 msgstr ""
 
-#: views/moove/admin/settings/help.php:381
+#: views/moove/admin/settings/help.php:421
 msgid "Default value: SameSite=Lax"
 msgstr ""
 
-#: views/moove/admin/settings/help.php:395
+#: views/moove/admin/settings/help.php:435
 msgid "Read cookie values with JavaScript"
 msgstr ""
 
-#: views/moove/admin/settings/help.php:420
+#: views/moove/admin/settings/help.php:460
 msgid "Compatibility with Pixel Your Site plugin"
 msgstr ""
 
-#: views/moove/admin/settings/help.php:443
+#: views/moove/admin/settings/help.php:483
 msgid "Hook for WooCommerce Facebook Pixel plugin"
 msgstr ""
 
-#: views/moove/admin/settings/help.php:466
+#: views/moove/admin/settings/help.php:506
 msgid "Disable Script Caching"
 msgstr ""
 
-#: views/moove/admin/settings/help.php:484
+#: views/moove/admin/settings/help.php:524
 msgid "Prevent ajax script injection"
 msgstr ""
 
-#: views/moove/admin/settings/help.php:487
-#: views/moove/admin/settings/help.php:543
-#: views/moove/admin/settings/help.php:561
+#: views/moove/admin/settings/help.php:527
+#: views/moove/admin/settings/help.php:616
+#: views/moove/admin/settings/help.php:634
 msgid "Note"
 msgstr ""
 
-#: views/moove/admin/settings/help.php:487
+#: views/moove/admin/settings/help.php:527
 msgid ""
 "By default, our plugin uses AJAX script injection to function properly, "
 "however, this may sometimes cause high server load. For that reason, you can "
@@ -953,17 +1021,21 @@ msgid ""
 "hook to start working."
 msgstr ""
 
-#: views/moove/admin/settings/help.php:501
+#: views/moove/admin/settings/help.php:541
 msgid ""
 "Custom Tracking Code on language sites (WPML, qTranslate, WP Multilang, "
 "Polylang)"
 msgstr ""
 
-#: views/moove/admin/settings/help.php:540
+#: views/moove/admin/settings/help.php:580
+msgid "Disable comments until cookies are not accepted"
+msgstr ""
+
+#: views/moove/admin/settings/help.php:613
 msgid "Prevent loading Lity Lightbox by JavaScript"
 msgstr ""
 
-#: views/moove/admin/settings/help.php:543
+#: views/moove/admin/settings/help.php:616
 msgid ""
 "By default our plugin first checks (using JavaScript) if the Lity lightbox "
 "is defined and used by your theme or any of the active plugins. If the "
@@ -971,17 +1043,17 @@ msgid ""
 "folder by JavaScript."
 msgstr ""
 
-#: views/moove/admin/settings/help.php:544
+#: views/moove/admin/settings/help.php:617
 msgid ""
 "You can use the following filter to prevent this JavaScript checking feature "
 "and enqueue the lightbox assets using PHP."
 msgstr ""
 
-#: views/moove/admin/settings/help.php:558
+#: views/moove/admin/settings/help.php:631
 msgid "GDPR Cookie Compliance Settings Page - Permissions"
 msgstr ""
 
-#: views/moove/admin/settings/help.php:561
+#: views/moove/admin/settings/help.php:634
 msgid "Default capability: manage_options"
 msgstr ""
 

@@ -65,6 +65,18 @@ class Forminator_CForm_New_Page extends Forminator_Admin_Page {
 		$script_version = FORMINATOR_VERSION;
 		wp_enqueue_style( 'intlTelInput-forminator-css', $style_src, array(), $style_version ); // intlTelInput
 		wp_enqueue_script( 'forminator-intlTelInput', $script_src, array( 'jquery' ), $script_version, false ); // intlTelInput
+
+		wp_enqueue_script( 'forminator-field-moment',
+			forminator_plugin_url() . 'assets/js/library/moment.min.js',
+			array( 'jquery' ),
+			'2.22.2',
+			true );
+
+        wp_enqueue_script( 'forminator-field-datepicker-range',
+			forminator_plugin_url() . 'assets/js/library/daterangepicker.min.js',
+			array('forminator-field-moment'),
+			'3.0.3',
+			true );
 	}
 
 	/**

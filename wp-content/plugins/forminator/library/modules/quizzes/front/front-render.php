@@ -828,7 +828,7 @@ class Forminator_QForm_Front extends Forminator_Render_Form {
 				ob_start();
 
 				if ( isset( $properties['custom_css'] ) && isset( $properties['form_id'] ) ) {
-					$properties['custom_css'] = forminator_prepare_css( $properties['custom_css'], '.forminator-quiz-' . $properties['form_id'] . ' ', false, true, 'forminator-quiz' );
+					$properties['custom_css'] = forminator_prepare_css( $properties['custom_css'], '.forminator-ui.forminator-quiz-' . $properties['form_id'] . ' ', false, true, 'forminator-quiz' );
 				}
 
 				/** @noinspection PhpIncludeInspection */
@@ -1065,8 +1065,97 @@ class Forminator_QForm_Front extends Forminator_Render_Form {
 	 * @return array
 	 */
 	public function ajax_display( $id, $is_preview = false, $data = false, $hide = true, $last_submit_data = array(), $extra = array() ) {
+		//The first module and preview for it
+		$id = isset( $id ) ? intval( $id ) : null;
 
-		if ( $data && ! empty( $data ) ) {
+		if ( ( is_null( $id ) || $id <= 0 ) && $is_preview && $data ) {
+			$questions  = $results = $settings = [];
+			$msg_count = false;
+
+			$title = isset( $data['settings']['quiz_name'] ) ? sanitize_text_field( $data['settings']['quiz_name'] ) : sanitize_text_field( $data['settings']['formName'] );
+
+			$form_model = new Forminator_Quiz_Form_Model();
+			$status = Forminator_Poll_Form_Model::STATUS_PUBLISH;
+
+			// Detect action
+			$action = isset( $data['type'] ) ? sanitize_text_field( $data['type'] ) : '';
+			if ( 'knowledge' == $action ) {
+				$form_model->quiz_type = 'knowledge';
+			} elseif( 'nowrong' == $action ) {
+				$form_model->quiz_type = 'nowrong';
+			} else {
+				return [];
+			}
+
+			// Check if results exist
+			if ( isset( $data['results'] ) && is_array( $data['results'] ) ) {
+				$results = forminator_sanitize_field( $data['results'] );
+				foreach ( $data['results'] as $key => $result ) {
+					$description = '';
+					if ( isset( $result['description'] ) ) {
+						$description = $result['description'];
+					}
+					$results[ $key ]['description'] = $description;
+				}
+
+				$form_model->results = $results;
+			}
+
+			// Check if answers exist
+			if ( isset( $data['questions'] ) ) {
+				$questions = forminator_sanitize_field( $data['questions'] );
+
+				// Check if questions exist
+				if ( isset( $questions ) ) {
+					foreach ( $questions as &$question ) {
+						$question['type'] = $form_model->quiz_type;
+						if ( ! isset( $question['slug'] ) || empty( $question['slug'] ) ) {
+							$question['slug'] = uniqid();
+						}
+					}
+				}
+			}
+
+			// Handle quiz questions
+			$form_model->questions = $questions;
+
+			if ( isset( $data['settings'] ) ) {
+				// Sanitize settings
+				$settings = forminator_sanitize_field( $data['settings'] );
+				$form_model->set_var_in_array( 'name', 'formName', $settings );
+			} else {
+				$form_model->set_var_in_array( 'name', 'formName', $data, 'forminator_sanitize_field' );
+			}
+
+			if( isset( $data['msg_count'] ) ) {
+				$msg_count = forminator_sanitize_field( $data['msg_count'] ); //Backup, we allow html here
+			}
+
+			// Sanitize admin email message
+			if ( isset( $data['settings']['admin-email-editor'] ) ) {
+				$settings['admin-email-editor'] = $data['settings']['admin-email-editor'];
+			}
+
+			// Sanitize quiz description
+			if ( isset( $data['settings']['quiz_description'] ) ) {
+				$settings['quiz_description'] = $data['settings']['quiz_description'];
+			}
+
+			// Update with backuped version
+			if( $msg_count ) {
+				$settings['msg_count'] = $msg_count;
+			}
+
+			$settings['formName'] = $title;
+			$settings['version'] = '1.0';
+
+			$form_model->settings = $settings;
+
+			$form_model->status = $status;
+
+			$this->model = $form_model;
+			$this->model->id = $id;
+		} elseif ( $data && ! empty( $data ) ) {
 			$this->model = Forminator_Quiz_Form_Model::model()->load_preview( $id, $data );
 			$this->model->id = $id; // its preview!
 		} else {
@@ -1155,10 +1244,28 @@ class Forminator_QForm_Front extends Forminator_Render_Form {
 		}
 
 		$options = array(
-			'form_type' => $this->get_form_type(),
+			'form_type'       => $this->get_form_type(),
+			'has_quiz_loader' => $this->form_has_loader( $form_properties ),
 		);
 
 		return $options;
+	}
+
+	/**
+	 * Return if form has submission loader enabled
+	 *
+	 * @param $properties
+	 *
+	 * @since 1.7.1
+	 *
+	 * @return bool
+	 */
+	public function form_has_loader( $properties ) {
+		if( isset( $properties['settings' ]['quiz-ajax-loader'] ) && "show" === $properties['settings' ]['quiz-ajax-loader'] ) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

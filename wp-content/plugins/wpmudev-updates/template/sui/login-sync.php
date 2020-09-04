@@ -19,9 +19,9 @@ if ( empty( $key ) ) {
 <div class="dashui-onboarding">
 
 	<div class="dashui-onboarding-body dashui-onboarding-content-center js-login-sync"
-	     data-key="<?php echo esc_attr( $key ); ?>"
-	     data-dashurl="<?php echo esc_url( $urls->dashboard_url ); ?>"
-	     data-hash="<?php echo esc_attr( wp_create_nonce( 'hub-sync' ) ); ?>"
+		data-key="<?php echo esc_attr( $key ); ?>"
+		data-dashurl="<?php echo esc_url( $urls->dashboard_url ); ?>"
+		data-hash="<?php echo esc_attr( wp_create_nonce( 'hub-sync' ) ); ?>"
 	>
 
 		<div class="dashui-login-form animate-sync animate-1">

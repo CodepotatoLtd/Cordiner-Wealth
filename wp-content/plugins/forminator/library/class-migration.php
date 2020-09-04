@@ -169,6 +169,13 @@ class Forminator_Migration {
 		 */
 		$field = self::migrate_page_break_pagination_field( $field );
 
+		/**
+		 * Migrate text_limit on `text` field
+		 *
+		 * @since 1.6
+		 */
+		$field = self::migrate_date_limit_1_13( $field );
+
 
 
 		return $field;
@@ -449,14 +456,14 @@ class Forminator_Migration {
 	}
 
 	/**
- * Migrate new padding settings
- *
- * @param $settings
- *
- * @since 1.6.1
- *
- * @return mixed
- */
+	 * Migrate new padding settings
+	 *
+	 * @param $settings
+	 *
+	 * @since 1.6.1
+	 *
+	 * @return mixed
+	 */
 	public static function migrate_padding_border_settings_1_6_1( $settings ) {
 		if ( ! isset( $settings['poll-padding'] ) ) {
 			$settings['poll-padding'] = 'custom';
@@ -687,6 +694,42 @@ class Forminator_Migration {
 	}
 
 	/**
+	 * Migrate Date limit
+	 *
+	 * @param $field
+	 *
+	 * @since 1.13
+	 *
+	 * @return mixed
+	 */
+	public static function migrate_date_limit_1_13( $field ) {
+
+		// Migrate page break
+		if ( 'date' === $field['type'] ) {
+			if ( isset( $field['howto-restrict'] ) && 'custom' === $field['howto-restrict'] ) {
+				$field['howto-restrict'] = 'all';
+				$disable_date            = array();
+				if ( isset( $field['date_multiple'] ) && ! empty( $field['date_multiple'] ) ) {
+					foreach ( $field['date_multiple'] as $key => $date ) {
+						$disable_date[] = date( 'm/d/Y', strtotime( $date['value'] ) );
+					}
+					$field['disabled-dates'] = $disable_date;
+				}
+			}
+			if ( isset( $field['min_year'] ) && ! empty( $field['min_year'] ) && ! isset( $field['start-date'] ) ) {
+				$field['start-date']          = 'specific';
+				$field['start-specific-date'] = date_i18n( 'm/d/Y', strtotime( '1/1/' . $field['min_year'] ) );
+			}
+			if ( isset( $field['max_year'] ) && ! empty( $field['max_year'] ) && ! isset( $field['end-date'] ) ) {
+				$field['end-date']          = 'specific';
+				$field['end-specific-date'] = date_i18n( 'm/d/Y', strtotime( '12/31/' . $field['max_year'] ) );
+			}
+		}
+
+		return $field;
+	}
+
+	/**
 	 *  pagination settings migrations
 	 *
 	 * @param $fields
@@ -760,6 +803,7 @@ class Forminator_Migration {
 					'slug'             => 'notification-1111-2222',
 					'label'            => 'Admin Email',
 					'email-recipients' => 'default',
+					'email-attachment' => 'false',
 				);
 				if ( ! empty( $settings['admin-email-recipients'] ) ) {
 					$admin_args['recipients'] = implode( ',', $settings['admin-email-recipients'] );

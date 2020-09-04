@@ -74,10 +74,12 @@ class Forminator_Radio extends Forminator_Field {
 				array(
 					'label' => __( 'Option 1', Forminator::DOMAIN ),
 					'value' => 'one',
+					'key'   => forminator_unique_key(),
 				),
 				array(
 					'label' => __( 'Option 2', Forminator::DOMAIN ),
 					'value' => 'two',
+					'key'   => forminator_unique_key(),
 				),
 			),
 		);
@@ -235,7 +237,7 @@ class Forminator_Radio extends Forminator_Field {
 			$required_message = self::get_property( 'required_message', $field, '' );
 			$required_message = apply_filters(
 				'forminator_single_field_required_validation_message',
-				( ! empty( $required_message ) ? $required_message : __( 'This field is required. Please select a value', Forminator::DOMAIN ) ),
+				( ! empty( $required_message ) ? $required_message : __( 'This field is required. Please select a value.', Forminator::DOMAIN ) ),
 				$id,
 				$field
 			);
@@ -252,15 +254,16 @@ class Forminator_Radio extends Forminator_Field {
 	 *
 	 * @param array        $field
 	 * @param array|string $data
+	 * @param array        $post_data
 	 */
-	public function validate( $field, $data ) {
+	public function validate( $field, $data, $post_data = array() ) {
 		if ( $this->is_required( $field ) ) {
 			$id               = self::get_property( 'element_id', $field );
 			$required_message = self::get_property( 'required_message', $field, '' );
 			if ( empty( $data ) && '0' !== $data ) {
 				$this->validation_message[ $id ] = apply_filters(
 					'forminator_single_field_required_validation_message',
-					( ! empty( $required_message ) ? $required_message : __( 'This field is required. Please select a value', Forminator::DOMAIN ) ),
+					( ! empty( $required_message ) ? $required_message : __( 'This field is required. Please select a value.', Forminator::DOMAIN ) ),
 					$id,
 					$field
 				);

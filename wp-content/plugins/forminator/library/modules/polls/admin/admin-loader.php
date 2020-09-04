@@ -99,7 +99,7 @@ class Forminator_Poll_Admin extends Forminator_Admin_Module {
 				if ( is_object( $model ) ) {
 					foreach ( (array) $model->get_fields() as $field ) {
 						$a = array(
-							'title'      => $field->title,
+							'title'      => html_entity_decode( $field->title ),
 							'element_id' => $field->element_id,
 							'color'      => $field->color,
 						);

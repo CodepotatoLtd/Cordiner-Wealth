@@ -11,44 +11,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 abstract class Forminator_Import_Mediator {
 
 	/**
-	* Stored form data.
-	*
-	* @since  1.7
-	* @access public
-	* @var    array
-	*/
-	public $data = array();
-
-	/**
-	 * Plugin instance
-	 * @since  1.7
-	 * @access private
-	 * @var null
-	 */
-	private static $instance = null;
-
-	/**
-	 * Return the plugin instance
+	 * Stored form data.
 	 *
-	 * @since 1.7
-	 * @return Forminator
+	 * @since  1.7
+	 * @access public
+	 * @var    array
 	 */
-	public static function get_instance() {
-		if ( is_null( self::$instance ) ) {
-			self::$instance = new self();
-		}
-
-		return self::$instance;
-	}
+	public $data = array();
 
 	/**
 	 * Insert form data
 	 * Override by child classes
 	 *
+	 * @param $id
+	 *
 	 * @since 1.7
 	 * @return array Parsed form data
 	 */
-	public function import_form( $id ){
+	public function import_form( $id ) {
 
 		return array();
 
@@ -57,17 +37,19 @@ abstract class Forminator_Import_Mediator {
 	/**
 	 * Replaces invalid tags with forminator tags
 	 *
+	 * @param $mayhavetags
+	 * @param $tags
 	 *
 	 * @since 1.7
 	 * @return string returns string with valid field tag format
 	 */
 	public function replace_invalid_tags( $mayhavetags, $tags = array() ) {
 
-		if( ! empty( $tags ) ){
+		if ( ! empty( $tags ) ) {
 			$tags = array_merge( $tags, array(
 				'{all_fields_table}' => '{all_fields}',
-				'{referer}'			 => '{referer_url}'
-			));
+				'{referer}'          => '{referer_url}'
+			) );
 		}
 
 		$mayhavetags = strtr( $mayhavetags, $tags );
@@ -159,11 +141,11 @@ abstract class Forminator_Import_Mediator {
 	 * @since 1.7
 	 * @return int random number
 	 */
-	public function random_wrapper_int(){
+	public function random_wrapper_int() {
 
 		//get all forms
 
-		$int = intval( (float)rand()/(float)getrandmax() * 9999 );
+		$int = intval( (float) rand() / (float) getrandmax() * 9999 );
 
 		return absint( $int );
 	}
@@ -171,70 +153,73 @@ abstract class Forminator_Import_Mediator {
 	/**
 	 * Replaces cf7 tags with forminator tags
 	 *
+	 * @param $type
 	 *
 	 * @since 1.7
 	 * @return string returns string with valid field tag format
 	 */
-	public function get_thirdparty_field_type( $type ){
+	public function get_thirdparty_field_type( $type ) {
 
-		switch( trim( $type ) ) {
+		switch ( trim( $type ) ) {
 			case 'firstname':
 			case 'lastname':
-				$type='name';
+				$type = 'name';
 				break;
 			case 'textbox':
 			case 'dynamichidden':
-				$type='text';
+				$type = 'text';
 				break;
 			case 'acceptance':
-				$type='gdprcheckbox';
+				$type = 'gdprcheckbox';
 				break;
 			case 'honeypot':
-				$type='honeypot';
+				$type = 'honeypot';
 				break;
 			case 'listradio':
-				$type='radio';
+				$type = 'radio';
 				break;
 			case 'listselect':
 			case 'listmultiselect':
 			case 'multiselect':
 			case 'multiple':
 			case 'liststate':
-				$type='select';
+				$type = 'select';
 				break;
 			case 'listcheckbox':
-				$type='checkbox';
+				$type = 'checkbox';
 				break;
 			case 'city':
 			case 'listcountry':
 			case 'zip':
-				$type='address';
+				$type = 'address';
 				break;
 			case 'textarea':
 			case 'description':
-				$type='textarea';
+				$type = 'textarea';
 				break;
 			case 'tel':
-				$type='phone';
+				$type = 'phone';
 				break;
 			case 'url':
-				$type='url';
+				$type = 'url';
 				break;
 			case 'page':
-				$type='pagination';
+				$type = 'pagination';
 				break;
 			case 'file':
 			case 'fileupload':
-				$type='upload';
+				$type = 'upload';
 				break;
 			case 'recaptcha':
-				$type='captcha';
+				$type = 'captcha';
 				break;
 			default:
 				break;
 		}
 
-		if( ! in_array( $type, self::default_fields(), true ) ) $type = '';
+		if ( ! in_array( $type, self::default_fields(), true ) ) {
+			$type = '';
+		}
 
 		return $type;
 	}
@@ -242,11 +227,11 @@ abstract class Forminator_Import_Mediator {
 	/**
 	 * Tries the form import
 	 *
+	 * @param $import_data
 	 *
-	 * @since 1.7
-	 * @return object instance of Forminator_Custom_Form_Model
+	 * @return array
 	 */
-	public function try_form_import( $import_data ){
+	public function try_form_import( $import_data ) {
 		try {
 			if ( empty( $import_data ) || ! is_array( $import_data ) ) {
 				throw new Exception( __( 'Oops, looks like we found an issue. Import text can not include whitespace or special characters.', Forminator::DOMAIN ) );
@@ -265,22 +250,22 @@ abstract class Forminator_Import_Mediator {
 				throw new Exception( $model->get_error_message() );
 			}
 
-			if ( !$model instanceof Forminator_Custom_Form_Model ) {
+			if ( ! $model instanceof Forminator_Custom_Form_Model ) {
 				throw new Exception( __( 'Failed to import form, please make sure import text is valid, and try again.', Forminator::DOMAIN ) );
 			}
 
 			$return_url = admin_url( 'admin.php?page=forminator-cform' );
 
 			return array(
-				'id'  => $model->id,
-				'url' => $return_url,
-				'type'=> 'success'
+				'id'   => $model->id,
+				'url'  => $return_url,
+				'type' => 'success'
 			);
 
 		} catch ( Exception $e ) {
 			return array(
 				'message' => $e->getMessage(),
-				'type'=>'fail'
+				'type'    => 'fail'
 			);
 		}
 	}
@@ -288,26 +273,29 @@ abstract class Forminator_Import_Mediator {
 	/**
 	 * Parses form data structure
 	 *
+	 * @param $data
 	 *
 	 * @since 1.7
 	 * @return array Parsed form data
 	 */
-	public function parse_import_data( $data ){
-		if( empty( $data ) || ! is_array( $data ) || ! isset( $data['data']['fields'] ) ) return;
+	public function parse_import_data( $data ) {
+		if ( empty( $data ) || ! is_array( $data ) || ! isset( $data['data']['fields'] ) ) {
+			return;
+		}
 
 		$fields = $form_data = array();
 
-		foreach ($data['data']['fields'] as $key => $value) {
+		foreach ( $data['data']['fields'] as $key => $value ) {
 			$value['id'] = $value['element_id'];
-			$fields[] = $value;
+			$fields[]    = $value;
 		}
 
-		$form_data['data']['fields']    = $fields;
-		$form_data['data']['settings'] 	= $data['data']['settings'];
-		$form_data['name'] 	      	    = $data['data']['settings']['formName'];
-		$form_data['type'] 	   	        = $data['type'];
-		$form_data['status']	        = $data['status'];
-		$form_data['version'] 	        = FORMINATOR_VERSION;
+		$form_data['data']['fields']   = $fields;
+		$form_data['data']['settings'] = $data['data']['settings'];
+		$form_data['name']             = $data['data']['settings']['formName'];
+		$form_data['type']             = $data['type'];
+		$form_data['status']           = $data['status'];
+		$form_data['version']          = FORMINATOR_VERSION;
 
 		return $form_data;
 	}

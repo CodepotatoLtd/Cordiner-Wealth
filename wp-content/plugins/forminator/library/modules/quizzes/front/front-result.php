@@ -146,7 +146,7 @@ class Forminator_QForm_Result extends Forminator_Result {
 		 *
 		 * @return string
 		 */
-		$image = apply_filters( 'forminator_quiz_result_page_meta_title', $image, $quiz, $entry_id );
+		$image = apply_filters( 'forminator_quiz_result_page_meta_image', $image, $quiz, $entry_id );
 
 		return $image;
 	}

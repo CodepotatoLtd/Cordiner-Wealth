@@ -116,7 +116,7 @@ class Forminator_Admin_AJAX {
 	 */
 	public function save_quiz() {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			return;
+			wp_send_json_error( __( 'Invalid request, you are not allowed to do that action.', Forminator::DOMAIN ) );
 		}
 
 		forminator_validate_ajax( 'forminator_save_quiz' );
@@ -274,7 +274,7 @@ class Forminator_Admin_AJAX {
 	 */
 	public function save_poll_form() {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			return;
+			wp_send_json_error( __( 'Invalid request, you are not allowed to do that action.', Forminator::DOMAIN ) );
 		}
 
 		forminator_validate_ajax( 'forminator_save_poll' );
@@ -322,6 +322,7 @@ class Forminator_Admin_AJAX {
 		// Check if answers exist
 		if ( isset( $poll_data['answers'] ) ) {
 			$answers = forminator_sanitize_field( $poll_data['answers'] );
+			$answers = wp_slash( $answers );
 		}
 
 		if ( isset( $poll_data['settings'] ) ) {
@@ -396,7 +397,7 @@ class Forminator_Admin_AJAX {
 	 */
 	public function save_builder() {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			return;
+			wp_send_json_error( __( 'Invalid request, you are not allowed to do that action.', Forminator::DOMAIN ) );
 		}
 
 		forminator_validate_ajax( 'forminator_save_builder_fields' );
@@ -1881,7 +1882,7 @@ class Forminator_Admin_AJAX {
 
 		update_option( 'forminator_dashboard_settings', $dashboard_settings );
 		update_option( "forminator_sender_email_address", sanitize_text_field( $_POST['sender_email'] ) );
-		update_option( "forminator_sender_name", sanitize_text_field( $_POST['sender_name'] ) );
+		update_option( "forminator_sender_name", sanitize_text_field( stripcslashes( $_POST['sender_name'] ) ) );
 
 		$pagination         = intval( sanitize_text_field( $_POST['pagination_entries'] ) );
 		$pagination_listing = intval( sanitize_text_field( $_POST['pagination_listings'] ) );
@@ -2281,6 +2282,12 @@ class Forminator_Admin_AJAX {
 		$notification_name = filter_input( INPUT_POST, 'prop', FILTER_SANITIZE_STRING );
 
 		update_option( $notification_name, true );
+
+		$version_upgraded = get_option( 'forminator_version_upgraded', false );
+
+		if ( $version_upgraded ) {
+			update_option( 'forminator_version_upgraded', false );
+		}
 
 		wp_send_json_success();
 	}

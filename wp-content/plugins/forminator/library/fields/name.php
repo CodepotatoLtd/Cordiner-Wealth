@@ -231,8 +231,8 @@ class Forminator_Name extends Forminator_Field {
 			);
 
 			$options        = array();
-			$prefix_options = forminator_get_name_prefixes();
 			$prefill        = false;
+			$prefix_options = forminator_get_name_prefixes();
 
 			if ( $this->has_prefill( $field, 'prefix' ) ) {
 				// We have pre-fill parameter, use its value or $value
@@ -573,7 +573,7 @@ class Forminator_Name extends Forminator_Field {
 					$field,
 					'mname_required_message',
 					'middle',
-					__( 'This field is required. Please input your middle name', Forminator::DOMAIN )
+					__( 'This field is required. Please input your middle name.', Forminator::DOMAIN )
 				);
 				$messages        .= '"' . $this->get_id( $field ) . '-middle-name": "' . forminator_addcslashes( $required_message ) . '",' . "\n";
 			}
@@ -584,7 +584,7 @@ class Forminator_Name extends Forminator_Field {
 					$field,
 					'lname_required_message',
 					'last',
-					__( 'This field is required. Please input your last name', Forminator::DOMAIN )
+					__( 'This field is required. Please input your last name.', Forminator::DOMAIN )
 				);
 				$messages        .= '"' . $this->get_id( $field ) . '-last-name": "' . forminator_addcslashes( $required_message ) . '",' . "\n";
 			}
@@ -593,7 +593,7 @@ class Forminator_Name extends Forminator_Field {
 				// backward compat
 				$required_message = self::get_property( 'required_message', $field, self::FIELD_PROPERTY_VALUE_NOT_EXIST, 'string' );
 				if ( self::FIELD_PROPERTY_VALUE_NOT_EXIST === $required_message ) {
-					$required_message = __( 'This field is required. Please input your name', Forminator::DOMAIN );
+					$required_message = __( 'This field is required. Please input your name.', Forminator::DOMAIN );
 				}
 
 				$required_message = apply_filters( 'forminator_name_field_required_validation_message', $required_message, $id, $field );
@@ -612,8 +612,9 @@ class Forminator_Name extends Forminator_Field {
 	 *
 	 * @param array        $field
 	 * @param array|string $data
+	 * @param array        $post_data
 	 */
-	public function validate( $field, $data ) {
+	public function validate( $field, $data, $post_data = array() ) {
 		$id          = self::get_property( 'element_id', $field );
 		$is_multiple = self::get_property( 'multiple_name', $field, false, 'bool' );
 		$required    = $this->is_required( $field );
@@ -661,7 +662,7 @@ class Forminator_Name extends Forminator_Field {
 						$field,
 						'mname_required_message',
 						'middle',
-						__( 'This field is required. Please input your middle name', Forminator::DOMAIN )
+						__( 'This field is required. Please input your middle name.', Forminator::DOMAIN )
 					);
 				}
 
@@ -671,7 +672,7 @@ class Forminator_Name extends Forminator_Field {
 						$field,
 						'lname_required_message',
 						'last',
-						__( 'This field is required. Please input your last name', Forminator::DOMAIN )
+						__( 'This field is required. Please input your last name.', Forminator::DOMAIN )
 					);
 				}
 			}
@@ -681,7 +682,7 @@ class Forminator_Name extends Forminator_Field {
 					// backward compat
 					$required_message = self::get_property( 'required_message', $field, self::FIELD_PROPERTY_VALUE_NOT_EXIST, 'string' );
 					if ( self::FIELD_PROPERTY_VALUE_NOT_EXIST === $required_message ) {
-						$required_message = __( 'This field is required. Please input your name', Forminator::DOMAIN );
+						$required_message = __( 'This field is required. Please input your name.', Forminator::DOMAIN );
 					}
 
 					$required_message                = apply_filters( 'forminator_name_field_required_validation_message', $required_message, $id, $field );

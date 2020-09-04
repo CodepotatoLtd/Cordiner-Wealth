@@ -344,7 +344,7 @@ class Forminator_Addon_Mailchimp_Wp_Api {
 	public function get_list_merge_fields( $list_id, $args ) {
 		$default_args = array(
 			'fields'     => implode( ',', array( 'merge_fields.merge_id', 'merge_fields.tag', 'merge_fields.name', 'merge_fields.type', 'merge_fields.required' ) ),
-			'count'      => 10,
+			'count'      => 100,
 			'sort_field' => 'display_order',
 			'sort_dir'   => 'ASC',
 		);

@@ -18,7 +18,7 @@ class Forminator_CForm_Front_User_Registration extends Forminator_User {
 
 		$this->mail_sender = new Forminator_CForm_Front_Mail();
 
-		if ( is_multisite() ) {
+		if ( forminator_is_main_site() ) {
 			add_action( 'forminator_cform_user_registration_validation', array( $this, 'multisite_validation' ), 10, 4 );
 			add_action( 'forminator_cform_user_registered', array( $this, 'create_site' ), 10, 5 );
 		}

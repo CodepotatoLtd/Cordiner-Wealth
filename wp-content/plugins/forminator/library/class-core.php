@@ -37,6 +37,13 @@ class Forminator_Core {
 	public $fields = array();
 
 	/**
+	 * Store PRO fields
+	 *
+	 * @var array
+	 */
+	public $pro_fields = array();
+
+	/**
 	 * Plugin instance
 	 *
 	 * @var null
@@ -86,6 +93,14 @@ class Forminator_Core {
 		$fields       = new Forminator_Fields();
 		$this->fields = $fields->get_fields();
 
+		/**
+		 * Filter Pro fields for promotion PRO version
+		 *
+		 * @since 1.13
+		 * @param array $pro_fields Array of PRO fields e.g. [ 'field_type' => 'test', 'name' => 'test, 'icon' => 'sui-icon-pencil' ]
+		 */
+		$this->pro_fields = apply_filters( 'forminator_pro_fields', [] );
+
 		// HACK: Add settings and entries page at the end of the list
 		if ( is_admin() ) {
 			$this->admin->add_entries_page();
@@ -93,6 +108,10 @@ class Forminator_Core {
 				$this->admin->add_integrations_page();
 			}
 			$this->admin->add_settings_page();
+
+			if ( ! FORMINATOR_PRO ) {
+				$this->admin->add_upgrade_page();
+			}
 		}
 
 		//Protection management
@@ -261,7 +280,7 @@ class Forminator_Core {
 	 * @since 1.0
 	 */
 	public function setup_post_meta_box() {
-        global $post;
+		global $post;
 		if ( is_object( $post ) ) {
 			$is_forminator_meta = get_post_meta( $post->ID, '_has_forminator_meta' );
 			if ( $is_forminator_meta ) {
@@ -279,9 +298,9 @@ class Forminator_Core {
 
 	public function localize_pointers() {
 		?>
-		<script type="text/javascript">
-			var ajaxurl = '<?php echo admin_url( 'admin-ajax.php' );  // WPCS: XSS ok. ?>';
-		</script>
+        <script type="text/javascript">
+            var ajaxurl = '<?php echo admin_url( 'admin-ajax.php' );  // WPCS: XSS ok. ?>';
+        </script>
 		<?php
 	}
 
@@ -300,7 +319,7 @@ class Forminator_Core {
 				if ( '_' === $key[0] ) {
 					continue;
 				}
-				$value =  $value[0];
+				$value = $value[0];
 				?>
                 <tr>
                     <th><?php echo esc_html( $key ); ?></th>

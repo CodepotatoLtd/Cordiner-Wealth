@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: Forminator Pro
- * Version: 1.12.1.1
+ * Version: 1.13.5
  * Plugin URI:  https://premium.wpmudev.org/project/forminator/
  * Description: Capture user information (as detailed as you like), engage users with interactive polls that show real-time results and graphs, “no wrong answer” Facebook-style quizzes and knowledge tests.
  * Author: WPMU DEV
- * Author URI: http://premium.wpmudev.org
+ * Author URI: https://premium.wpmudev.org
  * Text Domain: forminator
  * Domain Path: /languages/
  * WDP ID: 2097296
@@ -34,7 +34,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! defined( 'FORMINATOR_VERSION' ) ) {
-	define( 'FORMINATOR_VERSION', '1.12.1.1' );
+	define( 'FORMINATOR_VERSION', '1.13.5' );
 }
 
 if ( ! defined( 'FORMINATOR_SUI_VERSION' ) ) {
@@ -59,6 +59,11 @@ if ( ! defined( 'FORMINATOR_PAYPAL_LIB_VERSION' ) ) {
 
 if ( ! defined( 'FORMINATOR_PRO' ) ) {
 	define( 'FORMINATOR_PRO', true );
+}
+
+if ( ! defined( 'FORMINATOR_PLUGIN_BASENAME' ) ) {
+	define( 'FORMINATOR_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
+
 }
 
 if ( ! defined( 'FORMINATOR_PRO_URL' ) ) {
@@ -126,12 +131,13 @@ if ( ! class_exists( 'Forminator' ) ) {
 
 			$this->includes();
 			$this->include_vendors();
-			$this->init();
-			$this->load_textdomain();
 
 			if ( self::is_addons_feature_enabled() ) {
 				$this->init_addons();
 			}
+
+			$this->init();
+			$this->load_textdomain();
 		}
 
 		/**
@@ -404,7 +410,7 @@ if ( ! class_exists( 'Forminator' ) ) {
 				global $wpmudev_notices;
 				$wpmudev_notices[] = array(
 					'id'      => 2097296,
-					'name'    => 'Forminator',
+					'name'    => FORMINATOR_PRO ? 'Forminator Pro' : 'Forminator',
 					'screens' => array(
 						'toplevel_page_forminator',
 						'toplevel_page_forminator-network',
@@ -445,6 +451,53 @@ if ( ! class_exists( 'Forminator' ) ) {
 				 */
 				/** @noinspection PhpIncludeInspection */
 				include_once forminator_plugin_dir() . 'library/external/autoload_psr4.php';
+			}
+
+			if ( ! FORMINATOR_PRO ) {
+
+				if ( file_exists( forminator_plugin_dir() . 'library/lib/recommended-plugins/notice.php' ) ) {
+
+					require_once forminator_plugin_dir() . 'library/lib/recommended-plugins/notice.php';
+
+					do_action(
+						'wpmudev-recommended-plugins-register-notice',
+						plugin_basename( __FILE__ ), // Plugin basename
+						'My Plugin Name', // Plugin Name
+						array(
+							'toplevel_page_forminator',
+							'toplevel_page_forminator-network',
+							'forminator_page_forminator-cform',
+							'forminator_page_forminator-cform-network',
+							'forminator_page_forminator-poll',
+							'forminator_page_forminator-poll-network',
+							'forminator_page_forminator-quiz',
+							'forminator_page_forminator-quiz-network',
+							'forminator_page_forminator-settings',
+							'forminator_page_forminator-settings-network',
+							'forminator_page_forminator-cform-wizard',
+							'forminator_page_forminator-cform-wizard-network',
+							'forminator_page_forminator-cform-view',
+							'forminator_page_forminator-cform-view-network',
+							'forminator_page_forminator-poll-wizard',
+							'forminator_page_forminator-poll-wizard-network',
+							'forminator_page_forminator-poll-view',
+							'forminator_page_forminator-poll-view-network',
+							'forminator_page_forminator-nowrong-wizard',
+							'forminator_page_forminator-nowrong-wizard-network',
+							'forminator_page_forminator-knowledge-wizard',
+							'forminator_page_forminator-knowledge-wizard-network',
+							'forminator_page_forminator-quiz-view',
+							'forminator_page_forminator-quiz-view-network',
+							'forminator_page_forminator-entries',
+							'forminator_page_forminator-entries-network',
+							'forminator_page_forminator-integrations',
+							'forminator_page_forminator-integrations-network'
+						),
+						array( 'after', '.sui-wrap .sui-header' ) // selector
+					);
+
+				}
+
 			}
 
 		}

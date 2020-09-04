@@ -4,6 +4,82 @@ Author: Cvetan Cvetanov (Incsub)
 Change Log:
 ----------------------------------------------------------------------
 
+1.13.5 - 2020-08-25
+----------------------------------------------------------------------
+- Fix: WP 5.5 Gutenberg blocks missing permissions_callback
+- Fix: Missing nonce check for CSV export
+
+1.13.4 - 2020-08-04
+----------------------------------------------------------------------
+- Fix: Visibility conditions cause calculation result to be 0
+
+1.13.3 - 2020-07-24
+----------------------------------------------------------------------
+- Fix: Missing WDP ID
+
+1.13.2 - 2020-07-24
+----------------------------------------------------------------------
+- Fix: Select2 breaks form if another plugin loads the library
+- Fix: Upload field value is blank in Google Sheets integration
+- Fix: Required upload field does not show the uploaded file name
+- Fix: Removed the form ID from {submission_id}
+
+1.13.1 - 2020-07-17
+----------------------------------------------------------------------
+- Fix: Replace obfuscated with minified version of signatures script to prevent false positive reports
+- Fix: Check if temp_folder exist before running cron for cleaning it
+- Fix: Form shortcode with AJAX load replaces parent container
+- Fix: Post data custom fields breaking the field settings
+- Fix: Dropdowns doesn't show all values when used in pagination
+
+1.13 - 2020-07-13
+----------------------------------------------------------------------
+- Add: Electronic Signature field
+- Add: Multi-file uploads with the File Upload field
+- Add: Integration with the FortressDB plugin
+- Improvement: Advanced Date field restrictions
+- Improvement: Advanced Time field limits and intervals
+- Improvement: Ability to send uploaded files via File Upload field as email attachments
+- Improvement: Allow additional file extensions not mentioned in the File Upload field
+- Improvement: Support additional contact fields in the Hubspot integration
+- Improvement: Allow multi-line placeholder for the Textarea field
+- Improvement: Auto-populate submissions when only one form exists
+- Improvement: Added a select /unselect all filter in the File Upload field when allowing specific field types
+- Improvement: Make the input field of SUI color picker editable
+- Improvement: Add an optional loading state while evaluating the quiz answers in real-time
+- Improvement: Add error notification when form fails to save
+- Improvement: Scroll to submission indicator on form submit
+- Improvement: Character validation for the email field
+- Improvement: Disable submit on pressing enter if submit button is hidden by condition
+- Improvement: Add field search function while setting up visibility conditions
+- Improvement: Datepicker's week start day should follow WP settings
+- Fix: Select field shows the first option instead of placeholder
+- Fix: Cannot register new user when logged-in
+- Fix: Quiz social share and description custom colors not displayed on front-end
+- Fix: Social sharing doesn't work with knowledge quizzes
+- Fix: Issues with creating a new site on User Registration on a network
+- Fix: Email fields are not appearing under the merge tag option for Redirect URL
+- Fix: Form cannot be saved when custom user meta added for the User Registration template
+- Fix: Visibility conditions issues with required fields
+- Fix: Hidden field with query parameter doesn't work with AJAX loading
+- Fix: Submission email is sent even when a submission marked as spam by the Akismet integration
+- Fix: Module shortcode doesn't work with Elementor Pro
+- Fix: File Upload field doesn't work on IE 11
+- Fix: Stripe field is not visible on IE 11
+- Fix: Default date doesn't work for the dropdown type Date field when it is set to a custom date
+- Fix: Mailchimp fields are limited by 10 under the "Assign Fields" section
+- Fix: Form preview doesn't work when a form is expired
+- Fix: Submission error after Stripe payment in some cases
+- Fix: "Add Email Notification" button breaks the form wizard in some cases
+- Fix: Currency field not accepting any value other than 0 when limits are not set
+- Fix: Upload field uses non-unique ids which causes console warnings
+- Fix: Can't use apostrophes in Sender name under General settings
+- Fix: Searching address in Poll Email Notification tab throws console error
+- Fix: "Month Is" visibility option doesn't show any options
+- Fix: "Refer URL" merge tag show the wrong result when AJAX load enabled
+- Fix: Compatibility issues with Divi
+- Fix: Global Privacy Settings should link to the Submissions tab
+
 1.12.1.1 - 2020-04-01
 ----------------------------------------------------------------------
 - Fix: Missing quiz styles on front-end
@@ -617,4 +693,4 @@ Change Log:
 - First public release
 
 
-59765-1587724904-au
+59765-1599206143-au

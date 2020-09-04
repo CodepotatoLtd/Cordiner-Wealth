@@ -199,7 +199,7 @@ class Forminator_Email extends Forminator_Field {
 		$field              = $this->field;
 		$id                 = $this->get_id( $field );
 		$is_validate        = self::get_property( 'validation', $field );
-		$validation_message = self::get_property( 'validation_message', $field, __( 'This is not a valid email', Forminator::DOMAIN ) );
+		$validation_message = self::get_property( 'validation_message', $field, __( 'This is not a valid email.', Forminator::DOMAIN ) );
 
 		$validation_message = htmlentities( $validation_message );
 
@@ -212,7 +212,7 @@ class Forminator_Email extends Forminator_Field {
 					$field,
 					'required_message',
 					'',
-					__( 'This field is required. Please input a valid email', Forminator::DOMAIN )
+					__( 'This field is required. Please input a valid email.', Forminator::DOMAIN )
 				);
 			$messages                      .= '"required": "' . forminator_addcslashes( $default_required_error_message ) . '",' . "\n";
 		}
@@ -253,13 +253,14 @@ class Forminator_Email extends Forminator_Field {
 	 *
 	 * @param array        $field
 	 * @param array|string $data
+	 * @param array        $post_data
 	 *
 	 * @return bool
 	 */
-	public function validate( $field, $data ) {
+	public function validate( $field, $data, $post_data = array() ) {
 		$id                 = self::get_property( 'element_id', $field );
 		$is_validate        = self::get_property( 'validation', $field );
-		$validation_message = self::get_property( 'validation_message', $field, __( 'This is not a valid email', Forminator::DOMAIN ) );
+		$validation_message = self::get_property( 'validation_message', $field, __( 'This is not a valid email.', Forminator::DOMAIN ) );
 		if ( $this->is_required( $field ) ) {
 			$required_error_message =
 				$this->get_field_multiple_required_message(
@@ -267,7 +268,7 @@ class Forminator_Email extends Forminator_Field {
 					$field,
 					'required_message',
 					'',
-					__( 'This field is required. Please input a valid email', Forminator::DOMAIN )
+					__( 'This field is required. Please input a valid email.', Forminator::DOMAIN )
 				);
 
 			if ( empty( $data ) ) {
@@ -278,7 +279,7 @@ class Forminator_Email extends Forminator_Field {
 
 		if ( $is_validate && ! empty( $data ) ) {
 			$validation_message = htmlentities( $validation_message );
-			if ( ! is_email( $data ) ) {
+			if ( 320 < strlen( $data ) || ! is_email( $data ) ) {
 				$this->validation_message[ $id ] = $validation_message;
 			}
 		}

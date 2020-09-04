@@ -471,20 +471,25 @@ abstract class Forminator_Base_Form_Model {
 				}
 			}
 
+			$form_settings = $object->settings;
+			if ( ! isset( $form_settings['form_id'] ) ) {
+				$form_settings['form_id'] = $object->id;
+			}
+
 			// Migrate settings Custom Form
 			if ( 'forminator_forms' === $this->post_type ) {
-				$object->settings      = Forminator_Migration::migrate_custom_form_settings( $object->settings, $fields );
-				$object->notifications = Forminator_Migration::migrate_custom_form_notifications( $object->notifications, $object->settings, $meta );
+				$object->settings      = Forminator_Migration::migrate_custom_form_settings( $form_settings, $fields );
+				$object->notifications = Forminator_Migration::migrate_custom_form_notifications( $object->notifications, $form_settings, $meta );
 			}
 
 			// Migrate settings Polls
 			if ( 'forminator_polls' === $this->post_type ) {
-				$object->settings = Forminator_Migration::migrate_polls_settings( $object->settings );
+				$object->settings = Forminator_Migration::migrate_polls_settings( $form_settings );
 			}
 
 			// Migrate settings Polls
 			if ( 'forminator_quizzes' === $this->post_type ) {
-				$object->settings = Forminator_Migration::migrate_quizzes_settings( $object->settings );
+				$object->settings = Forminator_Migration::migrate_quizzes_settings( $form_settings );
 			}
 
 			$object->raw = $post;

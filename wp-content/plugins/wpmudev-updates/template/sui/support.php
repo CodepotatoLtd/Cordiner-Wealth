@@ -23,11 +23,27 @@ global $wp_version;
 $page_title = __( 'Support', 'wpmudev' );
 $page_slug  = 'support';
 $this->render_sui_header( $page_title, $page_slug );
+$has_support_access = is_wpmudev_member() || 'unit' === $membership_type;
 
-/** @var WPMUDEV_Dashboard_Sui $this */
-/** @var WPMUDEV_Dashboard_Sui_Page_Urls $urls */
-/** @var stdClass $staff_login */
-/** @var string $notes */
+/*
+ * WPMUDEV Dashboard Ui.
+ *
+ * @var WPMUDEV_Dashboard_Sui $this
+ */
+/**
+ * Page urls
+ *
+ * @var WPMUDEV_Dashboard_Sui_Page_Urls $urls
+ */
+/**
+ * Staff login details
+ *
+ * @var stdClass $staff_login
+ */
+/** Notes
+ *
+ * @var string $notes
+ */
 
 $url_grant       = wp_nonce_url( add_query_arg( 'action', 'remote-grant', $urls->support_url . '#access' ), 'remote-grant', 'hash' );
 $url_revoke      = wp_nonce_url( add_query_arg( 'action', 'remote-revoke', $urls->support_url . '#access' ), 'remote-revoke', 'hash' );
@@ -89,132 +105,84 @@ $time_format = get_option( 'time_format' );
 ?>
 
 <?php if ( isset( $_GET['success-action'] ) ) : // wpcs csrf ok. ?>
+	<div class="sui-floating-notices">
+		<?php
+		switch ( $_GET['success-action'] ) { //phpcs:ignore
 
-	<?php switch ( $_GET['success-action'] ) { // wpcs csrf ok.
+			case 'remote-grant':
+				$notice_msg ='<p>' . sprintf( esc_html__('Support access granted. Please let support staff know you have granted access via your %s support ticket %s.', 'wpmudev' ), "<a href='" . esc_url( $urls->support_url ) . "'>", "</a>" ) . '</p>';//phpcs:ignore
+				$notice_id  = 'notice-success-remote-grant';
+				break;
 
-		case 'remote-grant' : ?>
+			case 'remote-revoke':
+				$notice_msg = '<p>' . esc_html__( 'Support session ended. You can grant access again at any time.', 'wpmudev' ) . '</p>';
+				$notice_id  = 'notice-success-remote-revoke';
+				break;
 
-			<div class="sui-notice-top sui-notice-success sui-can-dismiss">
+			case 'remote-extend':
+				$notice_msg = '<p>' . esc_html__( 'Support session extended. You can end session at any time.', 'wpmudev' ) . '</p>';
+				$notice_id  = 'notice-success-remote-extend';
+				break;
 
-				<div class="sui-notice-content">
-					<p><?php printf( esc_html__('Support access granted. Please let support staff know you have granted access via your %s support ticket %s.', 'wpmudev' ), '<a href="' . esc_url( $urls->support_url ) . '">', '</a>' );//phpcs:ignore ?></p>
-				</div>
-
-				<span class="sui-notice-dismiss">
-					<a role="button" aria-label="Dismiss" class="sui-icon-check"></a>
-				</span>
-
-			</div>
-
-			<?php break;
-
-		case 'remote-revoke' : ?>
-
-			<div class="sui-notice-top sui-notice-success sui-can-dismiss">
-
-				<div class="sui-notice-content">
-					<p><?php esc_html_e( 'Support session ended. You can grant access again at any time.', 'wpmudev' ); ?></p>
-				</div>
-
-				<span class="sui-notice-dismiss">
-					<a role="button" aria-label="Dismiss" class="sui-icon-check"></a>
-				</span>
-
-			</div>
-
-			<?php break;
-
-		case 'remote-extend' : ?>
-
-			<div class="sui-notice-top sui-notice-success sui-can-dismiss">
-
-				<div class="sui-notice-content">
-					<p><?php esc_html_e( 'Support session extended. You can end session at any time.', 'wpmudev' ); ?></p>
-				</div>
-
-				<span class="sui-notice-dismiss">
-					<a role="button" aria-label="Dismiss" class="sui-icon-check"></a>
-				</span>
-
-			</div>
-
-			<?php break;
-
-		case 'staff-note' : ?>
-
-			<div class="sui-notice-top sui-notice-success sui-can-dismiss">
-
-				<div class="sui-notice-content">
-					<p><?php printf( esc_html__('Your note has been saved. Please let support staff know you have granted access via your %s support ticket %s.', 'wpmudev' ), '<a href="' . esc_url( '$urls->support_url' ) . '">', '</a>' );//phpcs:ignore ?></p>
-				</div>
-
-				<span class="sui-notice-dismiss">
-					<a role="button" aria-label="Dismiss" class="sui-icon-check"></a>
-				</span>
-
-			</div>
-
-			<?php break;
-		default:
-			break;
-	} ?>
+			case 'staff-note':
+				$notice_msg = '<p>' . sprintf( esc_html__( 'Your note has been saved. Please let support staff know you have granted access via your %1$s support ticket %2$s.', 'wpmudev' ), "<a href='" . esc_url( '$urls->support_url' ) . "'>", '</a>' ) . '</p>'; //phpcs:ignore
+				$notice_id  = 'notice-success-staff-note';
+				break;
+			case 'check-updates':
+				$notice_msg = '<p>' . esc_html__( 'Data successfully updated.', 'wpmudev' ) . '</p>';
+				$notice_id  = 'remote-check-success';
+				break;
+			default:
+				break;
+		}
+		?>
+		<div
+		role="alert"
+		id="<?php echo esc_attr( $notice_id ); ?>"
+		class="sui-support-notice-alert sui-notice"
+		aria-live="assertive"
+		data-show-dismiss="true"
+		data-notice-type="success"
+		data-notice-msg="<?php echo wp_kses_post( $notice_msg ); ?>"
+		>
+		</div>
+	</div>
 
 <?php endif; ?>
 
-<?php if ( isset( $_GET['failed-action'] ) ) : // wpcs csrf ok. ?>
+<?php if ( isset( $_GET['failed-action'] ) ) : //phpcs:ignore ?>
+	<div class="sui-floating-notices">
+		<?php
+		switch ( $_GET['failed-action'] ) { //phpcs:ignore
+			case 'remote-grant':
+				$notice_msg = '<p>' . esc_html__( 'Failed to grant support access.', 'wpmudev' ) . '</p>';
+				$notice_id  = 'notice-error-remote-grant';
+				break;
 
-	<?php switch ( $_GET['failed-action'] ) { // wpcs csrf ok.
-
-		case 'remote-grant' : ?>
-
-			<div class="sui-notice-top sui-notice-error sui-can-dismiss">
-
-				<div class="sui-notice-content">
-					<p><?php esc_html_e( 'Failed to grant support access.', 'wpmudev' ); ?></p>
-				</div>
-
-				<span class="sui-notice-dismiss">
-					<a role="button" aria-label="Dismiss" class="sui-icon-check"></a>
-				</span>
-
-			</div>
-
-			<?php break;
-
-		case 'remote-revoke' : ?>
-
-			<div class="sui-notice-top sui-notice-error sui-can-dismiss">
-
-				<div class="sui-notice-content">
-					<p><?php esc_html_e( 'Failed to end support session.', 'wpmudev' ); ?></p>
-				</div>
-
-				<span class="sui-notice-dismiss">
-					<a role="button" aria-label="Dismiss" class="sui-icon-check"></a>
-				</span>
-
-			</div>
-
-			<?php break;
-
-		case 'remote-extend' : ?>
-
-			<div class="sui-notice-top sui-notice-error sui-can-dismiss">
-
-				<div class="sui-notice-content">
-					<p><?php esc_html_e( 'Failed to extend support session.', 'wpmudev' ); ?></p>
-				</div>
-
-				<span class="sui-notice-dismiss">
-					<a role="button" aria-label="Dismiss" class="sui-icon-check"></a>
-				</span>
-
-			</div>
-
-			<?php break;
-		default:
+			case 'remote-revoke':
+				$notice_msg = '<p>' . esc_html__( 'Failed to end support session.', 'wpmudev' ) . '</p>';
+				$notice_id  = 'notice-error-remote-revoke';
 			break;
-	} ?>
+
+			case 'remote-extend':
+				$notice_msg = '<p>' . esc_html__( 'Failed to extend support session.', 'wpmudev' ) . '</p>';
+				$notice_id  = 'notice-error-remote-extend';
+				break;
+			default:
+				break;
+		}
+		?>
+		<div
+		role="alert"
+		id="<?php echo esc_attr( $notice_id ); ?>"
+		class="sui-support-notice-alert sui-notice"
+		aria-live="assertive"
+		data-show-dismiss="true"
+		data-notice-type="error"
+		data-notice-msg="<?php echo wp_kses_post( $notice_msg ); ?>"
+		>
+		</div>
+	</div>
 
 <?php endif; ?>
 
@@ -265,39 +233,58 @@ $time_format = get_option( 'time_format' );
 
 	</div>
 
-	<div class="sui-box js-sidenav-content" id="ticket" style="display: none;">
+	<div class="sui-box js-sidenav-content" id="ticket" style="display: block;">
 
 		<div class="sui-box-header">
 
 			<h2 class="sui-box-title"><?php esc_html_e( 'My Tickets', 'wpmudev' ); ?></h2>
 
 			<div class="sui-actions-right">
-
-				<?php if ( ! empty( $open_threads['all'] ) ) : ?>
+				<?php if ( 'free' === $membership_data['membership'] ) : // expired member. ?>
+					<a
+						href="https://premium.wpmudev.org/contact/#i-have-a-presales-question"
+						target="_blank"
+						class="sui-button sui-button-blue"
+					>
+						<i class="sui-icon-help-support" aria-hidden="true"></i>
+						<?php esc_html_e( 'Sales support', 'wpmudev' ); ?>
+					</a>
+					<?php if ( ! empty( $open_threads['all'] ) ) : ?>
+						<a
+							href="<?php echo esc_url( $hub_url ); ?>"
+							target="_blank"
+							class="sui-button sui-button-ghost"
+						>
+							<i class="sui-icon-hub" aria-hidden="true"></i>
+							<?php esc_html_e( 'The Hub', 'wpmudev' ); ?>
+						</a>
+					<?php endif; ?>
+				<?php else : // premium member. ?>
+					<?php if ( ! empty( $open_threads['all'] ) ) : ?>
 
 					<a
 						href="<?php echo esc_url( $url_open_ticket ); ?>"
 						target="_blank"
 						class="sui-button sui-button-blue"
-						<?php echo( ! is_wpmudev_member() ? 'disabled="disabled"' : '' ); ?>
+						<?php echo( $has_support_access ? '' : 'disabled="disabled"' ); ?>
 					>
 						<i class="sui-icon-plus" aria-hidden="true"></i>
 						<?php esc_html_e( 'New Ticket', 'wpmudev' ); ?>
 					</a>
 
+					<?php endif; ?>
+
+					<a
+						href="<?php echo esc_url( $hub_url ); ?>"
+						target="_blank"
+						class="sui-button sui-button-ghost"
+					>
+						<i class="sui-icon-hub" aria-hidden="true"></i>
+						<?php esc_html_e( 'The Hub', 'wpmudev' ); ?>
+					</a>
 				<?php endif; ?>
 
-				<a
-					href="<?php echo esc_url( $hub_url ); ?>"
-					target="_blank"
-					class="sui-button sui-button-ghost"
-				>
-					<i class="sui-icon-hub" aria-hidden="true"></i>
-					<?php esc_html_e( 'The Hub', 'wpmudev' ); ?>
-				</a>
-
 			</div>
-
 		</div>
 
 		<?php if ( empty( $open_threads['all'] ) ) : ?>
@@ -313,6 +300,12 @@ $time_format = get_option( 'time_format' );
 
 				<div class="sui-message-content">
 
+				<?php if ('free' === $membership_data['membership']): ?>
+					<p><?php echo __('Our team is here to help you with any WordPress problem, anytime. Every WPMU DEV<br>membership comes with 24/7 expert live WordPress support, renew your membership to<br>gain access.', 'wpmudev'); ?>
+					<p>
+						<a href="https://premium.wpmudev.org/hub/account/?utm_source=wpmudev-dashboard&utm_medium=plugin&utm_campaign=dashboard_expired_modal_reactivate" class="sui-button sui-button-purple" style="margin-top: 10px;"><?php echo __('Reactivate Membership', 'wpmudev'); ?></a>
+					</p>
+				<?php else: ?>
 					<p>
 						<?php echo wp_kses_post(
 							sprintf(
@@ -327,11 +320,11 @@ $time_format = get_option( 'time_format' );
 						<a href="<?php echo esc_url( $url_open_ticket ); ?>"
 						   target="_blank"
 						   class="sui-button sui-button-blue"
-							<?php echo( ! is_wpmudev_member() ? 'disabled="disabled"' : '' ); ?>>
+							<?php echo( $has_support_access ? '' : 'disabled="disabled"' ); ?>>
 						<i class="sui-icon-plus" aria-hidden="true"></i>
 						<?php esc_html_e( 'New Ticket', 'wpmudev' ); ?>
 					</a></p>
-
+				<?php endif; ?>
 				</div>
 
 			</div>
@@ -339,7 +332,19 @@ $time_format = get_option( 'time_format' );
 		<?php else : ?>
 
 			<div class="sui-box-body">
-
+				<?php if ('free' === $membership_data['membership']): ?>
+					<p><?php echo __('Here are your open and resolved support tickets, you can view all support tickets in the Hub', 'wpmudev'); ?></p>
+					<div class="sui-box-body sui-upsell-items">
+						<div class="sui-box-settings-row sui-upsell-row wpmud-support-page-upsell">
+							<img class="sui-image sui-upsell-image" src="/shared-ui/assets/images/hummingbird-upsell-minify.png" srcset="/shared-ui/assets/images/hummingbird-upsell-minify@2x.png 2x" alt="">
+							<div class="sui-upsell-notice">
+							<p><?php echo __('Your WPMU DEV Membership has expired and pro versions of installed plugins have been downgraded.<br>Reactivate your subscription to upgrade pro plugins.<br>', 'wpmudev'); ?>
+								<a href="https://premium.wpmudev.org/hub/account/?utm_source=wpmudev-dashboard&utm_medium=plugin&utm_campaign=dashboard_expired_modal_reactivate" class="sui-button sui-button-purple" style="margin-top: 10px;"><?php echo __('Reactivate Membership', 'wpmudev'); ?></a>
+							</p>
+							</div>
+						</div>
+					</div>
+				<?php endif; ?>
 				<div class="sui-side-tabs">
 
 					<div class="sui-tabs-menu js-filter-ticket">
@@ -396,8 +401,15 @@ $time_format = get_option( 'time_format' );
 												<div class="dashui-status-row">
 
 													<span class="<?php echo esc_attr( $item['ui_status']['class'] ); ?>"><?php echo esc_html( $item['ui_status']['text'] ); ?></span>
-
-													<a class="sui-button-icon" href="<?php echo esc_url( $item['link'] ); ?>" target="_blank">
+											<?php
+												$link_class   = '';
+												$tooltip_attr = '';
+											if ( 'free' === $membership_data['membership'] ) :
+												$link_class   = ' sui-tooltip sui-tooltip-constrained sui-tooltip-top-right ';
+												$tooltip_attr = __( 'You can view old support tickets, but not create new ones', 'wpmudev' );
+												endif;
+											?>
+													<a data-tooltip="<?php echo esc_attr( $tooltip_attr ); ?>" class="sui-button-icon <?php echo esc_attr( $link_class ); ?>" href="<?php echo esc_url( $item['link'] ); ?>" target="_blank">
 														<i class="sui-icon-chevron-right" aria-hidden="true"></i>
 													</a>
 
@@ -456,7 +468,7 @@ $time_format = get_option( 'time_format' );
 				<p class="sui-block-content-center"><small>
 					<?php echo wp_kses_post(
 						sprintf(
-							__( 'You can view and reply to your support tickets in %1$sThe Hub%2$s.', 'wpmudev' ),
+							__( 'See all your support tickets in %1$sThe Hub%2$s.', 'wpmudev' ),
 							'<a href="' . esc_url( $url_all_tickets ) . '" target="_blank">',
 							'</a>'
 						)
@@ -500,7 +512,7 @@ $time_format = get_option( 'time_format' );
 
 					<a href="<?php echo esc_url( $url_grant ); ?>"
 					class="sui-button sui-button-blue js-loading-link"
-						<?php echo( ! is_wpmudev_member() ? 'disabled="disabled"' : '' ); ?>>
+						<?php echo( $has_support_access ? '' : 'disabled="disabled"' ); ?>>
 						<span class="sui-loading-text">
 							<i class="sui-icon-key" aria-hidden="true"></i>
 							<?php esc_html_e( 'Grant Support Access', 'wpmudev' ); ?>
@@ -510,7 +522,7 @@ $time_format = get_option( 'time_format' );
 
 				<?php endif; ?>
 
-				<a class="sui-button sui-button-ghost js-modal-security" href="javascript:;">
+				<a id="modal-security" class="sui-button sui-button-ghost js-modal-security" href="javascript:;">
 					<i class="sui-icon-question" aria-hidden="true"></i>
 					<?php _e( 'SECURITY INFO', 'wpmudev' ); ?>
 				</a>
@@ -536,16 +548,19 @@ $time_format = get_option( 'time_format' );
 						/>
 
 						<p><?php esc_html_e( 'Need help? Grant support access so our WPMU DEV Support Staff are able to log in and help troubleshoot issues with you. This is completely secure and only active for a time period of your choice.', 'wpmudev' ); ?></p>
-
+						<?php if ('free' === $membership_data['membership']): ?>
+							<a href="https://premium.wpmudev.org/hub/account/?utm_source=wpmudev-dashboard&utm_medium=plugin&utm_campaign=dashboard_expired_modal_reactivate" class="sui-button sui-button-purple" style="margin-top: 10px;"><?php echo __('Reactivate Membership', 'wpmudev'); ?></a>
+						<?php else: ?>
 						<a href="<?php echo esc_url( $url_grant ); ?>"
 						   class="sui-button sui-button-blue js-loading-link"
-							<?php echo( ! is_wpmudev_member() ? 'disabled="disabled"' : '' ); ?>>
+							<?php echo( $has_support_access ? '' : 'disabled="disabled"' ); ?>>
 							<span class="sui-loading-text">
 								<i class="sui-icon-key" aria-hidden="true"></i>
 								<?php esc_html_e( 'Grant Support Access', 'wpmudev' ); ?>
 							</span>
 							<i class="sui-icon-loader sui-loading" aria-hidden="true"></i>
 						</a>
+						<?php endif; ?>
 
 					</div>
 
@@ -573,36 +588,39 @@ $time_format = get_option( 'time_format' );
 			<?php endif; ?>
 
 			<?php if ( $staff_login->enabled ) { ?>
+				<div id="dashui-notice-support" class="sui-notice sui-notice-info">
+					<div class="sui-notice-content">
+						<div class="sui-notice-message">
+							<span class="sui-notice-icon sui-icon-lock sui-md" aria-hidden="true"></span>
 
-				<div class="sui-notice dashui-notice-support">
-					<p><?php echo esc_html( sprintf( __( "You have an active support session. If you haven't already, please let support staff know you have granted access. It will remain active for another %s.", 'wpmudev' ), human_time_diff( $staff_login->expires ) ) ); ?></p>
+							<p><?php echo esc_html( sprintf( __( "You have an active support session. If you haven't already, please let support staff know you have granted access. It will remain active for another %s.", 'wpmudev' ), human_time_diff( $staff_login->expires ) ) ); ?></p>
+							<div class="sui-notice-buttons">
 
-					<div class="sui-notice-buttons">
+								<a
+									href="<?php echo esc_url( $url_revoke ); ?>"
+									class="sui-button js-loading-link"
+								>
+									<span class="sui-loading-text">
+										<?php esc_html_e( 'END SESSION', 'wpmudev' ); ?>
+									</span>
+									<i class="sui-icon-loader sui-loading" aria-hidden="true"></i>
+								</a>
 
-						<a
-							href="<?php echo esc_url( $url_revoke ); ?>"
-							class="sui-button js-loading-link"
-						>
-							<span class="sui-loading-text">
-								<?php esc_html_e( 'END SESSION', 'wpmudev' ); ?>
-							</span>
-							<i class="sui-icon-loader sui-loading" aria-hidden="true"></i>
-						</a>
+								<a href="<?php echo esc_url( $url_extend ); ?>"
+								class="sui-button sui-button-ghost sui-tooltip js-loading-link"
+								data-tooltip="<?php esc_attr_e( 'Add another 3 days of support access', 'wpmudev' ); ?>"
+									<?php echo( ! is_wpmudev_member() ? 'disabled="disabled"' : '' ); ?>>
+									<span class="sui-loading-text">
+										<?php esc_html_e( 'EXTEND', 'wpmudev' ); ?>
+									</span>
+									<i class="sui-icon-loader sui-loading" aria-hidden="true"></i>
+								</a>
 
-						<a href="<?php echo esc_url( $url_extend ); ?>"
-						   class="sui-button sui-button-ghost sui-tooltip js-loading-link"
-						   data-tooltip="<?php esc_attr_e( 'Add another 3 days of support access', 'wpmudev' ); ?>"
-							<?php echo( ! is_wpmudev_member() ? 'disabled="disabled"' : '' ); ?>>
-							<span class="sui-loading-text">
-								<?php esc_html_e( 'EXTEND', 'wpmudev' ); ?>
-							</span>
-							<i class="sui-icon-loader sui-loading" aria-hidden="true"></i>
-						</a>
+							</div>
 
+						</div>
 					</div>
-
 				</div>
-
 				<form
 					method="POST"
 					action="<?php echo esc_url( $urls->support_url . '#access' ); ?>"
@@ -649,20 +667,22 @@ $time_format = get_option( 'time_format' );
 						</div>
 
 					</div>
-
-					<div class="sui-notice">
-
-						<p><?php if ( $staff_login->enabled ) : ?>
-							<?php echo esc_html(
-								sprintf(
-									__( 'No one from Support has logged in yet. Sit tight, help is coming.', 'wpmudev' ),
-									human_time_diff( $staff_login->expires )
-								)
-							); ?>
-						<?php else : ?>
-							<?php echo esc_html( sprintf( __( 'No one from Support has logged in.', 'wpmudev' ), human_time_diff( $staff_login->expires ) ) ); ?>
-						<?php endif; ?></p>
-
+					<div id="dashui-notice-support-logs" class="sui-notice">
+						<div class="sui-notice-content">
+							<div class="sui-notice-message">
+								<i class="sui-notice-icon sui-icon-info sui-md" aria-hidden="true"></i>
+								<p><?php if ( $staff_login->enabled ) : ?>
+									<?php echo esc_html(
+										sprintf(
+											__( 'No one from Support has logged in yet. Sit tight, help is coming.', 'wpmudev' ),
+											human_time_diff( $staff_login->expires )
+										)
+									); ?>
+								<?php else : ?>
+									<?php echo esc_html( sprintf( __( 'No one from Support has logged in.', 'wpmudev' ), human_time_diff( $staff_login->expires ) ) ); ?>
+								<?php endif; ?></p>
+							</div>
+						</div>
 					</div>
 
 				<?php endif ; ?>
@@ -782,26 +802,26 @@ $time_format = get_option( 'time_format' );
 
 <?php $this->render( 'sui/footer' ); ?>
 
-<div class="sui-dialog" aria-hidden="true" tabindex="-1" id="security-details">
-
-	<div class="sui-dialog-overlay" data-a11y-dialog-hide></div>
-
-	<div class="sui-dialog-content" aria-labelledby="dialogTitle" aria-describedby="dialogDescription" role="dialog">
-
-		<div class="sui-box" role="document">
-
+<div class="sui-modal sui-modal-lg">
+	<div
+	role="dialog"
+	id="security-details"
+	class="sui-modal-content"
+	aria-modal="true"
+	aria-labelledby="supportaccess-dialogTitle"
+	aria-describedby=""
+	>
+		<div class="sui-box">
 			<div class="sui-box-header">
+				<h3 class="sui-box-title" id="supportaccess-dialogTitle"><?php esc_html_e( 'How secure is support access?', 'wpmudev' ); ?></h3>
 
-				<h3 class="sui-box-title" id="dialogTitle"><?php esc_html_e( 'How secure is support access?', 'wpmudev' ); ?></h3>
-
-				<div class="sui-actions-right">
-					<a data-a11y-dialog-hide class="sui-dialog-close" aria-label="<?php esc_html_e( 'Close this dialog window', 'wpmudev' ); ?>"></a>
-				</div>
-
+				<button class="sui-button-icon plugin-modal-close sui-button-float--right" data-modal-close="" >
+					<i class="sui-icon-close sui-md" aria-hidden="true"></i>
+					<span class="sui-screen-reader-text"><?php esc_html_e( 'Close this dialog.' ); ?></span>
+				</button>
 			</div>
 
 			<div class="sui-box-body">
-
 				<p class="sui-p-small"><?php esc_html_e( 'In short, our support access feature is bullet-proof secure and closed off to current WPMU DEV support staff only. We have never had any security issues with it, however you can disable it if you wish to.', 'wpmudev' ); ?></p>
 
 				<h4 class="dashui-modal-header"><?php esc_html_e( 'How it works', 'wpmudev' ); ?></h4>
@@ -816,19 +836,16 @@ $time_format = get_option( 'time_format' );
 				<pre class="sui-code-snippet sui-no-copy">define('WPMUDEV_DISABLE_REMOTE_ACCESS', true);</pre>
 
 			</div>
-
 			<div class="sui-box-footer">
 
-				<a class="sui-button sui-button-ghost" data-a11y-dialog-hide="ftp-details"><?php esc_html_e( 'Close', 'wpmudev' ); ?></a>
+				<a id="close-sec-det" class="sui-button sui-button-ghost" data-a11y-dialog-hide="security-details"><?php esc_html_e( 'Close', 'wpmudev' ); ?></a>
 
 				<div class="sui-actions-right">
 					<a class="sui-button" href="<?php echo esc_url('https://premium.wpmudev.org/docs/getting-started/getting-support/'); ?>"><?php esc_html_e( 'Support Docs', 'wpmudev' ); ?></a>
 				</div>
 
 			</div>
-
 		</div>
-
 	</div>
 
 </div>

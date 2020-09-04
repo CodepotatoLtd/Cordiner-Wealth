@@ -184,8 +184,9 @@ class Forminator_GdprCheckbox extends Forminator_Field {
 	 *
 	 * @param array        $field
 	 * @param array|string $data
+	 * @param array        $post_data
 	 */
-	public function validate( $field, $data ) {
+	public function validate( $field, $data, $post_data = array() ) {
 		// value of gdpr checkbox is `string` *true*
 		$id = $this->get_id( $field );
 		if ( empty( $data ) || 'true' !== $data ) {

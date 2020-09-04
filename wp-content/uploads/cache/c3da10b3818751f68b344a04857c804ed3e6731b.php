@@ -744,8 +744,7 @@
                             <?php if(have_rows('content_list_left')): ?>
                                 <?php $nl = 1 ?>
                                 <?php while(have_rows('content_list_left')): ?> <?php the_row() ?>
-                                <li class="flex flex-col lg:flex-row mb-6 list-item" data-aos="fade-left"
-                                    data-aos-delay="<?php echo e($nl * 50); ?>">
+                                <li class="flex flex-col lg:flex-row mb-6 list-item">
                                     <div class="flex flex-row justify-between w-full">
                                         <div class="w-1/6">
                                             <div
@@ -767,8 +766,7 @@
                             <?php if(have_rows('content_list_right')): ?>
                                 <?php $nr = $nl ?>
                                 <?php while(have_rows('content_list_right')): ?> <?php the_row() ?>
-                                <li class="flex flex-col lg:flex-row mb-6 list-item" data-aos="fade-left"
-                                    data-aos-delay="<?php echo e($nr * 50); ?>">
+                                <li class="flex flex-col lg:flex-row mb-6 list-item">
                                     <div class="flex flex-row justify-between w-full">
                                         <div class="w-1/6">
                                             <div

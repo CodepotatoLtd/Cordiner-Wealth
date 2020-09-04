@@ -69,8 +69,9 @@ abstract class Forminator_GFBlock_Abstract {
 			'/preview/' . $this->get_slug(),
 			array(
 				array(
-					'methods'  => WP_REST_Server::READABLE,
-					'callback' => array( $this, 'preview_block_markup' ),
+					'methods'  				 => WP_REST_Server::READABLE,
+					'callback' 				 => array( $this, 'preview_block_markup' ),
+					'permission_callback' => '__return_true',
 					'args'     => array(
 						'module_id' => array(
 							'description' => __( 'Module ID' ),

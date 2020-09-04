@@ -74,11 +74,13 @@ class Forminator_Select extends Forminator_Field {
 					'label' => __( 'Option 1', Forminator::DOMAIN ),
 					'value' => 'one',
 					'limit' => '',
+					'key'   => forminator_unique_key(),
 				),
 				array(
 					'label' => __( 'Option 2', Forminator::DOMAIN ),
 					'value' => 'two',
 					'limit' => '',
+					'key'   => forminator_unique_key(),
 				),
 			),
 		);
@@ -163,24 +165,31 @@ class Forminator_Select extends Forminator_Field {
 
 			$html .= '<div class="forminator-multiselect">';
 
-			foreach ( $options as $option ) {
+			$option_first_key = '';
+			//Multi values
+			$default_arr      = array();
+			$default          = '';
+				foreach ( $options as $key => $option ) {
 
-				$value             = $option['value'] ? esc_html( strip_tags( $option['value'] ) ) : esc_html( strip_tags( $option['label'] ) );
-				$limit             = ( isset( $option['limit'] ) && $option['limit'] ) ? esc_html( $option['limit'] ) : '';
-				$input_id          = $id . '-' . $i . '-' . $uniq_id;
-				$option_default    = isset( $option['default'] ) ? filter_var( $option['default'], FILTER_VALIDATE_BOOLEAN ) : false;
-                $calculation_value = $calc_enabled && isset( $option['calculation'] ) ? $option['calculation'] : 0.0;
-
-				// Check if Pre-fill parameter used
-				if ( $this->has_prefill( $field ) ) {
-					// We have pre-fill parameter, use its value or $value
-					$prefill        = $this->get_prefill( $field, false );
-					$prefill_values = explode( ',', $prefill );
-
-					if ( in_array( $value, $prefill_values ) ) { // phpcs:ignore WordPress.PHP.StrictInArray.MissingTrueStrict
-						$option_default = true;
+					$value             = $option['value'] ? esc_html( strip_tags( $option['value'] ) ) : esc_html( strip_tags( $option['label'] ) );
+					$limit             = ( isset( $option['limit'] ) && $option['limit'] ) ? esc_html( $option['limit'] ) : '';
+					$input_id          = $id . '-' . $i . '-' . $uniq_id;
+					$option_default    = isset( $option['default'] ) ? filter_var( $option['default'], FILTER_VALIDATE_BOOLEAN ) : false;
+                  $calculation_value = $calc_enabled && isset( $option['calculation'] ) ? $option['calculation'] : 0.0;
+					if ( 0 === $key ) {
+						$option_first_key = $value;
 					}
-				}
+
+					// Check if Pre-fill parameter used
+					if( $this->has_prefill( $field ) ) {
+						// We have pre-fill parameter, use its value or $value
+						$prefill = $this->get_prefill( $field, false );
+						$prefill_values = explode( ',', $prefill );
+
+						if( in_array( $value, $prefill_values ) ) {
+							$option_default = true;
+						}
+					}
 
 				if ( isset( $is_limit ) && 'enable' === $is_limit && ! empty( $limit ) ) {
 					$entries = Forminator_Form_Entry_Model::select_count_entries_by_meta_field(
@@ -205,7 +214,11 @@ class Forminator_Select extends Forminator_Field {
 					$selected = $option_default;
 				}
 
-				$selected    = $selected ? 'checked="checked"' : '';
+				if ( $option_default ) {
+					$default_arr[] = $value;
+				}
+
+				$selected = $selected ? 'checked="checked"' : '';
 				$extra_class = $selected ? ' forminator-is_checked' : '';
 
 				$class = 'forminator-option' . $extra_class;
@@ -228,6 +241,21 @@ class Forminator_Select extends Forminator_Field {
 				$i ++;
 			}
 
+					//If default values aren't enabled
+					if ( empty( $default_arr ) && '' !== $option_first_key ) {
+						$default_arr[] = $option_first_key;
+					}
+					if ( ! empty( $default_arr ) ){
+						$default = json_encode( $default_arr, JSON_FORCE_OBJECT );
+					}
+
+					$html .= sprintf(
+						"<input type='hidden' name='%s' class='%s' value='%s' />",
+						$field_name . '-multiselect-default-values',
+						'multiselect-default-values',
+						$default
+					);
+
 				$html .= '</div>';
 
 		} else {
@@ -237,6 +265,10 @@ class Forminator_Select extends Forminator_Field {
 
 			if ( 'enable' === $search_status ) {
 				$select_class = 'forminator-select2';
+			}
+
+			if ( ! empty( $placeholder ) ) {
+				$options_markup = sprintf( '<option value="">%s</option>', $placeholder );
 			}
 
 			foreach ( $options as $key => $option ) {
@@ -359,7 +391,7 @@ class Forminator_Select extends Forminator_Field {
 		$field_type  = self::get_property( 'value_type', $field, '' );
 
 		if ( $is_required ) {
-			$required_message = self::get_property( 'required_message', $field, __( 'This field is required. Please select a value', Forminator::DOMAIN ) );
+			$required_message = self::get_property( 'required_message', $field, __( 'This field is required. Please select a value.', Forminator::DOMAIN ) );
 			$required_message = apply_filters(
 				'forminator_single_field_required_validation_message',
 				$required_message,
@@ -384,12 +416,13 @@ class Forminator_Select extends Forminator_Field {
 	 *
 	 * @param array        $field
 	 * @param array|string $data
+	 * @param array        $post_data
 	 */
-	public function validate( $field, $data ) {
+	public function validate( $field, $data, $post_data = array() ) {
 		if ( $this->is_required( $field ) ) {
 			$id = self::get_property( 'element_id', $field );
 			if ( empty( $data ) ) {
-				$required_message                = self::get_property( 'required_message', $field, __( 'This field is required. Please select a value', Forminator::DOMAIN ) );
+				$required_message                = self::get_property( 'required_message', $field, __( 'This field is required. Please select a value.', Forminator::DOMAIN ) );
 				$this->validation_message[ $id ] = apply_filters(
 					'forminator_single_field_required_validation_message',
 					$required_message,

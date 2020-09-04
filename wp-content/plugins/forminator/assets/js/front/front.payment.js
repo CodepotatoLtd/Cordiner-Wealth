@@ -5,6 +5,39 @@
 
 	"use strict";
 
+	// Polyfill
+	if (!Object.assign) {
+		Object.defineProperty(Object, 'assign', {
+			enumerable: false,
+			configurable: true,
+			writable: true,
+			value: function(target, firstSource) {
+				'use strict';
+				if (target === undefined || target === null) {
+					throw new TypeError('Cannot convert first argument to object');
+				}
+
+				var to = Object(target);
+				for (var i = 1; i < arguments.length; i++) {
+					var nextSource = arguments[i];
+					if (nextSource === undefined || nextSource === null) {
+						continue;
+					}
+
+					var keysArray = Object.keys(Object(nextSource));
+					for (var nextIndex = 0, len = keysArray.length; nextIndex < len; nextIndex++) {
+						var nextKey = keysArray[nextIndex];
+						var desc = Object.getOwnPropertyDescriptor(nextSource, nextKey);
+						if (desc !== undefined && desc.enumerable) {
+							to[nextKey] = nextSource[nextKey];
+						}
+					}
+				}
+				return to;
+			}
+		});
+	}
+
 	// undefined is used here as the undefined global variable in ECMAScript 3 is
 	// mutable (ie. it can be changed by someone else). undefined isn't really being
 	// passed in so we can ensure the value of it is truly undefined. In ES5, undefined
@@ -112,10 +145,9 @@
 			e.preventDefault();
 			var self = this;
 			var updateFormData = formData;
-
-			updateFormData.set( 'action', 'forminator_update_payment_amount' );
-			updateFormData.set( 'paymentid', this.getStripeData('paymentid') );
-
+			//Method set() doesn't work in IE11
+			updateFormData.append( 'action', 'forminator_update_payment_amount' );
+			updateFormData.append( 'paymentid', this.getStripeData('paymentid') );
 			$.ajax({
 				type: 'POST',
 				url: window.ForminatorFront.ajaxUrl,
@@ -132,6 +164,8 @@
 
 						$target_message.html('<p>' + self.settings.loader_label + '</p>');
 
+						self.focus_to_element($target_message);
+
 						$target_message.removeAttr("aria-hidden")
 							.prop("tabindex", "-1")
 							.removeClass('forminator-success forminator-error')
@@ -143,12 +177,14 @@
 				success: function (data) {
 					if (data.success === true) {
 						// Store payment id
-						if (typeof data.data !== undefined && typeof data.data.paymentid !== undefined) {
+						if (typeof data.data !== 'undefined' && typeof data.data.paymentid !== 'undefined') {
 							self.$el.find('#forminator-stripe-paymentid').val(data.data.paymentid);
 							self._stripeData['paymentid'] = data.data.paymentid;
-						}
 
-						self.handleCardPayment(data, e, formData);
+							self.handleCardPayment(data, e, formData);
+						} else {
+							self.show_error('Invalid Payment Intent ID');
+						}
 					} else {
 						self.show_error(data.data.message);
 

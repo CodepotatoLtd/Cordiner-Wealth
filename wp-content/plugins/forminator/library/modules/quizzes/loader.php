@@ -72,6 +72,7 @@ class Forminator_Quizzes extends Forminator_Module {
 		new Forminator_QForm_Result();
 
 		add_action( 'wp_ajax_forminator_load_quiz', array( 'Forminator_QForm_Front', 'ajax_load_module' ) );
+		add_action( 'wp_ajax_nopriv_forminator_load_quiz', array( 'Forminator_QForm_Front', 'ajax_load_module' ) );
 
 		add_action( 'wp_ajax_forminator_reload_quiz', array( 'Forminator_QForm_Front', 'ajax_reload_module' ) );
 		add_action( 'wp_ajax_nopriv_forminator_reload_quiz', array( 'Forminator_QForm_Front', 'ajax_reload_module' ) );

@@ -64,6 +64,13 @@ abstract class Forminator_Mail {
 	protected $headers = array();
 
 	/**
+	 * Mail headers
+	 *
+	 * @var array
+	 */
+	protected $attachment = array();
+
+	/**
 	 * Main constructor
 	 *
 	 * @since 1.0
@@ -155,6 +162,17 @@ abstract class Forminator_Mail {
 	 */
 	public function set_subject( $subject ) {
 		$this->subject = $subject;
+	}
+
+	/**
+	 * Set attachment
+	 *
+	 * @since 1.0
+	 *
+	 * @param array $attachment - the mail attachment
+	 */
+	public function set_attachment( $attachment ) {
+		$this->attachment = $attachment;
 	}
 
 	/**
@@ -258,7 +276,11 @@ abstract class Forminator_Mail {
 		$headers = $this->get_headers();
 		if ( ! empty( $this->recipients ) && ! empty( $this->subject ) && ! empty( $this->message ) ) {
 			$this->clean();
-			$sent = wp_mail( $this->recipients, $this->subject, $this->message, $headers );
+			if( $this->attachment ) {
+				$sent = wp_mail( $this->recipients, $this->subject, $this->message, $headers, $this->attachment );
+			} else {
+				$sent = wp_mail( $this->recipients, $this->subject, $this->message, $headers );
+			}
 		}
 
 		return $sent;
@@ -283,7 +305,19 @@ abstract class Forminator_Mail {
 		}
 
 		$element_id = $routing['element_id'];
-		if ( stripos( $element_id, 'calculation-' ) !== false || stripos( $element_id, 'stripe-' ) !== false ) {
+		if ( stripos( $element_id, 'signature-' ) !== false ) {
+			// We have signature field
+			$is_condition_fulfilled = false;
+			$signature_id = 'field-' . $element_id;
+
+			if ( isset( $form_data[ $signature_id ] ) ) {
+				$signature_data = 'ctlSignature' . $form_data[ $signature_id ] . '_data';
+
+				if ( isset( $form_data[ $signature_data ] ) ) {
+					$is_condition_fulfilled = self::is_condition_fulfilled( $form_data[ $signature_data ], $condition );
+				}
+			}
+		} elseif ( stripos( $element_id, 'calculation-' ) !== false || stripos( $element_id, 'stripe-' ) !== false ) {
 			$is_condition_fulfilled = false;
 			if ( isset( $pseudo_submitted_data[ $element_id ] ) ) {
 				$is_condition_fulfilled = self::is_condition_fulfilled( $pseudo_submitted_data[ $element_id ], $routing );
@@ -326,7 +360,19 @@ abstract class Forminator_Mail {
 		foreach ( $all_conditions as $condition ) {
 			$element_id = $condition['element_id'];
 
-			if ( stripos( $element_id, 'calculation-' ) !== false || stripos( $element_id, 'stripe-' ) !== false ) {
+			if ( stripos( $element_id, 'signature-' ) !== false ) {
+				// We have signature field
+				$is_condition_fulfilled = false;
+				$signature_id = 'field-' . $element_id;
+
+				if ( isset( $form_data[ $signature_id ] ) ) {
+ 					$signature_data = 'ctlSignature' . $form_data[ $signature_id ] . '_data';
+
+					if ( isset( $form_data[ $signature_data ] ) ) {
+						$is_condition_fulfilled = self::is_condition_fulfilled( $form_data[ $signature_data ], $condition );
+					}
+				}
+			} elseif ( stripos( $element_id, 'calculation-' ) !== false || stripos( $element_id, 'stripe-' ) !== false ) {
 				$is_condition_fulfilled = false;
 				if ( isset( $pseudo_submitted_data[ $element_id ] ) ) {
 					$is_condition_fulfilled = self::is_condition_fulfilled( $pseudo_submitted_data[ $element_id ], $condition );

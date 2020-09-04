@@ -42,7 +42,8 @@
 			var self = this,
 				form = this.$el;
 			this.add_missing_relations();
-			this.$el.find('.forminator-field input, .forminator-field select, .forminator-field textarea').change(function (e) {
+
+			this.$el.find( ".forminator-field input, .forminator-field select, .forminator-field textarea, .forminator-field-signature").change(function (e) {
 				var $element = $(this),
 					element_id = $element.closest('.forminator-col').attr('id');
 				if (typeof element_id === 'undefined') {
@@ -181,6 +182,8 @@
 			//check the type of input
 			if (this.field_is_radio($element)) {
 				value = $element.filter(":checked").val();
+			} else if (this.field_is_signature($element)) {
+				value = $element.find( "input[id$='_data']" ).val();
 			} else if (this.field_is_checkbox($element)) {
 				value = [];
 				$element.each(function () {
@@ -238,6 +241,20 @@
 			});
 
 			return is_radio;
+		},
+
+		field_is_signature: function($element) {
+			var is_signature = false;
+
+			$element.each(function () {
+				if ($(this).find('.forminator-field-signature').length > 0) {
+					is_signature = true;
+					//break
+					return false;
+				}
+			});
+
+			return is_signature;
 		},
 
 		field_is_datepicker: function ($element) {
@@ -370,10 +387,10 @@
 			}else{
 				var value1 = this.get_field_value(condition.field);
 			}
+
 			var value2 = condition.value,
 				operator = condition.operator
 			;
-
 			if (action === "show") {
 				return this.is_matching(value1, value2, operator) && this.is_hidden(condition.field);
 			} else {
@@ -461,9 +478,11 @@
 			var $element_id = this.get_form_field(element_id),
 				$column_field = $element_id.closest('.forminator-col'),
 				$hidden_upload = $column_field.find('.forminator-input-file-required'),
+				$hidden_signature = $column_field.find('[id ^=ctlSignature][id $=_data]'),
 				$hidden_wp_editor = $column_field.find('.forminator-wp-editor-required'),
 				$row_field = $column_field.closest('.forminator-row'),
-				$pagination_next_field = this.$el.find('.forminator-pagination-footer').find('.forminator-button-next')
+				$pagination_next_field = this.$el.find('.forminator-pagination-footer').find('.forminator-button-next'),
+				$paypal_field = this.$el.find('.forminator-pagination-footer').find('#forminator-paypal-submit')
 				;
 			if( 'submit' === element_id ) {
 				var $pagination_field = this.$el.find('.forminator-pagination-footer').find('.forminator-button-submit')
@@ -484,6 +503,9 @@
 					if ($hidden_wp_editor.length > 0) {
 						$hidden_wp_editor.addClass('do-validate');
 					}
+					if ($hidden_signature.length > 0) {
+						$hidden_signature.addClass('do-validate');
+					}
 				} else {
 					$column_field.addClass('forminator-hidden');
 					$pagination_field.addClass('forminator-hidden');
@@ -493,8 +515,14 @@
 					if ($hidden_wp_editor.length > 0) {
 						$hidden_wp_editor.removeClass('do-validate');
 					}
+					if ($hidden_signature.length > 0) {
+						$hidden_signature.removeClass('do-validate');
+					}
 					if ($row_field.find('> .forminator-col:not(.forminator-hidden)').length === 0) {
 						$row_field.addClass('forminator-hidden');
+					}
+					if ($paypal_field.length > 0) {
+						$paypal_field.removeClass('forminator-hidden');
 					}
 				}
 			}
@@ -510,6 +538,9 @@
 					if ($hidden_wp_editor.length > 0) {
 						$hidden_wp_editor.removeClass('do-validate');
 					}
+					if ($hidden_signature.length > 0) {
+						$hidden_signature.removeClass('do-validate');
+					}
 					if ($row_field.find('> .forminator-col:not(.forminator-hidden)').length === 0) {
 						$row_field.addClass('forminator-hidden');
 					}
@@ -522,6 +553,9 @@
 					}
 					if ($hidden_wp_editor.length > 0) {
 						$hidden_wp_editor.addClass('do-validate');
+					}
+					if ($hidden_signature.length > 0) {
+						$hidden_signature.addClass('do-validate');
 					}
 				}
 			}

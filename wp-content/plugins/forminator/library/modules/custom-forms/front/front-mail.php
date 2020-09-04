@@ -107,7 +107,24 @@ class Forminator_CForm_Front_Mail extends Forminator_Mail {
 			$this->set_headers();
 
 		}
-
+		$files       = array();
+		$form_fields = $custom_form->get_fields();
+		foreach ( $form_fields as $form_field ) {
+			$field_array    = $form_field->to_formatted_array();
+			$field_forms    = forminator_fields_to_array();
+			$field_type     = $field_array['type'];
+			$form_field_obj = $field_forms[ $field_type ];
+			if ( 'upload' === $field_type && ! $form_field_obj->is_hidden( $field_array, $data, $pseudo_submitted_data ) ) {
+				$field_slug = isset( $entry->meta_data[ $form_field->slug ] ) ? $entry->meta_data[ $form_field->slug ] : '';
+				if ( ! empty( $field_slug ) && ! empty( $field_slug['value']['file'] ) ) {
+					$email_files = isset( $field_slug['value']['file'] ) ? $field_slug['value']['file']['file_path'] : array();
+					$files[]     = is_array( $email_files ) ? $email_files : array( $email_files );
+				}
+			}
+		}
+		if ( ! empty( $files ) ) {
+			$files = call_user_func_array( 'array_merge', $files );
+		}
 		/**
 		 * Message data filter
 		 *
@@ -136,7 +153,6 @@ class Forminator_CForm_Front_Mail extends Forminator_Mail {
 		if ( ! empty( $notifications ) ) {
 			$this->init( $_POST ); // WPCS: CSRF OK
 			//Process admin mail
-
 			foreach ( $notifications as $notification ) {
 
 				if( $this->is_condition( $notification, $data, $pseudo_submitted_data ) ) {
@@ -379,6 +395,10 @@ class Forminator_CForm_Front_Mail extends Forminator_Mail {
 					$this->set_subject( $subject );
 					$this->set_recipients( $recipients );
 					$this->set_message_with_vars( $this->message_vars, $message );
+					if ( ! empty( $files ) && isset( $notification['email-attachment'] ) && 'true' === $notification['email-attachment'] ) {
+						$this->set_attachment( $files );
+					}
+
 					$this->send_multiple();
 
 					/**

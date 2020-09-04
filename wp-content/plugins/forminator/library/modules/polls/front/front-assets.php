@@ -145,7 +145,7 @@ class Forminator_Assets_Enqueue_Poll extends Forminator_Assets_Enqueue {
 		// LOAD: Forminator UI JS
 		wp_enqueue_script(
 			'forminator-ui',
-			forminator_plugin_url() . 'assets/forminator-ui/js/forminator-ui.min.js',
+			forminator_plugin_url() . 'assets/forminator-ui/js/forminator-poll.min.js',
 			array( 'jquery' ),
 			FORMINATOR_VERSION,
 			false

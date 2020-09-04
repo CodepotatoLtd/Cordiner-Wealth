@@ -1,3 +1,58 @@
+v1.7.6
+- [Fix] Forms UI: Select dropdown not visualizing when is placed last on paginated form.
+
+
+v1.7.5
+- [Fix] Forms UI: Pagination issues with Divi.
+- [Enhance] Forms UI: Add wrapper to select chosen value.
+
+
+v1.7.4
+- [Fix] Forms UI: Allow select2 for vanilla theme.
+
+
+v1.7.3
+- [Fix] Forms UI: Uncaught TypeError: FUI.select2 is not a function.
+
+
+v1.7.2
+- [Fix] Form: Missing select2 JS file.
+
+
+v1.7.1
+- [Enhance] Poll UI: Create js file with only poll dedicated functions.
+- [Enhance] Form UI: Create js file with only form dedicated functions.
+- [Enhance] Form UI: Split custom select2 in its own file.
+- [Enhance] Remove emtpy file.
+
+
+v1.7.0
+- [Enhance] Quizzes UI: Social share icons color need to be managed on plugin side.
+
+
+v1.6.0
+- [New] [Element] E-Signature.
+- [Fix] Icons Font: Updated font is not uploaded to master branch.
+
+
+v1.5.1
+- [Fix] Icons Font: Updated font is not uploaded to master branch.
+
+
+v1.5.0
+- [Fix] Icons Font: Recently added icons not showing up.
+- [Enhance] [Element] Multiple Upload: Add styles to flat, bold and material designs.
+
+
+v1.4.0
+- [New] Forms UI: Multiple uploads element.
+- [Fix] Icons Font: Latest added icons not showing up.
+
+
+v1.3.0
+- [Enhance] New icons added to Forminator icons font: warning, reset, file, upload.
+
+
 v1.2.0
 - [New] Quizzes UI.
 - [New] Update icon font file to latest.

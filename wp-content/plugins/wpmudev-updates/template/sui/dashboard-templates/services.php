@@ -56,7 +56,14 @@ $services = array(
             <i class="sui-icon-hub" aria-hidden="true"></i>
             <?php esc_html_e( 'Services', 'wpmudev' ); ?>
         </h2>
+<?php if ('free' === $membership_data['membership']): ?>
+				<div class="sui-actions-left">
 
+				<span class="sui-tag sui-tag-purple sui-dashboard-expired-pro-tag">
+					<?php echo __('Pro', 'wpmudev'); ?>
+				</span>
+			</div>
+<?php endif; ?>
     </div>
 
     <?php //box body ?>
@@ -77,6 +84,7 @@ $services = array(
                             </a>
                         </h4>
                     </td>
+<?php if ('free' !== $membership_data['membership']): ?>
                     <td style="flex:1;">
                         <span class="<?php echo esc_attr( $service['class'] ); ?>"> <?php echo esc_html( $service['text'] ); ?></span>
                     </td>
@@ -85,6 +93,13 @@ $services = array(
                             <i class="sui-icon-widget-settings-config" aria-hidden="true"></i>
                         </a>
                     </td>
+<?php else: ?>
+                    <td>
+                        <a class="sui-button-icon" href="#">
+                            <i class="sui-icon-lock" aria-hidden="true"></i>
+                        </a>
+                    </td>
+<?php endif; ?>
                 </tr>
             <?php endforeach; ?>
         </tbody>
@@ -92,12 +107,14 @@ $services = array(
 
     <?php //box footer ?>
     <div class="sui-box-footer">
+<?php if ('free' !== $membership_data['membership']): ?>
 
         <a href="<?php echo esc_url( $urls->hub_url ); ?>" class="sui-button sui-button-ghost">
             <i class="sui-icon-eye" aria-hidden="true"></i>
             <?php esc_html_e( 'THE HUB', 'wpmudev' ); ?>
         </a>
 
+<?php endif; ?>
     </div>
 
 </div>

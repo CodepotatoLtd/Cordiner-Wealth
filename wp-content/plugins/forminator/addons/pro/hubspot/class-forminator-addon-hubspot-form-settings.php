@@ -77,6 +77,7 @@ class Forminator_Addon_Hubspot_Form_Settings extends Forminator_Addon_Form_Setti
 		}
 
 		$lists                        = array();
+		$property                     = array();
 		$email_fields                 = array();
 		$forminator_field_element_ids = array();
 		foreach ( $this->form_fields as $form_field ) {
@@ -88,14 +89,15 @@ class Forminator_Addon_Hubspot_Form_Settings extends Forminator_Addon_Form_Setti
 		}
 
 		$template_params = array(
-			'fields_map'    => $this->get_multi_id_form_settings_value( $multi_id, 'fields_map', array() ),
-			'error_message' => '',
-			'multi_id'      => $multi_id,
-			'fields'        => array(),
-			'form_fields'   => $this->form_fields,
-			'email_fields'  => $email_fields,
-			'list_id'       => $this->get_multi_id_form_settings_value( $multi_id, 'list_id', '' ),
-			'list_name'     => $this->get_multi_id_form_settings_value( $multi_id, 'list_name', '' ),
+			'fields_map'        => $this->get_multi_id_form_settings_value( $multi_id, 'fields_map', array() ),
+			'error_message'     => '',
+			'multi_id'          => $multi_id,
+			'fields'            => array(),
+			'form_fields'       => $this->form_fields,
+			'email_fields'      => $email_fields,
+			'list_id'           => $this->get_multi_id_form_settings_value( $multi_id, 'list_id', '' ),
+			'list_name'         => $this->get_multi_id_form_settings_value( $multi_id, 'list_name', '' ),
+			'custom_fields_map' => $this->get_multi_id_form_settings_value( $multi_id, 'custom_fields_map', array() ),
 		);
 
 		unset( $submitted_data['multi_id'] );
@@ -110,11 +112,19 @@ class Forminator_Addon_Hubspot_Form_Settings extends Forminator_Addon_Form_Setti
 		try {
 			$api           = $this->addon->get_api();
 			$lists_request = $api->get_contact_list();
+			$lists_property = $api->get_properties();
 
 			if ( ! empty( $lists_request->lists ) ) {
 				foreach ( $lists_request->lists as $key => $data ) {
-					if ( isset( $data->listId ) && isset( $data->name ) ) { //phpcs:ignore WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar
-						$lists[ $data->listId ] = $data->name; //phpcs:ignore WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar
+					if ( isset( $data->listId ) && isset( $data->name ) ) {
+						$lists[ $data->listId ] = $data->name;
+					}
+				}
+			}
+			if ( ! empty( $lists_property ) ) {
+				foreach ( $lists_property as $key => $data ) {
+					if ( isset( $data->name ) ) {
+						$property[ $data->name ] = $data->label;
 					}
 				}
 			}
@@ -124,14 +134,18 @@ class Forminator_Addon_Hubspot_Form_Settings extends Forminator_Addon_Form_Setti
 		}
 
 		$template_params['lists'] = $lists;
+		$template_params['properties'] = $property;
 		$is_submit                = ! empty( $submitted_data );
 		$has_errors               = false;
 		if ( $is_submit ) {
+			$custom_property               = isset( $submitted_data['custom_property'] ) ? $submitted_data['custom_property'] : array();
+			$custom_field                  = isset( $submitted_data['custom_field'] ) ? $submitted_data['custom_field'] : array();
+			$custom_field_map              = array_combine( $custom_property, $custom_field );
 			$fields_map                    = isset( $submitted_data['fields_map'] ) ? $submitted_data['fields_map'] : array();
 			$template_params['fields_map'] = $fields_map;
+			$template_params['custom_fields_map'] = $custom_field_map;
 
 			try {
-
 				$input_exceptions = new Forminator_Addon_Hubspot_Form_Settings_Exception();
 				if ( ! isset( $fields_map['email'] ) || empty( $fields_map['email'] ) ) {
 					$input_exceptions->add_input_exception( 'Please assign field for Email Address', 'email_error' );
@@ -163,9 +177,10 @@ class Forminator_Addon_Hubspot_Form_Settings extends Forminator_Addon_Form_Setti
 				$this->save_multi_id_form_setting_values(
 					$multi_id,
 					array(
-						'fields_map' => $fields_map,
-						'list_id'    => $list_id,
-						'list_name'  => $list_name,
+						'fields_map'        => $fields_map,
+						'custom_fields_map' => $custom_field_map,
+						'list_id'           => $list_id,
+						'list_name'         => $list_name,
 					)
 				);
 
@@ -188,8 +203,8 @@ class Forminator_Addon_Hubspot_Form_Settings extends Forminator_Addon_Form_Setti
 		}
 
 		$buttons['next']['markup'] = '<div class="sui-actions-right">' .
-									Forminator_Addon_Abstract::get_button_markup( esc_html__( 'Continue', Forminator::DOMAIN ), 'forminator-addon-next' ) .
-									'</div>';
+			Forminator_Addon_Abstract::get_button_markup( esc_html__( 'Continue', Forminator::DOMAIN ), 'forminator-addon-next' ) .
+		                             '</div>';
 
 		return array(
 			'html'       => Forminator_Addon_Abstract::get_template( $template, $template_params ),

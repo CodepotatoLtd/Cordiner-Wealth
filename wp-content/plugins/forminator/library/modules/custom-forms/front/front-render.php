@@ -211,7 +211,12 @@ class Forminator_CForm_Front extends Forminator_Render_Form {
 			$login_header_title = __( 'Powered by WordPress' );
 		}
 
-		$settings       = \WP_Defender\Module\Advanced_Tools\Model\Auth_Settings::instance();
+		if ( class_exists( '\WP_Defender\Module\Advanced_Tools\Model\Auth_Settings' ) ) {
+			$settings = \WP_Defender\Module\Advanced_Tools\Model\Auth_Settings::instance();
+		}
+		if ( class_exists( '\WP_Defender\Module\Two_Factor\Model\Auth_Settings' ) ) {
+			$settings = \WP_Defender\Module\Two_Factor\Model\Auth_Settings::instance();
+		}
 
 		$custom_graphic = false == wp_defender()->isFree && $settings->custom_graphic ? $settings->custom_graphic_url : wp_defender()->getPluginUrl() . 'app/module/advanced-tools/img/2factor-disabled.svg';
 
@@ -237,7 +242,7 @@ class Forminator_CForm_Front extends Forminator_Render_Form {
 				$wrapper .= '</div>';
 
 				$wrapper .= '<p class="forminator-authentication-nav"><a id="lostPhone" class="lost-device-url" href="#">' . esc_html__( 'Lost your device? ', Forminator::DOMAIN ) . '</a>';
-				$wrapper .= '<img class="def-ajaxloader" src="'.wp_defender()->getPluginUrl() .'app/module/advanced-tools/img/spinner.svg"/>';
+				$wrapper .= '<img class="def-ajaxloader" src="' . wp_defender()->getPluginUrl() . 'app/module/advanced-tools/img/spinner.svg"/>';
 				$wrapper .='<strong class="notification"></strong>';
 				$wrapper .='</p>';
 
@@ -402,6 +407,36 @@ class Forminator_CForm_Front extends Forminator_Render_Form {
 			}
 		}
 
+		/**
+		 * Filter enqueue form styles
+		 *
+		 * @since 1.13
+		 *
+		 * @param bool $is_preview
+		 * @param bool $is_ajax_load
+		 */
+		$this->styles = apply_filters( 'forminator_enqueue_form_styles', $this->styles, $is_preview, $is_ajax_load );
+
+		/**
+		 * Filter enqueue form scripts
+		 *
+		 * @since 1.13
+		 *
+		 * @param bool $is_preview
+		 * @param bool $is_ajax_load
+		 */
+		$this->scripts = apply_filters( 'forminator_enqueue_form_scripts', $this->scripts, $is_preview, $is_ajax_load );
+
+		/**
+		 * Filter enqueue form inline script
+		 *
+		 * @since 1.13
+		 *
+		 * @param bool $is_preview
+		 * @param bool $is_ajax_load
+		 */
+		$this->script = apply_filters( 'forminator_enqueue_form_script', $this->script, $is_preview, $is_ajax_load );
+
 		//Load Front Render Scripts
 		//render front script of form front end initialization
 		if ( ! $is_ajax_load ) {
@@ -469,6 +504,11 @@ class Forminator_CForm_Front extends Forminator_Render_Form {
 
 		$is_preview = isset( $atts['is_preview'] ) ? $atts['is_preview'] : false;
 		$is_preview = filter_var( $is_preview, FILTER_VALIDATE_BOOLEAN );
+
+		if( $is_preview === false && forminator_is_page_builder_preview() ) {
+			$is_preview = true;
+		}
+
 		$is_preview = apply_filters( 'forminator_render_shortcode_is_preview', $is_preview );
 
 		$preview_data = isset( $atts['preview_data'] ) ? $atts['preview_data'] : array();
@@ -1715,6 +1755,36 @@ class Forminator_CForm_Front extends Forminator_Render_Form {
 	}
 
 	/**
+	 * Compare element_id with precision elements
+	 *
+	 * @since 1.13
+	 *
+	 * @param string $element_id
+	 *
+	 * @return bool
+	 */
+	public function compare_element_id_with_precision_elements( $element_id ) {
+		return false !== strpos( $element_id, 'calculation-' )
+			|| false !== strpos( $element_id, 'currency-' );
+	}
+
+	/**
+	 * Change condition value with specified precision
+	 *
+	 * @since 1.13
+	 *
+	 * @param string $condition_value
+	 * @param array $field
+	 *
+	 * @return string
+	 */
+	public function change_condition_value_with_precision( $condition_value, $field ) {
+		$precision   = Forminator_Field::get_property( 'precision', $field, 2 );
+
+		return sprintf( "%.{$precision}f", $condition_value );
+	}
+
+	/**
 	 * Return fields conditions for JS
 	 *
 	 * @since 1.0
@@ -1741,6 +1811,14 @@ class Forminator_CForm_Front extends Forminator_Render_Form {
 					$field_conditions = isset( $field['conditions'] ) ? $field['conditions'] : array();
 
 					foreach ( $field_conditions as $condition ) {
+						if ( $this->compare_element_id_with_precision_elements( $condition['element_id'] ) ) {
+							foreach ( $fields as $key => $field_array ) {
+								if( $field_array['element_id'] === $condition['element_id'] ) {
+									$condition['value'] = $this->change_condition_value_with_precision( $condition['value'], $field_array );
+									break;
+								}
+							}
+						}
 						$new_condition = array(
 							'field'    => $condition['element_id'],
 							'operator' => $condition['rule'],
@@ -1946,6 +2024,9 @@ class Forminator_CForm_Front extends Forminator_Render_Form {
 		$html .= sprintf( '<input type="hidden" name="current_url" value="%s">', forminator_get_current_url() );
 		if ( isset( self::$render_ids[ $form_id ] ) ) {
 			$html .= sprintf( '<input type="hidden" name="render_id" value="%s">', self::$render_ids[ $form_id ] );
+		}
+		if ( $this->has_multiupload() ) {
+			$html .= sprintf( '<input type="hidden" name="forminator-multifile-hidden" class="forminator-multifile-hidden">' );
 		}
 
 		if ( $this->is_login_form() ) {
@@ -2396,9 +2477,11 @@ class Forminator_CForm_Front extends Forminator_Render_Form {
 				runForminatorFront();
 
 				if (window.elementorFrontend) {
-					elementorFrontend.hooks.addAction('frontend/element_ready/global', function () {
-						runForminatorFront();
-					});
+					if (typeof elementorFrontend.hooks !== "undefined") {
+						elementorFrontend.hooks.addAction('frontend/element_ready/global', function () {
+							runForminatorFront();
+						});
+					}
 				}
 
 				<?php
@@ -2803,7 +2886,71 @@ class Forminator_CForm_Front extends Forminator_Render_Form {
 	 * @return array
 	 */
 	public function ajax_display( $id, $is_preview = false, $data = false, $hide = true, $last_submit_data = array(), $extra = array() ) {
-		if ( $data && ! empty( $data ) ) {
+		//The first module and preview for it
+		$id = isset( $id ) ? intval( $id ) : null;
+
+		if ( ( is_null( $id ) || $id <= 0 ) && $is_preview && $data ) {
+			$fields = $settings = [];
+			$title  = '';
+
+			$form_model = new Forminator_Custom_Form_Model();
+			$status = Forminator_Custom_Form_Model::STATUS_PUBLISH;
+
+			// Build the fields
+			if ( isset( $data ) ) {
+				$fields = forminator_sanitize_field( $data['wrappers'] );
+				unset( $data['wrappers'] );
+
+				$title = !empty( $data['settings']['formName'] ) ? sanitize_text_field( $data['settings']['formName'] ) : $title;
+			}
+			if ( isset( $data['settings'] ) ) {
+				// Sanitize settings
+				$settings = forminator_sanitize_field( $data['settings'] );
+				$form_model->set_var_in_array( 'name', 'formName', $settings );
+			}else{
+				$form_model->set_var_in_array( 'name', 'formName', $data, 'forminator_sanitize_field' );
+			}
+
+			foreach ( $fields as $row ) {
+				foreach ( $row['fields'] as $f ) {
+					$field          = new Forminator_Form_Field_Model();
+					$field->form_id = $row['wrapper_id'];
+					$field->slug    = $f['element_id'];
+					$field->import( $f );
+					$form_model->add_field( $field );
+				}
+			}
+
+			// Sanitize custom css
+			if ( isset( $data['settings']['custom_css'] ) ) {
+				$settings['custom_css'] = sanitize_textarea_field( $data['settings']['custom_css'] );
+			}
+
+			// Sanitize thank you message
+			if ( isset( $data['settings']['thankyou-message'] ) ) {
+				$settings['thankyou-message'] = $data['settings']['thankyou-message'];
+			}
+
+			// Sanitize user email message
+			if ( isset( $data['settings']['user-email-editor'] ) ) {
+				$settings['user-email-editor'] = $data['settings']['user-email-editor'];
+			}
+
+			// Sanitize admin email message
+			if ( isset( $data['settings']['admin-email-editor'] ) ) {
+				$settings['admin-email-editor'] = $data['settings']['admin-email-editor'];
+			}
+
+			$settings['formName'] = $title;
+
+			$settings['version']  = '1.0';
+			$form_model->settings = $settings;
+
+			$form_model->status = $status;
+
+			$this->model = $form_model;
+			$this->model->id = $id;
+		} elseif ( $data && ! empty( $data ) ) {
 			$this->model = Forminator_Custom_Form_Model::model()->load_preview( $id, $data );
 			// its preview!
 			if( is_object( $this->model ) ) {
@@ -2886,7 +3033,7 @@ class Forminator_CForm_Front extends Forminator_Render_Form {
 	 */
 	public function get_html( $hide = true, $is_preview = false ) {
 		ob_start();
-		if ( $this->model->form_is_visible() ) {
+		if ( $this->model->form_is_visible( $is_preview ) ) {
 			add_filter( 'forminator_render_form_submit_markup', array( $this, 'render_honeypot_field' ), 10, 4 );
 			// Render form
 			$this->render( $this->model->id, $hide, $is_preview );
@@ -2905,20 +3052,14 @@ class Forminator_CForm_Front extends Forminator_Render_Form {
 				'fonts_settings'      => $this->get_google_fonts(),
 			);
 		} else {
-			$form_settings = $this->get_form_settings();
-
-			if ( isset( $form_settings['expire_message'] ) && '' !== $form_settings['expire_message'] ) {
-
-				$message = $form_settings['expire_message']; ?>
-
-				<div class="forminator-custom-form"><label
-							class="forminator-label--info"><span><?php echo esc_html( $message ); ?></span></label>
-				</div>
-
-				<?php
-
-			}
-		}
+			$form_settings = $this->get_form_settings(); ?>
+            <div class="forminator-custom-form">
+                 <?php if ( isset( $form_settings['expire_message'] ) && '' !== $form_settings['expire_message'] ) {
+                    $message = $form_settings['expire_message']; ?>
+                    <label class="forminator-label--info"><span><?php echo esc_html( $message ); ?></span></label>
+                 <?php } ?>
+            </div>
+		<?php }
 
 		$html = ob_get_clean();
 
@@ -3032,6 +3173,28 @@ class Forminator_CForm_Front extends Forminator_Render_Form {
 	 */
 	public function render_hidden_form_message( $hidden_form_message ) {
 		return apply_filters( 'forminator_render_hidden_form_message', $hidden_form_message );
+	}
+
+	/**
+	 * Check if Custom form has upload field
+	 *
+	 * @since 1.7
+	 * @return bool
+	 */
+	public function has_multiupload() {
+		$fields = $this->get_fields();
+
+		if ( ! empty( $fields ) ) {
+			foreach ( $fields as $field ) {
+				if ( isset( $field['type'] ) && 'upload' === $field['type'] &&
+				     isset( $field['file-type'] ) && 'multiple' === $field['file-type']
+				) {
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 }

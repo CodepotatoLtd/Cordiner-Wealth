@@ -6,13 +6,21 @@
 
 		<?php $this->template( 'dashboard/widgets/widget-cform' ); ?>
 
-		<?php $this->template( 'dashboard/widgets/widget-poll' ); ?>
+		<?php if ( ! FORMINATOR_PRO ) {
+            $this->template( 'dashboard/widgets/widget-upgrade' );
+		} ?>
 
 		<?php $this->template( 'dashboard/widgets/widget-quiz' ); ?>
 
-		<?php if ( isset( $_GET['show_stripe_dialog'] ) && ! empty( $_GET['show_stripe_dialog'] ) ) { // phpcs:ignore ?>
+		<?php $this->template( 'dashboard/widgets/widget-poll' ); ?>
 
-			<?php $this->template( 'dashboard/stripe-notice' ); ?>
+		<?php
+		$notice_dismissed = get_option( 'forminator_dismiss_feature_113', false );
+		$version_upgraded = get_option( 'forminator_version_upgraded', false );
+
+		if ( ! $notice_dismissed && $version_upgraded ) { ?>
+
+			<?php $this->template( 'dashboard/new-feature-notice' ); ?>
 
 		<?php } ?>
 

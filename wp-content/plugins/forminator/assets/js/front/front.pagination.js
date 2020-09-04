@@ -295,12 +295,13 @@
 			}
 
 			//get fields on current page
-			page.find("input, select, textarea, [contenteditable]")
+			page.find("input, select, textarea")
 				.not(":submit, :reset, :image, :disabled")
-				.not(':hidden:not(.forminator-wp-editor-required, .forminator-input-file-required)')
+				.not(':hidden:not(.forminator-wp-editor-required, .forminator-input-file-required, input[name$="_data"])')
 				.not('[gramm="true"]')
 				.each(function (key, element) {
 					valid = validator.element(element);
+
 					if (!valid) {
 						if (errors === 0) {
 							// focus on first error
@@ -389,6 +390,11 @@
 							.removeClass('forminator-hidden');
 					}
 				}
+
+				if ( this.$el.find('.forminator-payment iframe').length > 0 ) {
+					this.$el.find('.forminator-payment iframe').width('100%');
+				}
+
 			} else {
 				this.element = this.$el.find('[data-step=' + this.step + ']').data('name');
 				if ( this.custom_label[this.element] && this.custom_label['pagination-labels'] === 'custom'){
@@ -436,8 +442,11 @@
 			this.$el.find('.forminator-pagination').css({
 				'height': '0',
 				'opacity': '0',
-				'visibility': 'hidden'
+				'visibility': 'hidden',
+				'overflow': 'hidden'
 			}).attr( 'aria-hidden', 'true' );
+
+			this.$el.find('.forminator-pagination .forminator-pagination--content').hide();
 
 			// Show desired page
 			this.$el.find('[data-step=' + step + ']').css({
@@ -445,6 +454,8 @@
 				'opacity': '1',
 				'visibility': 'visible'
 			}).removeAttr( 'aria-hidden' );
+
+			this.$el.find('[data-step=' + step + '] .forminator-pagination--content').show();
 
 			//exec responsive captcha
 			var forminatorFront = this.$el.data('forminatorFront');

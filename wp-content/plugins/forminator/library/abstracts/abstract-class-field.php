@@ -180,7 +180,9 @@ abstract class Forminator_Field {
 	 */
 
 	public static function get_property( $property, $field, $fallback = '', $data_type = null ) {
+
 		$property_value = $fallback;
+
 		if ( isset( $field[ $property ] ) ) {
 			$property_value = $field[ $property ];
 		}
@@ -608,79 +610,92 @@ abstract class Forminator_Field {
 	 * @param bool   $required
 	 *
 	 * @param        $design
+	 * @param        $file_type
+	 * @param        $form_id
+	 * @param        $upload_attr
 	 *
 	 * @return string $html
 	 */
-	public static function create_file_upload( $id, $name, $description, $required, $design ) {
+	public static function create_file_upload( $id, $name, $description, $required, $design, $file_type = 'single', $form_id = 0, $upload_attr = array() ) {
 
-		$html  = '';
-		$id    = 'forminator-field-' . $id;
-		$class = 'forminator-input-file';
+		$html        = '';
+		$style       = '';
+		$field_id    = $id;
+		$id          = 'forminator-field-' . $id;
+		$button_id   = 'forminator-field-' . $id . '_button';
+		$mainclass   = 'forminator-file-upload';
+		$class       = 'forminator-input-file';
 
 		if ( $required ) {
 			$class .= '-required do-validate';
 		}
 
-		$html .= '<div class="forminator-file-upload">';
+		if ( 'multiple' === $file_type ) {
+			$mainclass = 'forminator-multi-upload';
+			$class     .= ' ' . $id . '-' . $form_id;
 
-		if ( 'clean' === $design ) {
+		}
+		$upload_data = self::implode_attr( $upload_attr );
 
-			$html .= sprintf( '<input class="%s" type="file" name="%s" id="%s">', $class, $name, $id );
-			$html .= sprintf( '<button class="forminator-upload--remove" style="display: none;">%s</button>', __( 'Remove', Forminator::DOMAIN ) );
+		$html .= sprintf( '<div class="%s %s" data-element="%s">', $mainclass, $style, $field_id );
 
-		} else {
+			$html .= sprintf( '<input type="file" name="%s" id="%s" class="%s" %s>', $name, $id, $class, $upload_data );
 
-			$html .= sprintf(
-				'<input type="file" name="%s" id="%s" class="%s" readonly="readonly" />',
-				$name,
-				$id,
-				$class
-			);
+			if ( 'clean' === $design ) {
 
-			if ( 'material' === $design ) {
-
-				$html .= sprintf(
-					'<button id="%s" class="forminator-button forminator-button-upload" data-id="%s">',
-					$id,
-					$id
-				);
-
-					$html .= sprintf(
-						'<span>%s</span>',
-						__( 'Choose File', Forminator::DOMAIN )
-					);
-
-					$html .= '<span aria-hidden="true"></span>';
-
-				$html .= '</button>';
+				$html .= sprintf( '<button class="forminator-upload--remove" style="display: none;">%s</button>', __( 'Remove', Forminator::DOMAIN ) );
 
 			} else {
 
-				$html .= sprintf(
-					'<button id="%s" class="forminator-button forminator-button-upload" data-id="%s">%s</button>',
-					$id,
-					$id,
-					__( 'Choose File', Forminator::DOMAIN )
-				);
+				if ( 'multiple' === $file_type ) {
+
+					$html .= '<div class="forminator-multi-upload-message" aria-hidden="true">';
+
+						$html .= '<span class="forminator-icon-upload" aria-hidden="true"></span>';
+
+						$html .= '<p>';
+							$html .= sprintf( esc_html__( 'Drag and Drop (or) %1$sChoose Files%2$s', Forminator::DOMAIN ), '<a class="forminator-upload-file--' . $id . '" href="javascript:void(0)">', '</a>' );
+						$html .= '</p>';
+
+					$html .= '</div>';
+
+				} else {
+
+					$html .= sprintf( '<button id="%s" class="forminator-button forminator-button-upload" data-id="%s">', $button_id, $id );
+
+						if ( 'material' === $design ) {
+
+							$html .= sprintf(
+								'<span>%s</span>',
+								__( 'Choose File', Forminator::DOMAIN )
+							);
+
+							$html .= '<span aria-hidden="true"></span>';
+
+						} else {
+							$html .= __( 'Choose File', Forminator::DOMAIN );
+						}
+
+					$html .= '</button>';
+
+					$html .= sprintf(
+						'<span data-empty-text="%s">%s</span>',
+						__( 'No file chosen', Forminator::DOMAIN ),
+						__( 'No file chosen', Forminator::DOMAIN )
+					);
+
+					$html .= '<button class="forminator-button-delete" style="display: none;">';
+
+						$html .= '<i class="forminator-icon-close" aria-hidden="true"></i>';
+
+						$html .= sprintf(
+							'<span class="forminator-screen-reader-only">%s</span>',
+							__( 'Delete uploaded file', Forminator::DOMAIN )
+						);
+
+					$html .= '</button>';
+				}
 			}
-
-			$html .= sprintf(
-				'<span data-empty-text="%s">%s</span>',
-				__( 'No file chosen', Forminator::DOMAIN ),
-				__( 'No file chosen', Forminator::DOMAIN )
-			);
-
-			$html .= '<button class="forminator-button-delete" style="display: none;">';
-
-				$html .= '<i class="forminator-icon-close" aria-hidden="true"></i>';
-
-				$html .= sprintf(
-					'<span class="forminator-screen-reader-only">%s</span>',
-					__( 'Delete uploaded file', Forminator::DOMAIN )
-				);
-
-			$html .= '</button>';
-		}
 
 		$html .= '</div>';
 
@@ -714,8 +729,9 @@ abstract class Forminator_Field {
 	 *
 	 * @param array        $field
 	 * @param array|string $data - the data to be validated
+	 * @param array        $post_data
 	 */
-	public function validate( $field, $data ) {
+	public function validate( $field, $data, $post_data = array() ) {
 	}
 
 	/**
@@ -833,17 +849,31 @@ abstract class Forminator_Field {
 		$all_conditions = self::get_field_conditions( $field, $conditions, $form_object );
 
 		foreach ( $conditions as $condition ) {
+
 			$element_id = $condition['element_id'];
 
-			if ( stripos( $element_id, 'calculation-' ) !== false || stripos( $element_id, 'stripe-' ) !== false ) {
+			if ( stripos( $element_id, 'signature-' ) !== false ) {
+				// We have signature field
+				$is_condition_fulfilled = false;
+				$signature_id = 'field-' . $element_id;
+
+				if ( isset( $form_data[ $signature_id ] ) ) {
+ 					$signature_data = 'ctlSignature' . $form_data[ $signature_id ] . '_data';
+
+					if ( isset( $form_data[ $signature_data ] ) ) {
+						$is_condition_fulfilled = self::is_condition_fulfilled( $form_data[ $signature_data ], $condition );
+					}
+				}
+			} elseif ( stripos( $element_id, 'calculation-' ) !== false || stripos( $element_id, 'stripe-' ) !== false ) {
 				$is_condition_fulfilled = false;
 				if ( isset( $pseudo_submitted_data[ $element_id ] ) ) {
-					$is_condition_fulfilled = self::is_condition_fulfilled( $pseudo_submitted_data[ $element_id ], $condition );
+					//Condition's value is saved as a string value
+					$is_condition_fulfilled = self::is_condition_fulfilled( (string) $pseudo_submitted_data[ $element_id ], $condition );
 				}
-			} elseif ( stripos( $element_id, 'checkbox-' ) !== false || stripos( $element_id, 'radio-' ) !== false ) {
-				$is_condition_fulfilled = self::is_condition_fulfilled( $form_data[ $element_id ], $condition );
 			} elseif ( ! isset( $form_data[ $element_id ] ) ) {
 				$is_condition_fulfilled = false;
+			} elseif ( stripos( $element_id, 'checkbox-' ) !== false || stripos( $element_id, 'radio-' ) !== false ) {
+				$is_condition_fulfilled = self::is_condition_fulfilled( $form_data[ $element_id ], $condition );
 			} else {
 				$is_condition_fulfilled = self::is_condition_fulfilled( $form_data[ $element_id ], $condition );
 			}
@@ -860,13 +890,13 @@ abstract class Forminator_Field {
 				$parent_field      = $form_object->get_field( $element_id );
 				$parent_conditions = self::get_property( 'conditions', $parent_field, array() );
 
-				if ( ! empty( $parent_conditions ) ) {
+				if ( ! empty( $parent_conditions ) && 'any' !== $condition_rule ) {
 					// Increase conditions count
 					$conditions_count ++;
 					$parent_hidden = self::is_hidden( $parent_field, $form_data, $pseudo_submitted_data, $form_object = false );
 
 					// If parent not hidden increase fulfilled conditions
-					if ( ! $parent_hidden ) {
+					if ( ! $parent_hidden && 'show' === $condition_action ) {
 						$condition_fulfilled ++;
 					}
 				}
@@ -942,7 +972,7 @@ abstract class Forminator_Field {
 			case 'starts':
 				return ( stripos( $form_field_value, $condition['value'] ) === 0 ? true : false );
 			case 'ends':
-				return ( stripos( $form_field_value, $condition['value'] ) === ( strlen( $form_field_value - 1 ) ) ? true : false );
+				return ( stripos( $form_field_value, $condition['value'] ) === ( strlen( $form_field_value ) - 1 ) ? true : false );
 			default:
 				return false;
 		}
@@ -1520,8 +1550,8 @@ abstract class Forminator_Field {
 
 		$prefill = self::get_property( $prefix . 'prefill', $field, false );
 
-		if ( isset( $_GET[ $prefill ] ) && ! empty( $_GET[ $prefill ] ) ) {  // phpcs:ignore
-			return sanitize_text_field( $_GET[ $prefill ] );// phpcs:ignore
+		if ( ! empty( $_REQUEST[ $prefill ] ) ) {  // WPCS: CSRF ok.
+			return sanitize_text_field( $_REQUEST[ $prefill ] );
 		}
 
 		return $default;

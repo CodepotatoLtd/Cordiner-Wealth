@@ -31,6 +31,9 @@ abstract class Forminator_Front_Action {
 
 			add_action( 'wp_ajax_forminator_update_payment_amount', array( $this, 'update_payment_amount' ) );
 			add_action( 'wp_ajax_nopriv_forminator_update_payment_amount', array( $this, 'update_payment_amount' ) );
+
+			add_action( 'wp_ajax_forminator_multiple_file_upload', array( $this, 'multiple_file_upload' ) );
+			add_action( 'wp_ajax_nopriv_forminator_multiple_file_upload', array( $this, 'multiple_file_upload' ) );
 		}
 	}
 
@@ -154,7 +157,7 @@ abstract class Forminator_Front_Action {
 	abstract public function update_payment_amount();
 
 	/**
-	 * Handle file uplload
+	 * Handle file upload
 	 *
 	 * @since 1.0
 	 * @since 1.1 Bugfix filter `forminator_file_upload_allow` `$file_name` passed arg

@@ -1,6 +1,6 @@
 <?php
 /**
- * Dashboard analytics widget: Displayed on site dashboards with stats.
+ * Dashboard analytics widget: Displays stats on site's Admin Dashboard.
  *
  * @since  4.6
  * @package WPMUDEV_Dashboard

@@ -697,7 +697,7 @@ class WPMUDEV_Dashboard_Remote {
 				}
 
 				// Check filesystem credentials. `delete_plugins()` will bail otherwise.
-				$url = wp_nonce_url( 'plugins.php?action=delete-selected&verify-delete=1&checked[]=' . $filename, 'bulk-plugins' );			 	  				 		  
+				$url = wp_nonce_url( 'plugins.php?action=delete-selected&verify-delete=1&checked[]=' . $filename, 'bulk-plugins' );
 				ob_start();
 				$credentials = request_filesystem_credentials( $url );
 				ob_end_clean();
@@ -726,6 +726,8 @@ class WPMUDEV_Dashboard_Remote {
 				if ( true === $result ) {
 					wp_clean_plugins_cache( false );
 					WPMUDEV_Dashboard::$site->schedule_shutdown_refresh();
+					//also refresh local data because reinstallation is not possible until the cache is refreshed.
+					WPMUDEV_Dashboard::$site->refresh_local_projects( 'local' );
 					$deleted[] = array( 'file' => $plugin );
 				} elseif ( is_wp_error( $result ) ) {
 					$errors[] = array(

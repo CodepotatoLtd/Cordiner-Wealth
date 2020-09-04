@@ -155,7 +155,8 @@ class Forminator_Export {
 
 		if ( isset( $post_data['action'] ) && 'forminator_export_entries' === $post_data['action'] ) {
 
-			if ( isset( $_POST['_forminator_nonce'] ) && ! wp_verify_nonce( $_POST['_forminator_nonce'], 'forminator_export' ) ) {
+			if ( ! isset( $_POST['_forminator_nonce'] ) || ! wp_verify_nonce( $_POST['_forminator_nonce'], 'forminator_export' ) ) {
+
 				$redirect = add_query_arg(
 					array(
 						'err_msg' => rawurlencode( __( 'Invalid request, you are not allowed to do that action.', Forminator::DOMAIN ) ),

@@ -376,7 +376,7 @@ class Forminator_Password extends Forminator_Field {
 			if ( $is_required ) {
 				$required_error = apply_filters(
 					'forminator_text_field_required_validation_message',
-					! empty( $required_message ) ? $required_message : __( 'Your password is required', Forminator::DOMAIN ),
+					! empty( $required_message ) ? $required_message : __( 'Your password is required.', Forminator::DOMAIN ),
 					$id,
 					$field
 				);
@@ -387,7 +387,7 @@ class Forminator_Password extends Forminator_Field {
 				if ( isset( $field['limit_type'] ) && 'characters' === trim( $field['limit_type'] ) ) {
 					$max_length_error = apply_filters(
 						'forminator_text_field_characters_validation_message',
-						__( 'You exceeded the allowed amount of characters. Please check again', Forminator::DOMAIN ),
+						__( 'You exceeded the allowed amount of characters. Please check again.', Forminator::DOMAIN ),
 						$id,
 						$field
 					);
@@ -395,7 +395,7 @@ class Forminator_Password extends Forminator_Field {
 				} else {
 					$max_words_error = apply_filters(
 						'forminator_text_field_words_validation_message',
-						__( 'You exceeded the allowed amount of words. Please check again', Forminator::DOMAIN ),
+						__( 'You exceeded the allowed amount of words. Please check again.', Forminator::DOMAIN ),
 						$id,
 						$field
 					);
@@ -423,7 +423,7 @@ class Forminator_Password extends Forminator_Field {
 			if ( $is_required ) {
 				$required_error = apply_filters(
 					'forminator_confirm_password_field_required_validation_message',
-					! empty( $required_confirm_message ) ? $required_confirm_message : __( 'You must confirm your chosen password', Forminator::DOMAIN ),
+					! empty( $required_confirm_message ) ? $required_confirm_message : __( 'You must confirm your chosen password.', Forminator::DOMAIN ),
 					$id,
 					$field
 				);
@@ -435,7 +435,7 @@ class Forminator_Password extends Forminator_Field {
 				$validation_message_not_match = self::get_property( 'validation_message', $field, '' );
 				$not_match_error = apply_filters(
 					'forminator_confirm_password_field_not_match_validation_message',
-					! empty( $validation_message_not_match ) ? $validation_message_not_match : __( 'Your passwords don\'t match', Forminator::DOMAIN ),
+					! empty( $validation_message_not_match ) ? $validation_message_not_match : __( 'Your passwords don\'t match.', Forminator::DOMAIN ),
 					$id,
 					$field
 				);
@@ -454,8 +454,9 @@ class Forminator_Password extends Forminator_Field {
 	 *
 	 * @param array        $field
 	 * @param array|string $data
+	 * @param array $post_data
 	 */
-	public function validate( $field, $data ) {
+	public function validate( $field, $data, $post_data = array() ) {
 		$id                    = self::get_property( 'element_id', $field );
 		$min_password_strength = self::get_property( 'strength', $field );
 		$is_confirm            = self::get_property( 'confirm-password', $field, '', 'bool' );
@@ -469,7 +470,7 @@ class Forminator_Password extends Forminator_Field {
 			if ( empty( $data ) ) {
 				$this->validation_message[ $id ] = apply_filters(
 					'forminator_text_field_required_validation_message',
-					( ! empty( $required_message ) ? $required_message : __( 'This field is required. Please enter text', Forminator::DOMAIN ) ),
+					( ! empty( $required_message ) ? $required_message : __( 'This field is required. Please enter text.', Forminator::DOMAIN ) ),
 					$id,
 					$field
 				);
@@ -479,7 +480,7 @@ class Forminator_Password extends Forminator_Field {
 			if ( ( isset( $field['limit_type'] ) && 'characters' === trim( $field['limit_type'] ) ) && ( strlen( $data ) > $field['limit'] ) ) {
 				$this->validation_message[ $id ] = apply_filters(
 					'forminator_text_field_characters_validation_message',
-					__( 'You exceeded the allowed amount of characters. Please check again', Forminator::DOMAIN ),
+					__( 'You exceeded the allowed amount of characters. Please check again.', Forminator::DOMAIN ),
 					$id,
 					$field
 				);
@@ -488,7 +489,7 @@ class Forminator_Password extends Forminator_Field {
 				if ( is_array( $words ) && count( $words ) > $field['limit'] ) {
 					$this->validation_message[ $id ] = apply_filters(
 						'forminator_text_field_words_validation_message',
-						__( 'You exceeded the allowed amount of words. Please check again', Forminator::DOMAIN ),
+						__( 'You exceeded the allowed amount of words. Please check again.', Forminator::DOMAIN ),
 						$id,
 						$field
 					);
