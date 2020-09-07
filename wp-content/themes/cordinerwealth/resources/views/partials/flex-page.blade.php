@@ -221,7 +221,7 @@
 
         <div class="flex flex-col-reverse lg:flex-row my-16">
             <div class="w-full lg:w-2/3 text-center mx-auto px-4">
-                <h2 class="merriweather-light text-orange text-3xl md:text-4xl leading-tight pr-4 mb-4">@php the_sub_field('title') @endphp</h2>
+                <h2 class="merriweather-light text-orange text-3xl lg:text-4xl leading-tight pr-4 mb-4">@php the_sub_field('title') @endphp</h2>
                 <div class="mb-6 px-4">@php the_sub_field('text') @endphp</div>
                 <div class="app-buttons mb-6">
                     <div class="flex flex-col text-center mx-auto w-2/3">
