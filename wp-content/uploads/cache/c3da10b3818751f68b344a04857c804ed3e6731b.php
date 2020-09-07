@@ -213,7 +213,7 @@
             <div class="w-full lg:w-2/3 text-center mx-auto px-4">
                 <h2 class="merriweather-light text-orange text-4xl leading-tight pr-4 mb-4"><?php the_sub_field('title') ?></h2>
                 <div class="mb-6 px-4"><?php the_sub_field('text') ?></div>
-                <a class="button white-bg-orange py-2 px-16 text-white text-center uppercase" href="<?php the_sub_field('button_link') ?>"><?php the_sub_field('button_text') ?></a>
+                <a class="button inline-block white-bg-orange py-2 px-16 text-white text-center uppercase" href="<?php the_sub_field('button_link') ?>"><?php the_sub_field('button_text') ?></a>
             </div>
         </div>
 
@@ -221,7 +221,7 @@
 
         <div class="flex flex-col-reverse lg:flex-row my-16">
             <div class="w-full lg:w-2/3 text-center mx-auto px-4">
-                <h2 class="merriweather-light text-orange text-4xl leading-tight pr-4 mb-4"><?php the_sub_field('title') ?></h2>
+                <h2 class="merriweather-light text-orange text-3xl md:text-4xl leading-tight pr-4 mb-4"><?php the_sub_field('title') ?></h2>
                 <div class="mb-6 px-4"><?php the_sub_field('text') ?></div>
                 <div class="app-buttons mb-6">
                     <div class="flex flex-col text-center mx-auto w-2/3">
@@ -234,7 +234,7 @@
                         <?php endif; ?>
                     </div>
                 </div>
-                <a class="button white-bg-orange py-2 px-16 text-white text-center uppercase" href="<?php the_sub_field('button_link') ?>"><?php the_sub_field('button_text') ?></a>
+                <a class="button inline-block white-bg-orange py-2 px-16 text-white text-center uppercase" href="<?php the_sub_field('button_link') ?>"><?php the_sub_field('button_text') ?></a>
             </div>
         </div>
 
