@@ -1717,7 +1717,7 @@
                 "layout_5f490f8a46872": {
                     "key": "layout_5f490f8a46872",
                     "name": "content_list_rtbp",
-                    "label": "Content List",
+                    "label": "Content List (RTBP)",
                     "display": "block",
                     "sub_fields": [
                         {
@@ -1900,5 +1900,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1598625728
+    "modified": 1599552981
 }

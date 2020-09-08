@@ -739,7 +739,7 @@
                     <h2 class="merriweather-light text-orange text-4xl leading-tight pr-4 mb-4 text-center" data-aos="fade"><?php the_sub_field('title') ?></h2>
                 </div>
                 <div class="flex flex-col md:flex-row">
-                    <div class="w-full md:w-1/2">
+                    <div class="w-full md:w-1/2 mb-6 md:mb-0">
                         <ul>
                             <?php if(have_rows('content_list_left')): ?>
                                 <?php $nl = 1 ?>
