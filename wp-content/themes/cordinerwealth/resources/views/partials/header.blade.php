@@ -49,7 +49,9 @@
               @endif
             </div>
             <div class="ml-auto" data-aos="fade-left">
-              <a class="button white-bg-orange py-2 px-6" target="_blank" href="{{ get_field('client_login', 'options') }}">Client Login</a>
+              <a class="button white-bg-orange py-2 px-6" target="_blank" href="{{ get_field('client_login', 'options') }}">
+                  {{ get_field('client_login_name', 'options') }}
+              </a>
             </div>
           </div>
 
