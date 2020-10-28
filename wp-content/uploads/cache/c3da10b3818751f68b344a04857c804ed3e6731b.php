@@ -77,18 +77,21 @@
         <div class="<?php colour('background') ?> pt-16 pb-4">
             <div class="container">
                 <div class="flex flex-col md:flex-row">
-                    <div class="w-full md:w-5/12 mb-4">
-                        <div class="flex flex-col justify-between h-full">
-                            <h2 class="merriweather-light text-4xl leading-none pr-4 mb-auto mr-4 php <?php colour('title') ?>"
+                    <div class="w-full md:w-5/12 mb-4 text-center">
+                        <div class="flex flex-col justify-between mb-8">
+                            <h2 class="merriweather-light text-4xl leading-none pr-4 mb-auto text-left mr-4 php <?php colour('title') ?>"
                                 data-aos="fade"><?php the_sub_field('title') ?></h2>
                         </div>
+                        <?php if(get_sub_field('button_text')): ?>
+                            <a class="button white-bg-orange py-2 px-16 text-white text-center uppercase mr-24" href="<?php the_sub_field('button_link') ?>"><?php the_sub_field('button_text') ?></a>
+                        <?php endif; ?>
                     </div>
                     <div class="w-full md:w-7/12">
                         <div class="montserrat-regular text-md leading-snug md:text-base mb-4 <?php colour('intro') ?>" data-aos="fade-left"
                              data-aos-delay="200">
                             <?php the_sub_field('intro_text') ?>
                         </div>
-                        <div class="montserrat-regular text-md leading-snug md:text-base @endphp" data-aos="fade-left"
+                        <div class="montserrat-regular text-md leading-snug md:text-base mb-4 @endphp" data-aos="fade-left"
                              data-aos-delay="200">
                             <?php the_sub_field('text') ?>
                         </div>
