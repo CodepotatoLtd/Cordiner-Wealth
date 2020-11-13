@@ -5,7 +5,13 @@
 
   .desktop-menu{
     .navbar-item{
-      @apply montserrat-medium text-darkgrey mx-4;
+        @apply montserrat-medium text-darkgrey mr-3;
+        @media(min-width:1200px){
+            @apply montserrat-medium text-darkgrey mr-4;
+            }
+      &:last-child{
+        margin-right:0;
+        }
       }
     }
 

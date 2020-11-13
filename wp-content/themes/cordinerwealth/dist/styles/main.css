@@ -13985,8 +13985,20 @@ ol {
   font-family: Montserrat, sans-serif;
   font-weight: 500;
   color: #241F21;
-  margin-left: 1rem;
-  margin-right: 1rem;
+  margin-right: 0.75rem;
+}
+
+@media (min-width: 1200px) {
+  .desktop-menu .navbar-item {
+    font-family: Montserrat, sans-serif;
+    font-weight: 500;
+    color: #241F21;
+    margin-right: 1rem;
+  }
+}
+
+.desktop-menu .navbar-item:last-child {
+  margin-right: 0;
 }
 
 #mobile-menu .navbar-item {

@@ -15,11 +15,12 @@
 
   <div class="navbar bg-white">
     <div class="container">
+
       <a href="{{ home_url('/') }}" class="logo block bg-white float-left mt-2 lg:mt-4 lg:w-auto xl:h-auto">
         <img src="@asset('images/cordiner-wealth.svg')" alt="Cordiner Wealth Logo" data-aos="fade">
       </a>
 
-      <div class=" py-165 lg:py-195 xl:py-195">
+      <div class="py-165 lg:py-195">
           <div class="mobile-menu flex flex-row items-center justify-end lg:hidden xl:hidden">
             <a href="mailto:{{ get_field('email', 'options') }}" class="mr-4">
               <img src="{{ \App\asset_path('images/email-dark.svg') }}" alt="Email us">
@@ -34,7 +35,7 @@
             </a>
           </div>
           <div class="desktop-menu hidden flex flex-row lg:flex xl:flex lg:flex-row xl:flex-row lg:content-around xl:content-around">
-            <div class="mx-auto">
+            <div class="mx-auto w-4/5 text-center">
               @if (has_nav_menu('primary_navigation'))
                 {!! wp_nav_menu([
                     'theme_location'    => 'primary_navigation',
@@ -48,13 +49,12 @@
                     ]) !!}
               @endif
             </div>
-            <div class="ml-auto" data-aos="fade-left">
+            <div class="ml-auto w-1/5 text-right" data-aos="fade-left">
               <a class="button white-bg-orange py-2 px-6" target="_blank" href="{{ get_field('client_login', 'options') }}">
                   {{ get_field('client_login_name', 'options') }}
               </a>
             </div>
           </div>
-
       </div>
 
     </div>
