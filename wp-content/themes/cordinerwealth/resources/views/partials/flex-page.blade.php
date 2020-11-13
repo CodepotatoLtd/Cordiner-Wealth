@@ -77,7 +77,7 @@
         <div class="@php colour('background') @endphp pt-16 pb-4">
             <div class="container">
                 <div class="flex flex-col md:flex-row">
-                    <div class="w-full md:w-5/12 mb-4 text-center">
+                    <div class="w-full md:w-5/12 mb-4 md:text-center">
                         <div class="flex flex-col justify-between mb-8">
                             <h2 class="merriweather-light text-4xl leading-none pr-4 mb-auto text-left mr-4 php @php colour('title') @endphp"
                                 data-aos="fade">@php the_sub_field('title') @endphp</h2>
