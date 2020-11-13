@@ -83,7 +83,7 @@
                                 data-aos="fade"><?php the_sub_field('title') ?></h2>
                         </div>
                         <?php if(get_sub_field('button_text')): ?>
-                            <a class="button white-bg-orange py-2 px-16 text-white text-center uppercase mr-24" href="<?php the_sub_field('button_link') ?>"><?php the_sub_field('button_text') ?></a>
+                            <a class="button white-bg-orange py-2 px-16 text-white text-center uppercase md:mr-24" href="<?php the_sub_field('button_link') ?>"><?php the_sub_field('button_text') ?></a>
                         <?php endif; ?>
                     </div>
                     <div class="w-full md:w-7/12">
